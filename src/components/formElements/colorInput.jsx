@@ -1,0 +1,44 @@
+import React from 'react'
+import { Label } from '../ui/label'
+import { Input } from '../ui/input'
+
+const ColorInput = ({ registerId, label, defaultValue, className, register, showOpacity = false, defaultOpacity }) => {
+  return (
+
+    <div className={`${ showOpacity ? 'grid grid-cols-2' : ''} ${className}`}>
+
+      <div className='flex flex-col gap-y-3'>
+      <Label htmlFor={registerId}>{label}</Label>
+      <Input
+        {...register(registerId)}
+        defaultValue={defaultValue}
+        id={registerId}
+        className={`w-20 h-10 bg-secondary border text-foreground focus:border-2 focus:border-primary`}
+        type="color"
+      />
+      </div>
+
+      
+      {showOpacity && (
+        <div className='flex flex-col gap-y-2'>
+          <Label htmlFor={registerId + 'Opacity'}>Opacity</Label>
+          <Input
+            {...register(registerId + 'Opacity')}
+            defaultValue={defaultOpacity}
+            id={registerId + 'Opacity'}
+            name={registerId + 'Opacity'}
+            className={`w-20 h-10 bg-secondary border text-foreground focus:border-2 focus:border-primary`}
+            type="number"
+            step={0.01}
+            min={0}
+            max={1} />
+        </div>
+      )}
+     
+    </div>
+
+  )
+}
+
+export default ColorInput
+

@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".", // Set the base URL for resolving paths
+      "paths": {
+        "@/*": ["./src/*"],
+        "@components/*": ["./src/components/ui/*"], // Example alias for components
+        "@utils/*": ["./src/lib/*"], // Example alias for utilities
+        "@styles/*": ["./styles/*"] // Example alias for styles
+      }
+    }
+}
