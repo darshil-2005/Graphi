@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation'
 import { usernameSchema } from '@/zod/schemas';
 import { auth, signIn, signOut } from '@/auth';
+import { prisma } from '@/../../prisma/prisma'
 
 export async function isUsernameAvailable(username) {
   try {
@@ -14,10 +15,11 @@ export async function isUsernameAvailable(username) {
     return response ? false : true
 
   } catch (error) {
-    console.error('Something Wrong with username or Database')
+    console.error('Something Wrong with username or Database', error.message)
     return false
   }
 }
+
 
 export async function usernameSetter(username) {
   const session = await auth();
