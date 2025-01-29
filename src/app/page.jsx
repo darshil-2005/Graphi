@@ -16,8 +16,6 @@ const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] })
 
 export default async function Default() {
 
-  console.log(String(v4().replace(/-/g, '')))
-
   return (
     <div className='h-screen px-2 bg-[linear-gradient(to_right,#4f4f4f4e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f4e_1px,transparent_1px)] bg-[size:60px_60px] '>
       <Navbar/>

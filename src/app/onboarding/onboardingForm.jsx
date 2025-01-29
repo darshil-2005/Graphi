@@ -41,7 +41,6 @@ function OnboardingForm() {
               message: 'Username must have atmost 14 characters!'
             },
             validate: async (username) => {
-              console.log('bale', username)
               const isAvailable = await isUsernameAvailable(username);
               return isAvailable || "Username not available!!"
             },

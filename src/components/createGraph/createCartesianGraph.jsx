@@ -20,10 +20,7 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
 
     async function addCartesianGraphInThePlaneElementsArray(data) {
 
-        console.log(data);
-
         const fileData = await data[`fileUpload${planeId}`][0]?.text().then(fileReader);
-        console.log(fileData);
 
         if (editGraphObject) {
 

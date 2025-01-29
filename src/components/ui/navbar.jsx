@@ -19,7 +19,7 @@ const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] })
 async function Navbar() {
 
   const session = await auth();
-  console.log(session)
+  
   return (
     <div className='flex justify-between py-6 items-center px-10 h-24'>
       <div className={`${orbitron.className} text-3xl tracking-[0.6rem] text-primary`}><Link href='/'>GRAPHI</Link></div>

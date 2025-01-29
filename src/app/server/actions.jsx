@@ -26,7 +26,6 @@ export async function usernameSetter(username) {
 
   const result = usernameSchema.safeParse(username);
   if (!result.success) {
-    console.log(result.error.issues)
     return { success: false, errors: result.error.flatten().fieldErrors };
   }
 
