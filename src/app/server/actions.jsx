@@ -20,6 +20,24 @@ export async function isUsernameAvailable(username) {
   }
 }
 
+export async function isUserOnBoarded(email){
+   return await fetch(`${process.env.NEXTAUTH_URL}/api/checkOnboardingStatus`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({email}),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (!(data.onBoarded)) {
+          return false
+        }
+        return true
+      })
+      .catch((error) => console.error('Error:', error));   
+}
+
 
 export async function usernameSetter(username) {
   const session = await auth();

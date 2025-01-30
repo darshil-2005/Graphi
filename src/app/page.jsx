@@ -8,9 +8,6 @@ import BarChartExample from '../components/heroSectionExamples/exBarChart'
 import PieChartExample from '../components/heroSectionExamples/exPieChart'
 import Link from 'next/link'
 import Navbar from '../components/ui/navbar'
-import { signIn } from '@/auth'
-import { handleLogin } from './server/actions';
-import { v4 } from 'uuid';
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] })
 

@@ -1,7 +1,7 @@
 import { auth } from '@/auth'
 import { NextResponse } from 'next/server'
-import { hasCompletedOnboarding } from '@/app/server/actions'
-import { redirect } from 'next/navigation';
+import { isUserOnBoarded } from '@/app/server/actions'
+
 
 export async function middleware(request) {
   const session = await auth();
@@ -9,28 +9,10 @@ export async function middleware(request) {
   if (!session) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
+  
+  const onBoarded = await isUserOnBoarded(session.user.email);  
 
-  const data = {
-    email: session.user.email,
-  }
-
-  const response = await fetch(`${request.nextUrl.origin}/api/checkOnboardingStatus`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (!(data.onBoarded)) {
-        return false
-      }
-      return true
-    })
-    .catch((error) => console.error('Error:', error));    
-
-  if (!response && !(request.url.endsWith('onboarding'))){
+  if (!onBoarded && !(request.url.endsWith('onboarding'))){
     return NextResponse.redirect(new URL('/onboarding', request.url));
   }
 

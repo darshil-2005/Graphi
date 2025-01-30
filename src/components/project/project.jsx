@@ -29,7 +29,7 @@ import AddPolarGrid from '../createGraphElements/createRadarGraphElements/addPol
 import AddRadar from '../createGraphElements/createRadarGraphElements/addRadar.jsx';
 import AddRadialBarChart from '../createGraphElements/createRadialBarGraphElements/addRadialBarGraphElement.jsx'
 
-function Project() {
+function Project( {projectId} ) {
 
   const elements = usePlaneElementsStore((state) => state.planeElements);
   const deleteElementFromGraphElementsArray = usePlaneElementsStore((state) => state.deleteElementFromGraphElementsArray);
@@ -40,8 +40,8 @@ function Project() {
   return (
     <div className='px-6'>
      
-      <Plane planeId={123} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} />
-      <Plane planeId={456} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} />
+      <Plane planeId={123} projectId={projectId} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} />
+      <Plane planeId={456} projectId={projectId} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} />
 
       <div className='flex mb-4 p-2'>
         <Button className='w-60 m-auto' variant='ghost' onClick={() => { setShowGraphElements(!showGraphElements); }}>Show Graph Elements</Button>
@@ -50,7 +50,7 @@ function Project() {
 
 
       {(showGraphElements) &&
-        <div className='fixed right-0 top-0 bg-background h-screen w-[30rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center overflow-y-scroll'>
+        <div className='fixed right-0 top-0 bg-background h-screen w-[30rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background'>
           <span className='text-4xl my-4 font-bold text-primary block text-center'>Current Components</span>
 
           {elements[focusedElementIndex]?.graphElementsArray?.map((currItem, index) => (

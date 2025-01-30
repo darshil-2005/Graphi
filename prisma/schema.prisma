@@ -7,24 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id            String    @id @default(cuid())
+model user {
+  id            String          @id @default(cuid())
   name          String?
-  email         String   @unique
-  username      String?    @unique
-  emailVerified DateTime? @map("email_verified")
+  email         String          @unique
+  username      String?         @unique
+  emailVerified DateTime?       @map("email_verified")
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  updatedBy     String?
-  isDeleted     Boolean   @default(false)
-  accounts      Account[]
-  projects      ProjectMember[]
- 
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  isDeleted     Boolean         @default(false)
+  accounts      account[]
+  project       project[]
+  projectmember projectMember[]
+
   @@map("users")
 }
 
-model Account {
+model account {
   id                String   @id @default(uuid())
   userId            String   @map("user_id")
   type              String
@@ -38,64 +38,66 @@ model Account {
   id_token          String?  @db.Text
   session_state     String?
   updatedAt         DateTime @updatedAt
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
 }
 
-model Project {
-  projectId   String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  updatedBy   String?
-  isDeleted   Boolean
-  projectMembers ProjectMember[]
-  planeElements PlaneElement[]
+model project {
+  projectId      String          @id @default(uuid())
+  projectName    String          @default("Untitled Project")
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  updatedBy      String
+  isDeleted      Boolean         @default(false)
+  projectMembers projectMember[]
+  planeElements  planeElement[]
+
+  user user @relation(fields: [updatedBy], references: [id], onDelete: Cascade)
+  @@map("projects")
 }
 
-model ProjectMember {
+model projectMember {
   id        String   @id @default(uuid())
   memberId  String
   projectId String
   access    String
   updatedAt DateTime @updatedAt
   updatedBy String?
-  project   Project @relation(fields: [projectId], references: [projectId], onDelete: Cascade)
-  member    User    @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  project   project  @relation(fields: [projectId], references: [projectId], onDelete: Cascade)
+  member    user     @relation(fields: [memberId], references: [id], onDelete: Cascade)
 }
 
-model PlaneElement {
-  planeId   String   @id @default(uuid())
-  projectId String
-  updatedAt DateTime @updatedAt
-  updatedBy String?
-  isDeleted Boolean
-  project   Project @relation(fields: [projectId], references: [projectId], onDelete: Cascade)
-  graphElements GraphElement[]
-  planeElementData PlaneElementData?
+model planeElement {
+  planeId          String            @id @default(uuid())
+  projectId        String
+  updatedAt        DateTime          @updatedAt
+  isDeleted        Boolean           @default(false)
+  project          project           @relation(fields: [projectId], references: [projectId], onDelete: Cascade)
+  graphElements    graphElement[]
+  planeElementData planeElementData?
 }
 
-model GraphElement {
-  elementId String   @id @default(uuid())
-  planeId   String
-  updatedAt DateTime @updatedAt
-  updatedBy String?
-  isDeleted Boolean
-  plane     PlaneElement @relation(fields: [planeId], references: [planeId], onDelete: Cascade)
-  graphElementData GraphElementData?
+model graphElement {
+  elementId        String            @id @default(uuid())
+  planeId          String
+  updatedAt        DateTime          @updatedAt
+  isDeleted        Boolean           @default(false)
+  plane            planeElement      @relation(fields: [planeId], references: [planeId], onDelete: Cascade)
+  graphElementData graphElementData?
 }
 
-model PlaneElementData {
-  dataId               String   @id @default(uuid())
-  planeId              String   @unique
+model planeElementData {
+  dataId                String       @id @default(uuid())
+  planeId               String       @unique
   planeElementsJsonData Json
-  plane                PlaneElement @relation(fields: [planeId], references: [planeId], onDelete: Cascade)
+  plane                 planeElement @relation(fields: [planeId], references: [planeId], onDelete: Cascade)
 }
 
-model GraphElementData {
-  dataId               String   @id @default(uuid())
-  elementId            String   @unique
+model graphElementData {
+  dataId                String       @id @default(uuid())
+  elementId             String       @unique
   graphElementsJsonData Json
-  graphElement         GraphElement @relation(fields: [elementId], references: [elementId], onDelete: Cascade)
+  graphElement          graphElement @relation(fields: [elementId], references: [elementId], onDelete: Cascade)
 }
