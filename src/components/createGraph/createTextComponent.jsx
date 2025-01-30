@@ -7,7 +7,7 @@ import ColorInput from '../formElements/colorInput.jsx';
 import NumberInput from '../formElements/numberInput.jsx';
 import DropdownInput from '../formElements/dropdownInput.jsx';
 import { generateId } from '../../utils/manualUtils.jsx';
-import usePlaneElementsStore from '../../features/store/planeElementsStore.js';
+import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import { Textarea } from '../ui/textarea.jsx';
 import FormWrapper from '@/components/ui/formWrapper';
 
@@ -15,7 +15,7 @@ function CreateTextComponent({ planeId, editGraphObject }) {
 
   const { register, handleSubmit } = useForm();
   const graphId = usePlaneElementsStore((state) => (state.nextGraphId));
-  const plusOneNextGraphId = usePlaneElementsStore((state) => (state.plusOneNextGraphId));
+  
   const addPlaneElements = usePlaneElementsStore((state) => (state.addPlaneElements));
   const handleEditing = usePlaneElementsStore((state) => (state.handleEditing))
 

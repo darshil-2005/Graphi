@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 import ColorInput from '../formElements/colorInput';
 import FileInput from '../formElements/fileInput';
 import NumberInput from '../formElements/numberInput';
-import usePlaneElementsStore from '../../features/store/planeElementsStore';
+import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import { fileReader } from '../../utils/manualUtils';
 import { generateId } from '../../utils/manualUtils';
 import FormWrapper from '@/components/ui/formWrapper';
@@ -13,7 +13,7 @@ import FormWrapper from '@/components/ui/formWrapper';
 const CreateRadarGraph = ({ planeId, editGraphObject }) => {
 
     const { register, handleSubmit } = useForm();
-    const plusOneNextGraphId = usePlaneElementsStore((state) => (state.plusOneNextGraphId));
+    
     const addPlaneElements = usePlaneElementsStore((state) => (state.addPlaneElements));
     const handleEditing = usePlaneElementsStore((state) => (state.handleEditing))
 

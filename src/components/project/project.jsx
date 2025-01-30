@@ -4,15 +4,7 @@ import React, { useState } from 'react'
 import Plane from '../plane/plane';
 import { Button } from '../ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import usePlaneElementsStore from '../../features/store/planeElementsStore';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "../ui/accordion";
-
-
+import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import AddAreaElement from '../createGraphElements/createCartesianGraphElements/addAreaElement.jsx';
 import AddLineElement from '../createGraphElements/createCartesianGraphElements/addLineElement.jsx';
 import AddBarElement from '../createGraphElements/createCartesianGraphElements/addBarElement.jsx';

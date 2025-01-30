@@ -7,7 +7,7 @@ import { generateId } from '../../utils/manualUtils';
 import { fileReader } from '../../utils/manualUtils';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import usePlaneElementsStore from '../../features/store/planeElementsStore';
+import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import FormWrapper from '@/components/ui/formWrapper';
 import {v4} from 'uuid';
 
@@ -15,7 +15,7 @@ const CreatePieGraph = ({ planeId, editGraphObject }) => {
 
     const { register, handleSubmit } = useForm();
     const graphId = usePlaneElementsStore((state) => (state.nextGraphId));
-    const plusOneNextGraphId = usePlaneElementsStore((state) => (state.plusOneNextGraphId));
+    
     const addPlaneElements = usePlaneElementsStore((state) => (state.addPlaneElements));
     const handleEditing = usePlaneElementsStore((state) => (state.handleEditing));
 

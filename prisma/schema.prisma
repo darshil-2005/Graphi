@@ -3,30 +3,31 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql" // Change to your database provider if needed
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model user {
   id            String          @id @default(cuid())
-  name          String?
+  name          String?         @default("Guest")
   email         String          @unique
   username      String?         @unique
   emailVerified DateTime?       @map("email_verified")
   image         String?
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-  isDeleted     Boolean         @default(false)
+  deletedAt     DateTime?
   accounts      account[]
   project       project[]
   projectmember projectMember[]
 
+  @@index([email])
   @@map("users")
 }
 
 model account {
   id                String   @id @default(uuid())
-  userId            String   @map("user_id")
+  userId            String   @unique @map("user_id")
   type              String
   provider          String
   providerAccountId String   @map("provider_account_id")
@@ -45,59 +46,65 @@ model account {
 }
 
 model project {
-  projectId      String          @id @default(uuid())
+  projectId      String          @id 
   projectName    String          @default("Untitled Project")
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   updatedBy      String
-  isDeleted      Boolean         @default(false)
+  deletedAt      DateTime?
   projectMembers projectMember[]
-  planeElements  planeElement[]
+  planes         plane[]
+  user           user            @relation(fields: [updatedBy], references: [id], onDelete: Cascade)
 
-  user user @relation(fields: [updatedBy], references: [id], onDelete: Cascade)
   @@map("projects")
 }
 
+enum AccessLevel {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
 model projectMember {
-  id        String   @id @default(uuid())
+  id        String      @id @default(uuid())
   memberId  String
   projectId String
-  access    String
-  updatedAt DateTime @updatedAt
+  access    AccessLevel
+  updatedAt DateTime    @updatedAt
   updatedBy String?
-  project   project  @relation(fields: [projectId], references: [projectId], onDelete: Cascade)
-  member    user     @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  project   project     @relation(fields: [projectId], references: [projectId], onDelete: Cascade)
+  member    user        @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@map("projectMembers")
 }
 
 model planeElement {
-  planeId          String            @id @default(uuid())
-  projectId        String
-  updatedAt        DateTime          @updatedAt
-  isDeleted        Boolean           @default(false)
-  project          project           @relation(fields: [projectId], references: [projectId], onDelete: Cascade)
-  graphElements    graphElement[]
-  planeElementData planeElementData?
+  planeElementId       String         @id
+  planeId              String
+  planeElementJsonData Json
+  updatedAt            DateTime       @updatedAt
+  deletedAt            DateTime?
+  graphElements        graphElement[]
+
+  @@map("planeElements")
 }
 
 model graphElement {
-  elementId        String            @id @default(uuid())
-  planeId          String
-  updatedAt        DateTime          @updatedAt
-  isDeleted        Boolean           @default(false)
-  plane            planeElement      @relation(fields: [planeId], references: [planeId], onDelete: Cascade)
-  graphElementData graphElementData?
-}
-
-model planeElementData {
-  dataId                String       @id @default(uuid())
-  planeId               String       @unique
-  planeElementsJsonData Json
-  plane                 planeElement @relation(fields: [planeId], references: [planeId], onDelete: Cascade)
-}
-
-model graphElementData {
-  dataId                String       @id @default(uuid())
-  elementId             String       @unique
+  elementId             String       @id
+  planeElementId        String
   graphElementsJsonData Json
-  graphElement          graphElement @relation(fields: [elementId], references: [elementId], onDelete: Cascade)
+  updatedAt             DateTime     @updatedAt
+  deletedAt             DateTime?
+  planeElement          planeElement @relation(fields: [planeElementId], references: [planeElementId], onDelete: Cascade)
+
+  @@map("graphElements")
+}
+
+model plane {
+  planeId   String  @id
+  projectId String
+  planeData Json
+  project   project @relation(fields: [projectId], references: [projectId], onDelete: Cascade)
+
+  @@map("planes")
 }

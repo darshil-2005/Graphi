@@ -6,7 +6,7 @@ import { generateId } from '../../utils/manualUtils';
 import ColorInput from '../formElements/colorInput';
 import FileInput from '../formElements/fileInput';
 import NumberInput from '../formElements/numberInput';
-import usePlaneElementsStore from '../../features/store/planeElementsStore';
+import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import { fileReader } from '../../utils/manualUtils';
 import FormWrapper from '@/components/ui/formWrapper';
 
@@ -14,7 +14,7 @@ const CreateRadialBarGraph = ({ planeId, editGraphObject }) => {
 
   const { register, handleSubmit } = useForm();
   const graphId = usePlaneElementsStore((state) => (state.nextGraphId));
-  const plusOneNextGraphId = usePlaneElementsStore((state) => (state.plusOneNextGraphId));
+  
   const addPlaneElements = usePlaneElementsStore((state) => (state.addPlaneElements));
   const handleEditing = usePlaneElementsStore((state) => (state.handleEditing))
 

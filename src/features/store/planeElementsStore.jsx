@@ -2,16 +2,19 @@ import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
 
 const initialState = {
+  plane: [],
   planeElements: [],
-  nextGraphId: 0,
 }
 
 const usePlaneElementsStore = create(
   immer((set, get) => ({
     planeElements: initialState.planeElements,
-    nextGraphId: initialState.nextGraphId,
+    plane: initialState.plane,
 
-    plusOneNextGraphId: () => set({ nextGraphId: get().nextGraphId + 1 }),
+    
+    
+
+
     handleZIndex: (graphId) => {
       set((state) => {
         for (let i = 0; i < state.planeElements.length; i++) {

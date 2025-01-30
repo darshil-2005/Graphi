@@ -12,7 +12,7 @@ import CreatePieGraph from '../createGraph/createPieGraph.jsx';
 import CreateRadialBarGraph from '../createGraph/createRadialBarGraph.jsx';
 import CreateTextComponent from '../createGraph/createTextComponent.jsx';
 import CreateImageComponent from '../createGraph/createImageComponent.jsx';
-import usePlaneElementsStore from '../../features/store/planeElementsStore';
+import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import ImageComponent from '../graphs/image.jsx';
 
 
