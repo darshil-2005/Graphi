@@ -1,7 +1,10 @@
 "use client";
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { toast } from "sonner";
 import Plane from '../plane/plane';
+import {generateId} from '@/utils/manualUtils'
+import { createProjectPlanes, handleFetchingPlanesFromDatabase } from '@/app/server/actions'
 import { Button } from '../ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
@@ -21,32 +24,60 @@ import AddPolarGrid from '../createGraphElements/createRadarGraphElements/addPol
 import AddRadar from '../createGraphElements/createRadarGraphElements/addRadar.jsx';
 import AddRadialBarChart from '../createGraphElements/createRadialBarGraphElements/addRadialBarGraphElement.jsx'
 
-function Project( {projectId} ) {
+function Project({ projectId }) {
 
   const elements = usePlaneElementsStore((state) => state.planeElements);
   const deleteElementFromGraphElementsArray = usePlaneElementsStore((state) => state.deleteElementFromGraphElementsArray);
   const [showGraphElements, setShowGraphElements] = useState(false);
   const [editMode, setEditMode] = useState(true);
   const [focusedElementIndex, setFocusedElementIndex] = useState(null);
+  const [planes, setPlanes] = useState(null);
 
-  const newId = crypto.randomUUID();
-  console.log("New Id: ", newId)
+  useEffect(() => {
+    async function handleFetchingPlanes(){
+      const fetchedPlanes = await handleFetchingPlanesFromDatabase(projectId);
+      setPlanes(fetchedPlanes)
+    }
+    handleFetchingPlanes();
+
+  }, [])
+
+  console.log(planes)
+
+  async function handleCreatingPlanes(){
+    const newPlaneData = {
+      planeId: generateId(),
+      projectId: projectId,
+      planeData: {}
+    }
+
+    try {
+      await createProjectPlanes(newPlaneData);
+      toast.success("Plane created successfully!");
+      
+    } catch (error) {
+      console.error("Failed to create project: ", error.message);      
+    }
+
+  }
+
 
   return (
     <div className='px-6'>
 
       {/* {projectId} */}
-     
+
       <div className='flex mb-4 p-2'>
         <Button className='w-60 m-auto' variant='secondary' onClick={() => { setShowGraphElements(!showGraphElements); }}>Show Graph Elements</Button>
         <Button className='w-60 m-auto' variant='secondary' onClick={() => { setEditMode(!editMode); }}>Edit Mode</Button>
         <Button className='w-60 m-auto bg-blue-600 hover:bg-blue-500 text-primary'>Save Changes</Button>
       </div>
 
-      <Plane planeId={123} projectId={projectId} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} />
-      <Plane planeId={456} projectId={projectId} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} />
+      {planes?.map((data, index) => {
+        return  <Plane key={index} planeId={data.planeId} projectId={data.projectId} planeData={data.planeData} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} />
+      })}
 
-
+      <Button className='w-full mb-4' variant='secondary' onClick={handleCreatingPlanes}>Add New Plane</Button>
 
       {(showGraphElements) &&
         <div className='fixed right-0 top-0 bg-background h-screen w-[30rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background'>

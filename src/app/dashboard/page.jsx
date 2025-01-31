@@ -10,6 +10,7 @@ async function Dashboard() {
 
   const session = await auth();
   const projects = await fetchAllProjectsForAParticularUser();
+  
 
   const finalProjectObjectsForAUser = projects.map((projectObject) => {
     return {
@@ -26,7 +27,6 @@ async function Dashboard() {
       userConfigUpdater: projectObject.data.userConfigUpdater
     }
   })
-
  
   return (
     <div className=' flex flex-col'>

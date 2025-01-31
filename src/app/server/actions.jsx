@@ -148,6 +148,25 @@ export async function fetchAllProjectsForAParticularUser() {
     return projects
 }
 
+export async function createProjectPlanes(newPlaneData) {
+  const planeCreationResponse = await prisma.plane.create({
+    data: newPlaneData,
+  })
+
+  return planeCreationResponse
+}
+
+export async function handleFetchingPlanesFromDatabase(projectId){
+  const planes = await prisma.plane.findMany({
+    where: {
+      projectId: projectId
+    }
+  })
+
+  return planes
+}
+
+
 
 
 

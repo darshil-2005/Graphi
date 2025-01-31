@@ -35,7 +35,7 @@ export function showContextMenu(e) {
   contextMenu.classList.toggle('hidden');
 }
 
-export async function generateId() {
+export function generateId() {
   return String(crypto.randomUUID().replace(/-/g, ''))
 }
 

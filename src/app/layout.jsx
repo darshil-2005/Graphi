@@ -3,6 +3,7 @@ import { Roboto, Inter } from 'next/font/google';
 import '../globals.css'
 import Navbar from "../components/ui/navbar"
 import { SessionProvider } from "next-auth/react";
+import { Toaster } from "sonner";
 
 export const metadata = {
   title: "Graphi",
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning className='scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background'>
       <body className={`${roboto.className} text-[16px] tracking-widest bg-background text-foreground `}>
+      <Toaster richColors position="bottom-right" />
         <SessionProvider>
           <ThemeProvider
             attribute="class"

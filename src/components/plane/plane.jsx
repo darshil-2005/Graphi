@@ -16,7 +16,7 @@ import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import ImageComponent from '../graphs/image.jsx';
 
 
-function Plane({ planeId, setFocusedElementIndex, editMode }) {
+function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode }) {
 
   const elements = usePlaneElementsStore((state) => state.planeElements);
   const updatePosition = usePlaneElementsStore((state) => state.updatePosition);
@@ -54,7 +54,7 @@ function Plane({ planeId, setFocusedElementIndex, editMode }) {
   return (
     <>
       <div
-        className="h-[100vh] w-full m-auto overflow-hidden border shadow-sm "
+        className="h-[70vh] w-full m-auto overflow-hidden border shadow-sm "
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
