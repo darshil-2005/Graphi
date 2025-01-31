@@ -44,7 +44,7 @@ function AddYAxisElement({ graphId, editGraphObject }) {
         } : {
             planeId: graphObjects[graphObjIndex].planeId,
             graphId: graphId,
-            elementId: generateId(),
+            elementId: crypto.randomUUID(),
             type: 'yAxis',
             domainStart: Number(data.domainStart),
             domainEnd: Number(data.domainEnd),

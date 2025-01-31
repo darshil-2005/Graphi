@@ -22,7 +22,7 @@ function AddScatterElement({ graphId, editGraphObject }) {
 
     const onSubmit = (data) => {
         const scatterElement = {
-            elementId: editGraphObject ? editGraphObject.elementId : generateId(),
+            elementId: editGraphObject ? editGraphObject.elementId : crypto.randomUUID(),
             graphId: editGraphObject ? editGraphObject.graphId : graphId,
             planeId: editGraphObject ? undefined : graphObjects[graphObjIndex].planeId,
             type: 'scatter',

@@ -17,6 +17,8 @@ function AddLineElement({ graphId, editGraphObject }) {
     const addGraphObjGraphElementsArray = usePlaneElementsStore((state) => state.addGraphObjGraphElementsArray);
     const handleGraphElementsArrayEditing = usePlaneElementsStore((state) => state.handleGraphElementsArrayEditing);
 
+    console.log('EditGraphObject: ', editGraphObject)
+
     useEffect(() => {
         setGraphObjIndex(retrieveGraphObjectIndex(graphId, graphObjects));
     });
@@ -42,7 +44,7 @@ function AddLineElement({ graphId, editGraphObject }) {
                 planeId: graphObjects[graphObjIndex].planeId,
                 graphId: graphId,
                 type: 'line',
-                elementId: generateId(),
+                elementId: crypto.randomUUID(),
                 lineType: data.interpolationType,
                 lineColor: data.lineColor,
                 strokeWidth: data.strokeWidth,
@@ -84,7 +86,7 @@ function AddLineElement({ graphId, editGraphObject }) {
                         <DropdownInput registerId={'yAxisData'} register={register} optionsArray={graphObjects[graphObjIndex]?.data?.columns} label={'Choose the Y-Axis Data:'} formatLabel={true} defaultValue={editGraphObject ? editGraphObject.dataKey : ''} />
                     }
 
-                    <Button type='submit'>Add Line!!</Button>
+                    <Button type='submit'>{editGraphObject ? 'Edit Element' : 'Add Line!!'}</Button>
 
                 </div>
             </form>

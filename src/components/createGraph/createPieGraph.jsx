@@ -49,7 +49,7 @@ const CreatePieGraph = ({ planeId, editGraphObject }) => {
 
             const temp = {
                 planeId: planeId,
-                graphId: (String(planeId) + String(generateId())),
+                graphId: (String(planeId) + String(crypto.randomUUID())),
                 type: 'pieGraph',
                 data: fileData,
                 top: Number(0),

@@ -29,7 +29,7 @@ function AddBarElement({ graphId, editGraphObject }) {
         } : {
             planeId: graphObjects[graphObjIndex].planeId,
             graphId: graphId,
-            elementId: generateId(),
+            elementId: crypto.randomUUID(),
             type: 'bar',
             fill: data.fill,
             dataKey: data.yAxisData,

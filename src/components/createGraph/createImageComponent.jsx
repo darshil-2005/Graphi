@@ -48,7 +48,7 @@ const CreateImageComponent = ( {planeId, editGraphObject}) => {
 
           const temp = {
               planeId: planeId,
-              graphId: Number(String(planeId) + String(generateId())),
+              graphId: Number(String(planeId) + String(crypto.randomUUID())),
               type: 'image',
               top: Number(data.top),
               left: Number(data.left),

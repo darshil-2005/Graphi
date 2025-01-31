@@ -22,7 +22,7 @@ function AddToolTip({ graphId, editGraphObject }) {
     function handleLineFormSubmit(data) {
 
         const cartesianTemp = {
-            elementId: editGraphObject ? editGraphObject.elementId : generateId(),
+            elementId: editGraphObject ? editGraphObject.elementId : crypto.randomUUID(),
             graphId: editGraphObject ? editGraphObject.graphId : graphId,
             planeId: editGraphObject ? undefined : graphObjects[graphObjIndex].planeId,
             type: 'toolTip',

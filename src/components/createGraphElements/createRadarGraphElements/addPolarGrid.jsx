@@ -43,7 +43,7 @@ const AddPolarGrid = ({ graphId, editGraphObject }) => {
             const polarGridTemp = {
                 planeId: graphObjects[graphObjIndex].planeId,
                 graphId: graphId,
-                elementId: generateId(),
+                elementId: crypto.randomUUID(),
                 type: 'polarGrid',
             }
 

@@ -52,7 +52,7 @@ const CreateRadialBarGraph = ({ planeId, editGraphObject }) => {
 
       const temp = {
         planeId: planeId,
-        graphId: Number(String(planeId) + String(generateId())),
+        graphId: Number(String(planeId) + String(crypto.randomUUID())),
         type: 'radialBarGraph',
         data: fileData,
         top: Number(0),

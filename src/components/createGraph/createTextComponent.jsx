@@ -55,7 +55,7 @@ function CreateTextComponent({ planeId, editGraphObject }) {
 
       const textTemp = {
         planeId: planeId,
-        graphId: String(String(planeId) + String(generateId())),
+        graphId: String(String(planeId) + String(crypto.randomUUID())),
         type: 'textElement',
         text: data.text,
         zIndex: data.zIndex,

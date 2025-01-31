@@ -56,7 +56,7 @@ function AddXAxisElement({ graphId, editGraphObject }) {
             const xAxisTemp = {
                 planeId: graphObjects[graphObjIndex].planeId,
                 graphId: graphId,
-                elementId: generateId(),
+                elementId: crypto.randomUUID(),
                 type: 'xAxis',
                 dataKey: data.dataKey,
                 domainStart: Number(data.domainStart),

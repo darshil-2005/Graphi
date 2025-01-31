@@ -29,7 +29,7 @@ function AddLegend({ graphId, editGraphObject }) {
             planeId: graphObjects[graphObjIndex].planeId,
             graphId: graphId,
             type: 'legend',
-            elementId: generateId(),
+            elementId: crypto.randomUUID(),
         };
 
         if (editGraphObject) {

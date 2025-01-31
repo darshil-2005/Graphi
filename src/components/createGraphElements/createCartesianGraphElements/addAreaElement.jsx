@@ -24,9 +24,7 @@ function AddAreaElement({ graphId, editGraphObject }) {
 
     function handleLineFormSubmit(data) {
 
-
         if (editGraphObject) {
-
             const areaTemp = {
                 elementId: editGraphObject.elementId,
                 graphId: editGraphObject.graphId,
@@ -36,15 +34,12 @@ function AddAreaElement({ graphId, editGraphObject }) {
                 opacity: Number(data.opacity),
                 fillColor: data.fillColor,
             }
-
             handleGraphElementsArrayEditing(areaTemp);
-
         } else {
-
             const areaTemp = {
                 planeId: graphObjects[graphObjIndex].planeId,
                 graphId: graphId,
-                elementId: generateId(),
+                elementId: crypto.randomUUID(),
                 type: 'area',
                 areaType: data.areaType,
                 dataKey: data.yAxisData,
@@ -52,7 +47,6 @@ function AddAreaElement({ graphId, editGraphObject }) {
                 opacity: Number(data.opacity),
                 fillColor: data.fillColor,
             }
-
             const returnObj = { index: graphObjIndex, newGraphElement: areaTemp };
             addGraphObjGraphElementsArray(returnObj);
         }

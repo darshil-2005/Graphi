@@ -51,7 +51,7 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
 
             const temp = {
                 planeId: planeId,
-                graphId: (String(planeId) + String(generateId())),
+                graphId: (String(planeId) + String(crypto.randomUUID())),
                 type: 'cartesianGraph',
                 top: Number(data.top),
                 left: Number(data.left),

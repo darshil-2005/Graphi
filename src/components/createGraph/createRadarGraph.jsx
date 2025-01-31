@@ -48,7 +48,7 @@ const CreateRadarGraph = ({ planeId, editGraphObject }) => {
 
             const temp = {
                 planeId: planeId,
-                graphId: Number(String(planeId) + String(generateId())),
+                graphId: Number(String(planeId) + String(crypto.randomUUID())),
                 type: 'radarGraph',
                 data: fileData,
                 top: Number(0),

@@ -25,7 +25,7 @@ function AddRadialBarChart({ graphId, editGraphObject }) {
 
   function handleLineFormSubmit(data) {
     const radialBarGraphTemp = {
-      elementId: editGraphObject ? editGraphObject.elementId : generateId(),
+      elementId: editGraphObject ? editGraphObject.elementId : crypto.randomUUID(),
       graphId: editGraphObject ? editGraphObject.graphId : graphId,
       planeId: editGraphObject ? editGraphObject?.planeId : graphObjects[graphObjIndex].planeId,
       type: 'radialBarGraph',

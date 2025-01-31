@@ -29,6 +29,9 @@ function Project( {projectId} ) {
   const [editMode, setEditMode] = useState(true);
   const [focusedElementIndex, setFocusedElementIndex] = useState(null);
 
+  const newId = crypto.randomUUID();
+  console.log("New Id: ", newId)
+
   return (
     <div className='px-6'>
 

@@ -52,7 +52,7 @@ function AddSingleColoredPieChart({ graphId, editGraphObject }) {
             const pieTemp = {
                 planeId: graphObjects[graphObjIndex].planeId,
                 graphId: graphId,
-                elementId: generateId(),
+                elementId: crypto.randomUUID(),
                 type: 'singleColoredPie',
                 data: graphObjects[graphObjIndex].data,
                 dataKey: data.dataKey,

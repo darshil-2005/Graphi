@@ -23,7 +23,7 @@ export async function isUsernameAvailable(username) {
 }
 
 export async function generateId() {
-  return String(v4().replace(/-/g, ''));
+  return String(crypto.randomUUID().replace(/-/g, ''));
 }
 
 export async function isUserOnBoarded(email) {
@@ -98,7 +98,7 @@ export async function handleLogout() {
 export async function handleCreatingProject() {
 
   const session = await auth();
-  const projectId = await generateId();
+  const projectId = await crypto.randomUUID();
 
   const usernameObj = await prisma.user.findUnique({
     where:{
