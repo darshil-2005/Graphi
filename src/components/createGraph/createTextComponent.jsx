@@ -55,7 +55,7 @@ function CreateTextComponent({ planeId, editGraphObject }) {
 
       const textTemp = {
         planeId: planeId,
-        graphId: Number(String(planeId) + String(generateId())),
+        graphId: String(String(planeId) + String(generateId())),
         type: 'textElement',
         text: data.text,
         zIndex: data.zIndex,
@@ -80,7 +80,7 @@ function CreateTextComponent({ planeId, editGraphObject }) {
         textOverflow: data.textOverflow,
       };
 
-      plusOneNextGraphId();
+      
       addPlaneElements({ graph: textTemp });
 
     }

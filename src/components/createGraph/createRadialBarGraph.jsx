@@ -71,7 +71,7 @@ const CreateRadialBarGraph = ({ planeId, editGraphObject }) => {
         endAngle: data.endAngle,
       }
 
-      plusOneNextGraphId();
+      
       addPlaneElements({ graph: temp });
 
     }

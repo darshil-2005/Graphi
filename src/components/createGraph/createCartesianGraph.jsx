@@ -67,7 +67,7 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
                 cartesianGridColor: data.cartesianGrid,
             }
 
-            plusOneNextGraphId();
+            
             addPlaneElements({ graph: temp });
 
         }

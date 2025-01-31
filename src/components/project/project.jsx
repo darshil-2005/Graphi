@@ -31,14 +31,18 @@ function Project( {projectId} ) {
 
   return (
     <div className='px-6'>
+
+      {/* {projectId} */}
      
+      <div className='flex mb-4 p-2'>
+        <Button className='w-60 m-auto' variant='secondary' onClick={() => { setShowGraphElements(!showGraphElements); }}>Show Graph Elements</Button>
+        <Button className='w-60 m-auto' variant='secondary' onClick={() => { setEditMode(!editMode); }}>Edit Mode</Button>
+        <Button className='w-60 m-auto bg-blue-600 hover:bg-blue-500 text-primary'>Save Changes</Button>
+      </div>
+
       <Plane planeId={123} projectId={projectId} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} />
       <Plane planeId={456} projectId={projectId} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} />
 
-      <div className='flex mb-4 p-2'>
-        <Button className='w-60 m-auto' variant='ghost' onClick={() => { setShowGraphElements(!showGraphElements); }}>Show Graph Elements</Button>
-        <Button className='w-60 m-auto' variant='secondary' onClick={() => { setEditMode(!editMode); }}>Edit Mode</Button>
-      </div>
 
 
       {(showGraphElements) &&

@@ -46,7 +46,7 @@ model account {
 }
 
 model project {
-  projectId      String          @id 
+  projectId      String          @id
   projectName    String          @default("Untitled Project")
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
@@ -54,7 +54,7 @@ model project {
   deletedAt      DateTime?
   projectMembers projectMember[]
   planes         plane[]
-  user           user            @relation(fields: [updatedBy], references: [id], onDelete: Cascade)
+  user           user            @relation(fields: [updatedBy], references: [username], onDelete: Cascade)
 
   @@map("projects")
 }
@@ -66,14 +66,15 @@ enum AccessLevel {
 }
 
 model projectMember {
-  id        String      @id @default(uuid())
-  memberId  String
-  projectId String
-  access    AccessLevel
-  updatedAt DateTime    @updatedAt
-  updatedBy String?
-  project   project     @relation(fields: [projectId], references: [projectId], onDelete: Cascade)
-  member    user        @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  id                  String      @id @default(uuid())
+  memberId            String
+  projectId           String
+  access              AccessLevel
+  addedAt             DateTime    @default(now())
+  updatedUserConfigAt DateTime    @updatedAt
+  userConfigUpdater   String?
+  project             project     @relation(fields: [projectId], references: [projectId], onDelete: Cascade)
+  member              user        @relation(fields: [memberId], references: [id], onDelete: Cascade)
 
   @@map("projectMembers")
 }

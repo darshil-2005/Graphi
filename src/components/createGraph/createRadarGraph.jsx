@@ -65,7 +65,7 @@ const CreateRadarGraph = ({ planeId, editGraphObject }) => {
                 outerRadius: data.outerRadius,
             }
 
-            plusOneNextGraphId();
+            
             addPlaneElements({ graph: temp });
 
         }

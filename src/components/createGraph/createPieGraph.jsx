@@ -64,7 +64,7 @@ const CreatePieGraph = ({ planeId, editGraphObject }) => {
                 graphElementsArray: [],
             }
 
-            plusOneNextGraphId();
+            
             addPlaneElements({ graph: temp });
 
         }

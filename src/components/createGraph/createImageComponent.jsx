@@ -61,7 +61,7 @@ const CreateImageComponent = ( {planeId, editGraphObject}) => {
               margin: { top: Number(data.marginTop), right: Number(data.marginRight), bottom: Number(data.marginBottom), left: Number(data.marginLeft) },
           }
 
-          plusOneNextGraphId();
+          
           addPlaneElements({ graph: temp });
 
       }

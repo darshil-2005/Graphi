@@ -13,5 +13,16 @@ export default {
         // Logged in users are authenticated, otherwise redirect to login page
         return !!auth
       },
+
+      async session({ token, session }) {
+        if (token.sub && session.user){
+          session.user.id = token.sub;
+        }
+        return session;
+      },
+
+      async jwt({ token }){
+        return token;
+      }
     },
 }

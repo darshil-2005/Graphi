@@ -35,8 +35,7 @@ export function showContextMenu(e) {
   contextMenu.classList.toggle('hidden');
 }
 
-export function generateId() {
-  // return Date.now() + parseInt(Math.random() * 10000);
+export async function generateId() {
   return String(v4().replace(/-/g, ''));
 }
 

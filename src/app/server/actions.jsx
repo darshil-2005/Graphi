@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation'
 import { usernameSchema } from '@/zod/schemas';
 import { auth, signIn, signOut } from '@/auth';
 import { prisma } from '@/../../prisma/prisma'
+import { v4 } from 'uuid';
+
 
 export async function isUsernameAvailable(username) {
   try {
@@ -20,22 +22,26 @@ export async function isUsernameAvailable(username) {
   }
 }
 
-export async function isUserOnBoarded(email){
-   return await fetch(`${process.env.NEXTAUTH_URL}/api/checkOnboardingStatus`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({email}),
+export async function generateId() {
+  return String(v4().replace(/-/g, ''));
+}
+
+export async function isUserOnBoarded(email) {
+  return await fetch(`${process.env.NEXTAUTH_URL}/api/checkOnboardingStatus`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (!(data.onBoarded)) {
+        return false
+      }
+      return true
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (!(data.onBoarded)) {
-          return false
-        }
-        return true
-      })
-      .catch((error) => console.error('Error:', error));   
+    .catch((error) => console.error('Error:', error));
 }
 
 
@@ -82,12 +88,67 @@ export async function hasCompletedOnboarding() {
 }
 
 export async function handleLogin(method) {
-    await signIn( method, {redirectTo: "/" })
-  }
+  await signIn(method, { redirectTo: "/" })
+}
 
 export async function handleLogout() {
-    await signOut({redirectTo: "/" })
-  }
+  await signOut({ redirectTo: "/" })
+}
+
+export async function handleCreatingProject() {
+
+  const session = await auth();
+  const projectId = await generateId();
+
+  const usernameObj = await prisma.user.findUnique({
+    where:{
+      id: session.user.id,
+    }
+  })
+
+  const response = await prisma.project.create({
+    data: {
+      projectId: String(projectId),
+      updatedBy: usernameObj.username,
+      projectMembers: {
+        create: {
+          memberId: session.user.id,
+          userConfigUpdater: session.user.id,
+          access: "ADMIN",
+        },
+      },
+    },
+    include: {
+      projectMembers: true,
+    },
+  });
+
+  return response;
+}
+
+export async function fetchAllProjectsForAParticularUser() {
+
+  const session = await auth();
+  const projectMemberResponse = await prisma.projectMember.findMany({
+    where: {
+      memberId: session.user.id,
+    }
+  });
+
+  let projects = await Promise.all(
+    projectMemberResponse.map(async (data) => {
+      const response = await prisma.project.findUnique({
+        where: {
+          projectId: data.projectId,
+        }
+      })
+      return { data, response }
+    }
+    ))
+    return projects
+}
 
 
-  
+
+
+

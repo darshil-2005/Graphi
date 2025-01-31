@@ -9,10 +9,8 @@ async function Dashboard( {params} ){
 
   return (
     <div>
-
       <Navbar/>
-      <Project projectId={projectId}/>pproject
-
+      <Project projectId={projectId}/>
     </div>
 
   )
