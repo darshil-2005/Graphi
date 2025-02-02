@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react'
+import {useRouter} from 'next/navigation'
 import { toast } from "sonner";
 import Plane from '../plane/plane';
 import {generateId} from '@/utils/manualUtils'
@@ -26,12 +27,14 @@ import AddRadialBarChart from '../createGraphElements/createRadialBarGraphElemen
 
 function Project({ projectId }) {
 
+  const router = useRouter();
   const elements = usePlaneElementsStore((state) => state.planeElements);
   const deleteElementFromGraphElementsArray = usePlaneElementsStore((state) => state.deleteElementFromGraphElementsArray);
   const [showGraphElements, setShowGraphElements] = useState(false);
   const [editMode, setEditMode] = useState(true);
   const [focusedElementIndex, setFocusedElementIndex] = useState(null);
   const [planes, setPlanes] = useState(null);
+  const [planeNumber, setPlaneNumber] = useState(0);
 
   useEffect(() => {
     async function handleFetchingPlanes(){
@@ -40,11 +43,12 @@ function Project({ projectId }) {
     }
     handleFetchingPlanes();
 
-  }, [])
+  }, [planeNumber])
 
-  console.log(planes)
 
   async function handleCreatingPlanes(){
+
+    setPlaneNumber(planeNumber + 1)
     const newPlaneData = {
       planeId: generateId(),
       projectId: projectId,
@@ -54,6 +58,7 @@ function Project({ projectId }) {
     try {
       await createProjectPlanes(newPlaneData);
       toast.success("Plane created successfully!");
+      router.refresh()
       
     } catch (error) {
       console.error("Failed to create project: ", error.message);      
@@ -64,8 +69,6 @@ function Project({ projectId }) {
 
   return (
     <div className='px-6'>
-
-      {/* {projectId} */}
 
       <div className='flex mb-4 p-2'>
         <Button className='w-60 m-auto' variant='secondary' onClick={() => { setShowGraphElements(!showGraphElements); }}>Show Graph Elements</Button>
@@ -80,7 +83,7 @@ function Project({ projectId }) {
       <Button className='w-full mb-4' variant='secondary' onClick={handleCreatingPlanes}>Add New Plane</Button>
 
       {(showGraphElements) &&
-        <div className='fixed right-0 top-0 bg-background h-screen w-[30rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background'>
+        <div className='absolute right-0 top-0 bg-background h-[200vh] w-[30rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center '>
           <span className='text-4xl my-4 font-bold text-primary block text-center'>Current Components</span>
 
           {elements[focusedElementIndex]?.graphElementsArray?.map((currItem, index) => (

@@ -9,9 +9,9 @@ function ProjectDashboardCard({ projectCardObject }) {
     <div className="w-full h-20 rounded-none bg-background border hover:bg-primary-foreground text-primary grid grid-cols-4 whitespace-nowrap p-4 items-center justify-center">
       <div className='text-start'>
         <div className='text-xl font-bold'>{projectCardObject.projectName}</div>
-        <div className='w-60 text-ellipsis overflow-hidden text-muted-foreground/60'>Project Id: {projectCardObject.projectId}</div>
+        <div className='w-60 sm:w-40 text-ellipsis overflow-hidden text-muted-foreground/60'>Project Id: {projectCardObject.projectId}</div>
       </div>
-      <div className='text-[11px] text-start text-muted-foreground/70'>
+      <div className='text-[9px] text-start text-muted-foreground/70 mx-auto'>
         <div>
           Created At: {format(Date(projectCardObject.projectCreatedAt), 'yyyy/MM/dd, HH:mm')}
         </div>
@@ -22,12 +22,12 @@ function ProjectDashboardCard({ projectCardObject }) {
           Last Updated By: {projectCardObject.projectLastUpdatedBy}
         </div>
       </div>
-      <div className='text-start'>
+      <div className='text-start text-sm mx-auto'>
         Your Access: {projectCardObject.access}
       </div>
-      <div className='text-start flex justify-evenly'>
-        <Button className='w-32' ><Link href={`/project/${projectCardObject.projectId}`}>Open</Link></Button>
-        <Button variant="destructive">Delete</Button>
+      <div className='text-start flex justify-evenly mx-auto gap-x-4'>
+        <Button size="md" ><Link href={`/project/${projectCardObject.projectId}`}>Open</Link></Button>
+        <Button size="sm" variant="destructive">Delete</Button>
       </div>
       
     </div>

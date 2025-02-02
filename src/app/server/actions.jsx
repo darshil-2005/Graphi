@@ -5,6 +5,7 @@ import { usernameSchema } from '@/zod/schemas';
 import { auth, signIn, signOut } from '@/auth';
 import { prisma } from '@/../../prisma/prisma'
 import { v4 } from 'uuid';
+import fs from 'fs';
 
 
 export async function isUsernameAvailable(username) {
@@ -98,10 +99,10 @@ export async function handleLogout() {
 export async function handleCreatingProject() {
 
   const session = await auth();
-  const projectId = await crypto.randomUUID();
+  const projectId = crypto.randomUUID();
 
   const usernameObj = await prisma.user.findUnique({
-    where:{
+    where: {
       id: session.user.id,
     }
   })
@@ -145,7 +146,7 @@ export async function fetchAllProjectsForAParticularUser() {
       return { data, response }
     }
     ))
-    return projects
+  return projects
 }
 
 export async function createProjectPlanes(newPlaneData) {
@@ -156,7 +157,7 @@ export async function createProjectPlanes(newPlaneData) {
   return planeCreationResponse
 }
 
-export async function handleFetchingPlanesFromDatabase(projectId){
+export async function handleFetchingPlanesFromDatabase(projectId) {
   const planes = await prisma.plane.findMany({
     where: {
       projectId: projectId
@@ -165,9 +166,49 @@ export async function handleFetchingPlanesFromDatabase(projectId){
 
   return planes
 }
+export async function handleUploadingFile() {
+  console.log("mister dandanbara");
+  fs.writeFile("input.txt", "Geeks For Geeks", function (err) {
+    if (err) {
+      return console.error(err);
+    }
+
+    console.log("Data written successfully!");
+    console.log("Let's read newly written data");
+
+    fs.readFile("input.txt", function (err, data) {
+      if (err) {
+        return console.error(err);
+      }
+      console.log("Asynchronous read: " + data.toString());
+    });
+  });
+}
+
+export async function handleAddingFileEntryInDb(dbEntryObject) {
+
+  const session = await auth();
+
+  const response = await prisma.fileDataAccess.create({
+    data: {
+      fileId: dbEntryObject.fileId,
+      fileName: dbEntryObject.fileName,
+      fileSize: dbEntryObject.fileSize,
+      userId: session.user.id,
+    }
+  })
+
+  return response;
+}
 
 
+export async function fetchAllFilesUserHasAccessTo(){
+  const session = await auth();
 
-
-
-
+  return await prisma.fileDataAccess.findMany({
+    where: {
+      userId: session.user.id,
+    }
+  })
+  
+}
