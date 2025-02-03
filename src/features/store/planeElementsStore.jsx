@@ -1,19 +1,25 @@
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer'
+import { fetchAllFilesUserHasAccessTo } from '@/app/server/actions'
 
 const initialState = {
   plane: [],
   planeElements: [],
+  userDataFiles: []
 }
 
 const usePlaneElementsStore = create(
   immer((set, get) => ({
     planeElements: initialState.planeElements,
     plane: initialState.plane,
+    userDataFiles: initialState.userDataFiles,
 
-    
-    
-
+    setUserFiles: async () => {
+      const userDataFileObjects = await fetchAllFilesUserHasAccessTo();
+      set((state) => {
+        state.userDataFiles = userDataFileObjects;
+      })
+    },
 
     handleZIndex: (graphId) => {
       set((state) => {
@@ -80,7 +86,7 @@ const usePlaneElementsStore = create(
         state.planeElements[payload.index]['graphElementsArray'].push(payload.newGraphElement);
       });
     },
-    
+
     deleteElementFromElementsArray: (graphId) => {
       set((state) => {
         state.planeElements = state.planeElements.filter((obj) =>
@@ -88,7 +94,7 @@ const usePlaneElementsStore = create(
         );
       });
     },
-    
+
     handleEditing: (payload) => {
       set((state) => {
         for (let i = 0; i < state.planeElements.length; i++) {
@@ -129,7 +135,7 @@ const usePlaneElementsStore = create(
           }
         }
       });
-      
+
     },
 
   }))

@@ -7,33 +7,33 @@ import NumberInput from '../../formElements/numberInput';
 import DropdownInput from '../../formElements/dropdownInput';
 import { retrieveGraphObjectIndex } from '../../../utils/manualUtils.jsx';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
-import { generateId } from '../../../utils/manualUtils.jsx';
+import { retrieveFileIndex } from '@/utils/manualUtils'
 
 function AddLineElement({ graphId, editGraphObject }) {
 
     const { register, handleSubmit } = useForm();
     const [graphObjIndex, setGraphObjIndex] = useState();
+    const [fileIndex, setFileIndex] = useState();
     const graphObjects = usePlaneElementsStore((state) => (state.planeElements));
     const addGraphObjGraphElementsArray = usePlaneElementsStore((state) => state.addGraphObjGraphElementsArray);
     const handleGraphElementsArrayEditing = usePlaneElementsStore((state) => state.handleGraphElementsArrayEditing);
-
-    console.log('EditGraphObject: ', editGraphObject)
-
+    const userDataFiles = usePlaneElementsStore((state) => state.userDataFiles);
+    const keys = userDataFiles[fileIndex]?.fileKeys?.fileKeys;
     useEffect(() => {
         setGraphObjIndex(retrieveGraphObjectIndex(graphId, graphObjects));
-    });
+        setFileIndex(retrieveFileIndex(userDataFiles, graphObjects[graphObjIndex]?.data))
+    }, [graphObjects, graphId, graphObjIndex, userDataFiles]);
 
     function handleLineFormSubmit(data) {
 
         if (editGraphObject) {
-
             const lineTemp = {
                 elementId: editGraphObject.elementId,
                 graphId: editGraphObject.graphId,
                 lineType: data.interpolationType,
                 lineColor: data.lineColor,
                 strokeWidth: data.strokeWidth,
-                dataKey: data.yAxisData,
+                dataKey: data.dataKey,
             }
 
             handleGraphElementsArrayEditing(lineTemp);
@@ -48,7 +48,7 @@ function AddLineElement({ graphId, editGraphObject }) {
                 lineType: data.interpolationType,
                 lineColor: data.lineColor,
                 strokeWidth: data.strokeWidth,
-                dataKey: data.yAxisData,
+                dataKey: data.dataKey,
             }
 
             const returnObj = { index: graphObjIndex, newGraphElement: lineTemp };
@@ -82,8 +82,8 @@ function AddLineElement({ graphId, editGraphObject }) {
                         register={register}
                         min='0' className='w-[8rem]'
                     />
-                    {graphObjects[graphObjIndex]?.data &&
-                        <DropdownInput registerId={'yAxisData'} register={register} optionsArray={graphObjects[graphObjIndex]?.data?.columns} label={'Choose the Y-Axis Data:'} formatLabel={true} defaultValue={editGraphObject ? editGraphObject.dataKey : ''} />
+                    {keys &&
+                        <DropdownInput registerId={'dataKey'} register={register} optionsArray={keys} label={'Choose the Y-Axis Data:'} formatLabel={true} defaultValue={editGraphObject?.dataKey} />
                     }
 
                     <Button type='submit'>{editGraphObject ? 'Edit Element' : 'Add Line!!'}</Button>

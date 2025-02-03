@@ -8,6 +8,7 @@ import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import FileInput from '../formElements/fileInput';
 import { generateId } from '../../utils/manualUtils';
 import FormWrapper from '@/components/ui/formWrapper';
+import DropdownFileInput from '@/components/formElements/dropdownFileInput'
 
 const CreateImageComponent = ( {planeId, editGraphObject}) => {
 
@@ -73,7 +74,7 @@ const CreateImageComponent = ( {planeId, editGraphObject}) => {
     <FormWrapper className='grid gap-y-4 w-[20rem] bg-primary-foreground p-4 mt-4 rounded-lg shadow-lg mx-auto'>
         <div className='font-bold'>Create Image Component!!</div>
 
-        <FileInput registerId={'fileUpload'} register={register} label={'Choose File'} />
+        {/* <FileInput registerId={'fileUpload'} register={register} label={'Choose File'} /> */}
         <div className='grid grid-cols-2'>
         <NumberInput registerId={'height'} label={'Height'} defaultValue={parseInt(editGraphObject?.height) || 200} register={register} suffix={'px'} />
         <NumberInput registerId={'width'} label={'Width'} defaultValue={parseInt(editGraphObject?.width) || 200} register={register} suffix={'px'} />

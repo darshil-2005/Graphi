@@ -166,24 +166,6 @@ export async function handleFetchingPlanesFromDatabase(projectId) {
 
   return planes
 }
-export async function handleUploadingFile() {
-  console.log("mister dandanbara");
-  fs.writeFile("input.txt", "Geeks For Geeks", function (err) {
-    if (err) {
-      return console.error(err);
-    }
-
-    console.log("Data written successfully!");
-    console.log("Let's read newly written data");
-
-    fs.readFile("input.txt", function (err, data) {
-      if (err) {
-        return console.error(err);
-      }
-      console.log("Asynchronous read: " + data.toString());
-    });
-  });
-}
 
 export async function handleAddingFileEntryInDb(dbEntryObject) {
 
@@ -195,6 +177,7 @@ export async function handleAddingFileEntryInDb(dbEntryObject) {
       fileName: dbEntryObject.fileName,
       fileSize: dbEntryObject.fileSize,
       userId: session.user.id,
+      fileKeys: dbEntryObject.fileKeys
     }
   })
 

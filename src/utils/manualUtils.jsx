@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import { v4 } from 'uuid';
+import { openDB } from 'idb'
 import { Line, Area, Bar, Scatter, Pie, CartesianGrid, Tooltip, Legend, RadialBar, PolarGrid, PolarRadiusAxis, PolarAngleAxis, Radar, XAxis, YAxis } from 'recharts';
 
 export function isTheElementInGraphElementsArray(graphElementsArray, element) {
@@ -73,6 +73,7 @@ export function hexToRgbA(hex, alpha) {
 
 export function createGraphElements(elementObject, index) {
 
+  
   if (elementObject.type == 'singleColoredPie') {
     return <Pie key={index} data={elementObject.data} dataKey={elementObject.dataKey} nameKey={elementObject.nameKey} cx={elementObject.xCoor} cy={elementObject.yCoor} innerRadius={elementObject.innerRadius} outerRadius={elementObject.outerRadius} fill={elementObject.fillColor} startAngle={elementObject.startAngle} endAngle={elementObject.endAngle} label={elementObject.label} paddingAngle={elementObject.paddingAngle} />
   }
@@ -173,4 +174,32 @@ export function CustomTooltip({ active, payload, label }) {
 
   return null;
 };
+
+export async function retrieveDataFromIndexedDBWithFileId(fileId) {
+
+  const dbPromise = openDB('GraphiDataBase', 1, {
+    upgrade(db) {
+      if (!db.objectStoreNames.contains('Data')) {
+        db.createObjectStore('Data', { keyPath: 'id' }); // Ensure 'id' is the keyPath
+      }
+    }
+  });
+
+  const db = await dbPromise;
+  const data = await db.get('Data', fileId);
+  
+  return data?.userData
+}
+
+export function retrieveFileIndex(userDataFiles, fileId){
+
+  for (let i = 0; i < userDataFiles.length; i++){
+
+    if(userDataFiles[i].fileId == fileId){
+      return i
+    }
+
+  }
+
+}
 

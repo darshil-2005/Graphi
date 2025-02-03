@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { RadialBarChart, RadialBar, Legend, Tooltip, Text, ResponsiveContainer } from 'recharts';
 import ContextMenuWrapper from '../ui/contextMenuWrapper';
 import CommonGraphWrapper from '../ui/commonGraphWrapper';
@@ -7,6 +7,7 @@ import AddToolTip from '../createGraphElements/createCartesianGraphElements/addT
 import AddRadialBarChart from '../createGraphElements/createRadialBarGraphElements/addRadialBarGraphElement';
 import CreateRadialBarGraph from '../createGraph/createRadialBarGraph.jsx';
 import { createGraphElements } from '../../utils/manualUtils.jsx';
+import { retrieveDataFromIndexedDBWithFileId } from '@/utils/manualUtils'
 import {
   Popover,
   PopoverContent,
@@ -16,6 +17,20 @@ import {
 
 
 function RadialBarGraph({ graphObject, index, setDraggedElement, setFocusedElementIndex, editMode }) {
+
+  const [data, setData] = useState();
+
+  useEffect(() => {
+
+    async function retriever() {
+      const data = await retrieveDataFromIndexedDBWithFileId(graphObject.data);
+      setData(data);
+    }
+
+    retriever();
+
+  }, [])
+
   return (
 
     <CommonGraphWrapper graphObject={graphObject} index={index} setDraggedElement={setDraggedElement} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode}>
@@ -25,7 +40,7 @@ function RadialBarGraph({ graphObject, index, setDraggedElement, setFocusedEleme
         <RadialBarChart
           innerRadius={graphObject.innerRadius}
           outerRadius={graphObject.outerRadius}
-          data={graphObject.data}
+          data={data}
           startAngle={Number(graphObject.startAngle)}
           endAngle={Number(graphObject.endAngle)}
         >

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { isUsernameAvailable, usernameSetter } from '@/app/server/actions'
 import { redirect } from 'next/navigation';
 import { CircleCheck, CircleAlert } from 'lucide-react';
+import { openDB } from 'idb'
 
 function OnboardingForm() {
   

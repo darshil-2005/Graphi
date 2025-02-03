@@ -1,39 +1,28 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import ColorInput from '../formElements/colorInput';
-import FileInput from '../formElements/fileInput';
 import NumberInput from '../formElements/numberInput';
-import { fileReader } from '../../utils/manualUtils';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
-import { generateId } from '../../utils/manualUtils';
 import FormWrapper from '@/components/ui/formWrapper'
+import DropdownFileInput from '@/components/formElements/dropdownFileInput'
 
 function CreateCartesianGraph({ planeId, editGraphObject }) {
 
-    const { register, handleSubmit } = useForm();
-    const graphId = usePlaneElementsStore((state) => (state.nextGraphId));
-    
+    const { register, handleSubmit } = useForm(); 
     const addPlaneElements = usePlaneElementsStore((state) => (state.addPlaneElements));
     const handleEditing = usePlaneElementsStore((state) => (state.handleEditing));
 
+
     async function addCartesianGraphInThePlaneElementsArray(data) {
 
-        const fileData = await data[`fileUpload${planeId}`][0]?.text().then(fileReader);
+        console.log("heelo: ", editGraphObject?.margin?.top)
 
         if (editGraphObject) {
 
-            let editedFileData;
-            if (!fileData) {
-                editedFileData = editGraphObject.data;
-            } else {
-                editedFileData = fileData;
-            }
-
             const temp = {
                 graphId: editGraphObject.graphId,
-                data: editedFileData,
+                data: data[`fileUpload${planeId}`],
                 height: String(data.height) + 'px',
                 width: String(data.width) + 'px',
                 top: Number(data.top),
@@ -57,7 +46,7 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
                 left: Number(data.left),
                 zIndex: Number(data.zIndex),
                 graphElementsArray: [],
-                data: fileData,
+                data: data[`fileUpload${planeId}`],
                 height: String(data.height) + 'px',
                 width: String(data.width) + 'px',
                 borderRadius: (data.borderRadius + 'px'),
@@ -67,7 +56,6 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
                 cartesianGridColor: data.cartesianGrid,
             }
 
-            
             addPlaneElements({ graph: temp });
 
         }
@@ -78,8 +66,9 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
             <form onSubmit={handleSubmit(addCartesianGraphInThePlaneElementsArray)}>
                 <FormWrapper>
                     <div className='font-bold '>Create Cartesian Graph!!</div>
+                    
+                    <DropdownFileInput registerId={`fileUpload${planeId}`} register={register} defaultValue={editGraphObject?.data} />
 
-                    <FileInput registerId={`fileUpload${planeId}`} register={register} label={'Choose File'} />
                     <div className='grid grid-cols-2'>
                         <NumberInput registerId={'height'} label={'Height'} defaultValue={parseInt(editGraphObject?.height) || 200} register={register} suffix={'px'} />
                         <NumberInput registerId={'width'} label={'Width'} defaultValue={parseInt(editGraphObject?.width) || 200} register={register} suffix={'px'} />
@@ -97,12 +86,12 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
                     <div className='grid gap-y-4 relative'>
                         <div className='font-semibold text-xl tracking-wider'>Margin</div>
                         <div className='grid grid-cols-2'>
-                        <NumberInput registerId={'marginTop'} label={'Top'} defaultValue={editGraphObject?.margin.top || 30} register={register} suffix={'px'} />
-                        <NumberInput registerId={'marginLeft'} label={'Left'} defaultValue={editGraphObject?.margin.left || 0} register={register} suffix={'px'} />
+                        <NumberInput registerId={'marginTop'} label={'Top'} defaultValue={editGraphObject ? editGraphObject.margin.top : 0} register={register} suffix={'px'} />
+                        <NumberInput registerId={'marginLeft'} label={'Left'} defaultValue={editGraphObject ? editGraphObject.margin.left : 0} register={register} suffix={'px'} />
                         </div>
                         <div className='grid grid-cols-2'>
-                        <NumberInput registerId={'marginBottom'} label={'Bottom'} defaultValue={editGraphObject?.margin.bottom || 10} register={register} suffix={'px'} />
-                        <NumberInput registerId={'marginRight'} label={'Right'} defaultValue={editGraphObject?.margin.right || 50} register={register} suffix={'px'} />
+                        <NumberInput registerId={'marginBottom'} label={'Bottom'} defaultValue={editGraphObject ? editGraphObject.margin.bottom : 0} register={register} suffix={'px'} />
+                        <NumberInput registerId={'marginRight'} label={'Right'} defaultValue={editGraphObject ? editGraphObject.margin.right : 0} register={register} suffix={'px'} />
                         </div>
                     </div>
 

@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from 'react'
-import {useRouter} from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { toast } from "sonner";
 import Plane from '../plane/plane';
-import {generateId} from '@/utils/manualUtils'
+import { generateId } from '@/utils/manualUtils'
 import { createProjectPlanes, handleFetchingPlanesFromDatabase } from '@/app/server/actions'
 import { Button } from '../ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
@@ -35,20 +35,31 @@ function Project({ projectId }) {
   const [focusedElementIndex, setFocusedElementIndex] = useState(null);
   const [planes, setPlanes] = useState(null);
   const [planeNumber, setPlaneNumber] = useState(0);
+  const setUserFiles = usePlaneElementsStore((state) => state.setUserFiles);
+
+  async function handleSavingChanges(){
+
+    
+  }
+
+
+
+
 
   useEffect(() => {
-    async function handleFetchingPlanes(){
+    async function handleFetchingPlanes() {
+      setUserFiles();
       const fetchedPlanes = await handleFetchingPlanesFromDatabase(projectId);
-      setPlanes(fetchedPlanes)
+      setPlanes(fetchedPlanes);
     }
     handleFetchingPlanes();
 
   }, [planeNumber])
 
 
-  async function handleCreatingPlanes(){
+  async function handleCreatingPlanes() {
 
-    setPlaneNumber(planeNumber + 1)
+    setPlaneNumber(planeNumber + 1);
     const newPlaneData = {
       planeId: generateId(),
       projectId: projectId,
@@ -59,13 +70,12 @@ function Project({ projectId }) {
       await createProjectPlanes(newPlaneData);
       toast.success("Plane created successfully!");
       router.refresh()
-      
+
     } catch (error) {
-      console.error("Failed to create project: ", error.message);      
+      console.error("Failed to create project: ", error.message);
     }
 
   }
-
 
   return (
     <div className='px-6'>
@@ -73,11 +83,11 @@ function Project({ projectId }) {
       <div className='flex mb-4 p-2'>
         <Button className='w-60 m-auto' variant='secondary' onClick={() => { setShowGraphElements(!showGraphElements); }}>Show Graph Elements</Button>
         <Button className='w-60 m-auto' variant='secondary' onClick={() => { setEditMode(!editMode); }}>Edit Mode</Button>
-        <Button className='w-60 m-auto bg-blue-600 hover:bg-blue-500 text-primary'>Save Changes</Button>
+        <Button className='w-60 m-auto bg-blue-600 hover:bg-blue-500 text-primary' onClick={handleSavingChanges}>Save Changes</Button>
       </div>
 
       {planes?.map((data, index) => {
-        return  <Plane key={index} planeId={data.planeId} projectId={data.projectId} planeData={data.planeData} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} />
+        return <Plane key={index} planeId={data.planeId} projectId={data.projectId} planeData={data.planeData} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} />
       })}
 
       <Button className='w-full mb-4' variant='secondary' onClick={handleCreatingPlanes}>Add New Plane</Button>

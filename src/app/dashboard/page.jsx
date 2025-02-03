@@ -6,14 +6,13 @@ import { auth } from '@/auth'
 import { fetchAllProjectsForAParticularUser, fetchAllFilesUserHasAccessTo } from '@/app/server/actions'
 import ProjectDashboardCard from "@/components/ui/projectDashboardCard"
 import DataDashboardCard from "@/components/ui/dataDashboardCard"
-// import { FileInput }
+import DashboardFileDisplayer from './dashboardFileDisplayer'
 
 
 async function Dashboard() {
 
   const session = await auth();
   const projects = await fetchAllProjectsForAParticularUser();
-  const userDataFileObjects = await fetchAllFilesUserHasAccessTo(); 
 
 
   const finalProjectObjectsForAUser = projects.map((projectObject) => {
@@ -38,12 +37,8 @@ async function Dashboard() {
       <div className='flex gap-x-2 px-2 h-[87vh]'>
         <div className='w-[40%] bg-background p-3 gap-y-4 border flex flex-col'>
           <FileUploaderInput session={session} className={'h-[70px]'} />
-          <div className='flex-1 p-2 bg-background border flex flex-col gap-y-[8px] overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background '>
-            {userDataFileObjects.map((fileDisplayObject, index) => {
-              return <DataDashboardCard key={index} fileDisplayObject={fileDisplayObject} />
-            })}
-          </div>
-
+          <DashboardFileDisplayer/>
+      
         </div>
         <div className='w-[60%] bg-background p-3 gap-y-4 border flex flex-col'>
           <CreateProjectButton session={session} className={'h-[70px]'} />

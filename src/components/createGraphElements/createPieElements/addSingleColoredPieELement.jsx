@@ -1,7 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
-import { Label } from '../../ui/label';
 import { Button } from '../../ui/button';
 import { useState, useEffect } from 'react';
 import ColorInput from '../../formElements/colorInput';
@@ -9,29 +8,44 @@ import NumberInput from '../../formElements/numberInput';
 import DropdownInput from '../../formElements/dropdownInput';
 import { CheckBox } from 'src/components/formElements/checkBox';
 import { retrieveGraphObjectIndex } from '../../../utils/manualUtils.jsx';
-import { getAllColumnsOfSpecificDataType } from '../../../utils/manualUtils.jsx';
-import { generateId } from '../../../utils/manualUtils.jsx';
+import { retrieveFileIndex } from '@/utils/manualUtils';
+import { retrieveDataFromIndexedDBWithFileId } from '@/utils/manualUtils'
 
 function AddSingleColoredPieChart({ graphId, editGraphObject }) {
 
     const { register, handleSubmit } = useForm();
     const [graphObjIndex, setGraphObjIndex] = useState();
+    const [fileIndex, setFileIndex] = useState();
+    const [fileData, setFileData] = useState();
     const graphObjects = usePlaneElementsStore((state) => (state.planeElements));
     const addGraphObjGraphElementsArray = usePlaneElementsStore((state) => state.addGraphObjGraphElementsArray);
     const handleGraphElementsArrayEditing = usePlaneElementsStore((state) => state.handleGraphElementsArrayEditing);
-
+    const userDataFiles = usePlaneElementsStore((state) => state.userDataFiles);
+    const keys = userDataFiles[fileIndex]?.fileKeys?.fileKeys;
     useEffect(() => {
         setGraphObjIndex(retrieveGraphObjectIndex(graphId, graphObjects));
-    });
+        setFileIndex(retrieveFileIndex(userDataFiles, graphObjects[graphObjIndex]?.data));
 
-    function handleLineFormSubmit(data) {
+        async function dataSetter() {
+            if (graphObjects && (typeof graphObjIndex == 'number')) {
+                const fetchedData = await retrieveDataFromIndexedDBWithFileId(graphObjects[graphObjIndex]?.data);
+                if (fetchedData)
+                    setFileData(fetchedData.userData);
+            }
+        }
+
+        dataSetter()
+
+    }, [graphObjects, graphId, graphObjIndex, userDataFiles]);
+
+
+
+    async function handleLineFormSubmit(data) {
 
         if (editGraphObject) {
-
             const pieTemp = {
                 elementId: editGraphObject.elementId,
                 graphId: editGraphObject.graphId,
-                data: graphObjects[graphObjIndex].data,
                 dataKey: data.dataKey,
                 nameKey: data.nameKey,
                 label: data.label,
@@ -44,17 +58,15 @@ function AddSingleColoredPieChart({ graphId, editGraphObject }) {
                 paddingAngle: Number(data.paddingAngle),
                 fillColor: data.fillColor,
             }
-
             handleGraphElementsArrayEditing(pieTemp);
 
         } else {
-
             const pieTemp = {
                 planeId: graphObjects[graphObjIndex].planeId,
                 graphId: graphId,
                 elementId: crypto.randomUUID(),
                 type: 'singleColoredPie',
-                data: graphObjects[graphObjIndex].data,
+                data: fileData,
                 dataKey: data.dataKey,
                 nameKey: data.nameKey,
                 label: data.label,
@@ -79,23 +91,23 @@ function AddSingleColoredPieChart({ graphId, editGraphObject }) {
                 <div className='grid w-fit gap-y-5'>
                     <div className='font-bold grid'>Create Pie Graph!!</div>
 
-                    {graphObjects[graphObjIndex]?.data &&
+                    {keys &&
                         <DropdownInput
                             register={register}
                             registerId="dataKey"
                             label="Data Key"
                             defaultValue={editGraphObject?.dataKey}
-                            optionsArray={graphObjects[graphObjIndex]?.data?.columns}
+                            optionsArray={keys}
                         />
                     }
 
-                    {graphObjects[graphObjIndex]?.data &&
+                    {keys &&
                         <DropdownInput
                             register={register}
                             registerId="nameKey"
                             label="Name Key"
                             defaultValue={editGraphObject?.nameKey}
-                            optionsArray={graphObjects[graphObjIndex]?.data?.columns}
+                            optionsArray={keys}
                         />}
 
                     <CheckBox label={'Label'} defaultChecked={editGraphObject ? editGraphObject.label : true} registerId={'label'} register={register} />
@@ -175,7 +187,7 @@ function AddSingleColoredPieChart({ graphId, editGraphObject }) {
                         defaultValue={editGraphObject?.paddingAngle || 0}
                         suffix={'°'}
                     />
-                    <Button type='submit'>Add PieChart!!</Button>
+                    <Button type='submit'>{editGraphObject ? 'Edit Graph' : 'Add PieChart!!'}</Button>
 
                 </div>
             </form>

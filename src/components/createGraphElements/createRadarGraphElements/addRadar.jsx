@@ -7,21 +7,27 @@ import DropdownInput from '../../formElements/dropdownInput';
 import ColorInput from '../../../components/formElements/colorInput';
 import NumberInput from '../../../components/formElements/numberInput';
 import TextInput from '../../formElements/textInput';
-import { Input } from '../../../components/ui/input';
-import { Label } from '../../../components/ui/label';
+import { retrieveFileIndex } from '@/utils/manualUtils'
 
 const AddRadar = ({ graphId, editGraphObject }) => {
     const { register, handleSubmit } = useForm();
     const [graphObjIndex, setGraphObjIndex] = useState();
+    const [fileIndex, setFileIndex] = useState();
     const graphObjects = usePlaneElementsStore((state) => (state.planeElements));
     const addGraphObjGraphElementsArray = usePlaneElementsStore((state) => state.addGraphObjGraphElementsArray);
     const handleGraphElementsArrayEditing = usePlaneElementsStore((state) => state.handleGraphElementsArrayEditing);
-
+    const userDataFiles = usePlaneElementsStore((state) => state.userDataFiles);
+    const keys = userDataFiles[fileIndex]?.fileKeys?.fileKeys;
     useEffect(() => {
         setGraphObjIndex(retrieveGraphObjectIndex(graphId, graphObjects));
-    });
+        setFileIndex(retrieveFileIndex(userDataFiles, graphObjects[graphObjIndex]?.data))
+    }, [graphObjects, graphId, graphObjIndex, userDataFiles]);
+
 
     function handleLineFormSubmit(data) {
+
+        console.log("hekkee", data)
+
         let radarTemp = {
             elementId: editGraphObject ? editGraphObject.elementId : crypto.randomUUID(),
             graphId: editGraphObject ? editGraphObject.graphId : graphId,
@@ -32,7 +38,6 @@ const AddRadar = ({ graphId, editGraphObject }) => {
             stroke: data.stroke,
             fill: data.fill,
             fillOpacity: data.fillOpacity,
-
         }
 
         if (editGraphObject) {
@@ -50,12 +55,12 @@ const AddRadar = ({ graphId, editGraphObject }) => {
 
                 <TextInput registerId='name' label='Name' register={register} defaultValue={editGraphObject?.name} />
 
-                {graphObjects[graphObjIndex]?.data &&
+                {keys &&
                     <DropdownInput
                         register={register}
                         registerId="dataKey"
                         label="Data Key"
-                        optionsArray={graphObjects[graphObjIndex]?.data?.columns}
+                        optionsArray={keys}
                         defaultValue={editGraphObject?.dataKey}
                     />
                 }

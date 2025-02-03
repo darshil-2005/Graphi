@@ -1,4 +1,4 @@
-import React from 'react';;
+import React, { useState, useEffect } from 'react';;
 import ContextMenuWrapper from '../ui/contextMenuWrapper';
 import CommonGraphWrapper from '../ui/commonGraphWrapper';
 import AddLegend from '../createGraphElements/createCartesianGraphElements/addLegend';
@@ -10,6 +10,7 @@ import AddPolarRadiusAxis from '../createGraphElements/createRadarGraphElements/
 import CreateRadarGraph from '../createGraph/createRadarGraph.jsx';
 import { RadarChart, Radar, PolarAngleAxis, PolarRadiusAxis, Legend, ResponsiveContainer, PolarGrid } from 'recharts';
 import { createGraphElements } from '../../utils/manualUtils.jsx';
+import { retrieveDataFromIndexedDBWithFileId } from '@/utils/manualUtils'
 import {
   Popover,
   PopoverContent,
@@ -17,11 +18,25 @@ import {
 } from "../../components/ui/popover"
 
 function RadarGraph({ graphObject, index, setDraggedElement, setFocusedElementIndex, editMode }) {
+
+  const [data, setData] = useState();
+
+  useEffect(() => {
+
+    async function retriever() {
+      const data = await retrieveDataFromIndexedDBWithFileId(graphObject.data);
+      setData(data);
+    }
+
+    retriever();
+
+  }, [])
+
   return (
     <CommonGraphWrapper graphObject={graphObject} index={index} setDraggedElement={setDraggedElement} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode}>
 
       <ResponsiveContainer width="100%" height="100%">
-        <RadarChart innerRadius={graphObject.innerRadius} outerRadius={graphObject.outerRadius} data={graphObject.data}>
+        <RadarChart innerRadius={graphObject.innerRadius} outerRadius={graphObject.outerRadius} data={data}>
           {
             graphObject.graphElementsArray.map((d, i) => {
               return createGraphElements(d, i);

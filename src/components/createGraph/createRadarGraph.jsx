@@ -1,14 +1,17 @@
+
+
+
+//! IMPLEMENT LEFT AND TOP IN FORM!!
+
+
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import ColorInput from '../formElements/colorInput';
-import FileInput from '../formElements/fileInput';
 import NumberInput from '../formElements/numberInput';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
-import { fileReader } from '../../utils/manualUtils';
-import { generateId } from '../../utils/manualUtils';
 import FormWrapper from '@/components/ui/formWrapper';
+import DropdownFileInput from '@/components/formElements/dropdownFileInput'
 
 const CreateRadarGraph = ({ planeId, editGraphObject }) => {
 
@@ -19,20 +22,11 @@ const CreateRadarGraph = ({ planeId, editGraphObject }) => {
 
     async function addRadarGraphInThePlaneElementsArray(data) {
 
-        const fileData = await data.fileUploadRadarGraph[0]?.text().then(fileReader);
-
         if (editGraphObject) {
-
-            let editedFileData;
-            if (!fileData) {
-                editedFileData = editGraphObject.data;
-            } else {
-                editedFileData = fileData;
-            }
 
             const temp = {
                 graphId: editGraphObject.graphId,
-                data: editedFileData,
+                data: data[`fileUpload${planeId}`],
                 height: String(data.height) + 'px',
                 width: String(data.width) + 'px',
                 zIndex: Number(data.zIndex),
@@ -48,9 +42,9 @@ const CreateRadarGraph = ({ planeId, editGraphObject }) => {
 
             const temp = {
                 planeId: planeId,
-                graphId: Number(String(planeId) + String(crypto.randomUUID())),
+                graphId: (String(planeId) + String(crypto.randomUUID())),
                 type: 'radarGraph',
-                data: fileData,
+                data: data[`fileUpload${planeId}`],
                 top: Number(0),
                 left: Number(0),
                 height: String(data.height) + 'px',
@@ -77,7 +71,8 @@ const CreateRadarGraph = ({ planeId, editGraphObject }) => {
         <form onSubmit={handleSubmit(addRadarGraphInThePlaneElementsArray)} className='mb-4 flex gap-y-4 flex-col'>
             <FormWrapper className='grid gap-y-4 w-[20rem] bg-primary-foreground p-4 mt-4 rounded-lg shadow-lg mx-auto'>
                 <div className='font-bold grid'>Create Radar Graph!!</div>
-                <FileInput registerId="fileUploadRadarGraph" label="Choose File" register={register} />
+                {/* <FileInput registerId="fileUploadRadarGraph" label="Choose File" register={register} /> */}
+                <DropdownFileInput registerId={`fileUpload${planeId}`} register={register} defaultValue={editGraphObject?.data} />
                 <div className='grid grid-cols-2'>
                     <NumberInput registerId="height" label="Height" defaultValue={parseInt(editGraphObject?.height) || 200} suffix="px" register={register} />
                     <NumberInput registerId="width" label="Width" defaultValue={parseInt(editGraphObject?.width) || 200} suffix="px" register={register} />

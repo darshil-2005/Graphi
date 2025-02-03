@@ -1,23 +1,22 @@
 'use client';
 
 import React, { useState } from 'react'
-import { toast } from "sonner";
-import { Button } from '@/components/ui/button'
+import { openDB } from 'idb';
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation';
-import {handleAddingFileEntryInDb} from '@/app/server/actions'
+import { handleAddingFileEntryInDb } from '@/app/server/actions'
+import { fileReader } from '@/utils/manualUtils'
+import usePlaneElementsStore from '@/features/store/planeElementsStore.jsx';
 
 
 function FileUploaderInput({ className }) {
 
-  const router = useRouter();
-
   const [isUploading, setIsUploading] = useState(false);
+   const setUserFiles = usePlaneElementsStore((state) => (state.setUserFiles));
 
   async function handleUploadingFile(e) {
-
     e.preventDefault();
     const file = e.target.files[0];
     const data = new FormData();
@@ -26,7 +25,6 @@ function FileUploaderInput({ className }) {
     if (!file) return alert('Please select a file');
     setIsUploading(true);
 
-
     const fileUploadResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/fileUploader`, {
       method: 'POST',
       body: data,
@@ -34,19 +32,52 @@ function FileUploaderInput({ className }) {
 
     const jsonResponse = await fileUploadResponse.json();
 
-    const dbEntryObject = {
-      fileName: file.name,
-      fileSize: file.size,
-      fileId: jsonResponse.response.document.file_id,    
+    if (file.type == 'text/csv') {
+
+      const fileData = await file.text();
+      const fileData2 = await fileReader(fileData);
+
+      const dbEntryObject = {
+        fileName: file.name,
+        fileSize: file.size,
+        fileId: jsonResponse.response.document.file_id,
+        fileKeys: {fileKeys: fileData2['columns']}
+      }
+
+      if (jsonResponse.success) {
+        const response = await handleAddingFileEntryInDb(dbEntryObject);
+        console.log(response);
+      }
+
+
+      const dbPromise = openDB('GraphiDataBase', 1, {
+        upgrade(db) {
+          const dataStore = db.createObjectStore('Data', { keyPath: 'id' });
+          dataStore.createIndex('id', 'id', { unique: true });
+        },
+      });
+
+      const db = await dbPromise;
+      await db.put('Data', { id: jsonResponse.response.document.file_id, userData: fileData2 });
     }
 
-    if(jsonResponse.success){
-      const response = await handleAddingFileEntryInDb(dbEntryObject);
-      console.log(response)
+
+    if (file.type.startsWith('image')) {
+      const dbEntryObject = {
+        fileName: file.name,
+        fileSize: file.size,
+        fileId: jsonResponse.response.photo[jsonResponse.response.photo.length - 1].file_id,
+        fileKeys: {}
+      }
+
+      if (jsonResponse.success) {
+        const response = await handleAddingFileEntryInDb(dbEntryObject);
+        console.log(response)
+      }
     }
 
     setIsUploading(false)
-    router.refresh()
+    setUserFiles();
   }
 
   return (
@@ -63,7 +94,7 @@ function FileUploaderInput({ className }) {
           </>
         )}
       </Label>
-      <Input type='file' id='dashboardFileUploadHandler' required onChange={handleUploadingFile} disabled={isUploading}/>
+      <Input type='file' id='dashboardFileUploadHandler' required onChange={handleUploadingFile} disabled={isUploading} />
     </>
   )
 }

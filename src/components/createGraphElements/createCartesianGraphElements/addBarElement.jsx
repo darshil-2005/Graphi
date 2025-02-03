@@ -4,20 +4,25 @@ import { Button } from '../../ui/button';
 import { useState, useEffect } from 'react';
 import ColorInput from '../../formElements/colorInput';
 import DropdownInput from '../../formElements/dropdownInput';
-import { retrieveGraphObjectIndex, generateId } from '../../../utils/manualUtils.jsx';
+import { retrieveGraphObjectIndex } from '../../../utils/manualUtils.jsx';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
+import { retrieveFileIndex } from '@/utils/manualUtils'
 
 function AddBarElement({ graphId, editGraphObject }) {
 
     const { register, handleSubmit } = useForm();
     const [graphObjIndex, setGraphObjIndex] = useState();
+    const [fileIndex, setFileIndex] = useState();
     const graphObjects = usePlaneElementsStore((state) => (state.planeElements));
     const addGraphObjGraphElementsArray = usePlaneElementsStore((state) => state.addGraphObjGraphElementsArray);
     const handleGraphElementsArrayEditing = usePlaneElementsStore((state) => state.handleGraphElementsArrayEditing);
-
+    const userDataFiles = usePlaneElementsStore((state) => state.userDataFiles);
+    const keys = userDataFiles[fileIndex]?.fileKeys?.fileKeys;
     useEffect(() => {
         setGraphObjIndex(retrieveGraphObjectIndex(graphId, graphObjects));
-    });
+        setFileIndex(retrieveFileIndex(userDataFiles, graphObjects[graphObjIndex]?.data))
+    }, [graphObjects, graphId, graphObjIndex, userDataFiles]);
+
 
     function handleLineFormSubmit(data) {
 
@@ -25,14 +30,14 @@ function AddBarElement({ graphId, editGraphObject }) {
             elementId: editGraphObject.elementId,
             graphId: editGraphObject.graphId,
             fill: data.fill,
-            dataKey: data.yAxisData,
+            dataKey: data.dataKey,
         } : {
             planeId: graphObjects[graphObjIndex].planeId,
             graphId: graphId,
             elementId: crypto.randomUUID(),
             type: 'bar',
             fill: data.fill,
-            dataKey: data.yAxisData,
+            dataKey: data.dataKey,
         };
 
         if (editGraphObject) {
@@ -54,8 +59,8 @@ function AddBarElement({ graphId, editGraphObject }) {
                         className='w-[8rem]'
                         defaultValue={editGraphObject?.fill || '#0000ff'}
                     />
-                    {graphObjects[graphObjIndex]?.data &&
-                        <DropdownInput registerId='yAxisData' defaultValue={editGraphObject?.dataKey} register={register} optionsArray={graphObjects[graphObjIndex]?.data?.columns} label='Choose the Y-Axis Data:' formatLabel={true} />
+                    {keys &&
+                        <DropdownInput registerId='dataKey' defaultValue={editGraphObject?.dataKey} register={register} optionsArray={keys} label='Choose the Y-Axis Data:' formatLabel={true} />
                     }
                     <Button type='submit'>{editGraphObject ? 'Edit Bar' : 'Add Bars!!'}</Button>
                 </div>

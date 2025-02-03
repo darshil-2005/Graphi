@@ -5,8 +5,6 @@ import { Button } from '../../ui/button';
 import { retrieveGraphObjectIndex } from '../../../utils/manualUtils.jsx';
 import DropdownInput from '../../formElements/dropdownInput';
 import NumberInput from '../../formElements/numberInput';
-import { getAllColumnsOfSpecificDataType } from '../../../utils/manualUtils.jsx';
-import { generateId } from '../../../utils/manualUtils.jsx';
 
 const AddPolarRadiusAxis = ({ graphId, editGraphObject }) => {
     const { register, handleSubmit } = useForm();
@@ -14,10 +12,11 @@ const AddPolarRadiusAxis = ({ graphId, editGraphObject }) => {
     const graphObjects = usePlaneElementsStore((state) => (state.planeElements));
     const addGraphObjGraphElementsArray = usePlaneElementsStore((state) => state.addGraphObjGraphElementsArray);
     const handleGraphElementsArrayEditing = usePlaneElementsStore((state) => state.handleGraphElementsArrayEditing);
+    const userDataFiles = usePlaneElementsStore((state) => state.userDataFiles);
 
     useEffect(() => {
         setGraphObjIndex(retrieveGraphObjectIndex(graphId, graphObjects));
-    });
+    }, [graphObjects, graphId, graphObjIndex, userDataFiles]);
 
     function handleLineFormSubmit(data) {
         const polarAngleAxisTemp = {
@@ -25,7 +24,6 @@ const AddPolarRadiusAxis = ({ graphId, editGraphObject }) => {
             graphId: editGraphObject ? editGraphObject.graphId : graphId,
             planeId: editGraphObject ? undefined : graphObjects[graphObjIndex].planeId,
             type: 'polarRadiusAxis',
-            dataKey: data.dataKey,
             angle: Number(data.angle),
             domainStart: Number(data.domainStart),
             domainEnd: Number(data.domainEnd),
@@ -43,15 +41,6 @@ const AddPolarRadiusAxis = ({ graphId, editGraphObject }) => {
         <form onSubmit={handleSubmit(handleLineFormSubmit)} className='flex flex-col gap-y-6'>
 
             <div className='grid gap-y-5 w-fit'>
-                {graphObjects[graphObjIndex]?.data &&
-                    <DropdownInput
-                        register={register}
-                        registerId="dataKey"
-                        label="Data Key"
-                        optionsArray={graphObjects[graphObjIndex]?.data?.columns}
-                        defaultValue={editGraphObject?.dataKey}
-                    />
-                }
 
                 <NumberInput
                     register={register}

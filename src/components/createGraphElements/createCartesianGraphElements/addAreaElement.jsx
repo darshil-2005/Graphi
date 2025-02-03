@@ -8,19 +8,24 @@ import NumberInput from '../../formElements/numberInput';
 import DropdownInput from '../../formElements/dropdownInput';
 import { retrieveGraphObjectIndex, generateId } from '../../../utils/manualUtils.jsx';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
+import { retrieveFileIndex } from '@/utils/manualUtils'
 
 
 function AddAreaElement({ graphId, editGraphObject }) {
 
     const { register, handleSubmit } = useForm();
     const [graphObjIndex, setGraphObjIndex] = useState();
+    const [fileIndex, setFileIndex] = useState();
     const graphObjects = usePlaneElementsStore((state) => (state.planeElements));
     const addGraphObjGraphElementsArray = usePlaneElementsStore((state) => state.addGraphObjGraphElementsArray);
     const handleGraphElementsArrayEditing = usePlaneElementsStore((state) => state.handleGraphElementsArrayEditing);
-
+    const userDataFiles = usePlaneElementsStore((state) => state.userDataFiles);
+    const keys = userDataFiles[fileIndex]?.fileKeys?.fileKeys;
     useEffect(() => {
         setGraphObjIndex(retrieveGraphObjectIndex(graphId, graphObjects));
-    });
+        setFileIndex(retrieveFileIndex(userDataFiles, graphObjects[graphObjIndex]?.data))
+    }, [graphObjects, graphId, graphObjIndex, userDataFiles]);
+
 
     function handleLineFormSubmit(data) {
 
@@ -29,7 +34,7 @@ function AddAreaElement({ graphId, editGraphObject }) {
                 elementId: editGraphObject.elementId,
                 graphId: editGraphObject.graphId,
                 areaType: data.areaType,
-                dataKey: data.yAxisData,
+                dataKey: data.dataKey,
                 areaColor: data.areaColor,
                 opacity: Number(data.opacity),
                 fillColor: data.fillColor,
@@ -42,7 +47,7 @@ function AddAreaElement({ graphId, editGraphObject }) {
                 elementId: crypto.randomUUID(),
                 type: 'area',
                 areaType: data.areaType,
-                dataKey: data.yAxisData,
+                dataKey: data.dataKey,
                 areaColor: data.areaColor,
                 opacity: Number(data.opacity),
                 fillColor: data.fillColor,
@@ -74,11 +79,19 @@ function AddAreaElement({ graphId, editGraphObject }) {
                     <NumberInput registerId='opacity' label='Opacity' register={register} min='0' max='1' step='0.1' defaultValue={editGraphObject?.opacity || 0.4} />
                     <ColorInput registerId='fillColor' label='Fill Color' register={register} defaultValue={editGraphObject?.fillColor || '#ff0000'} />
 
-                    {graphObjects[graphObjIndex]?.data &&
-                        <DropdownInput registerId={'yAxisData'} register={register} defaultValue={editGraphObject?.dataKey} optionsArray={graphObjects[graphObjIndex]?.data?.columns} label={'Choose the Y-Axis Data:'} formatLabel={true} />
+
+                    {keys &&
+                        <DropdownInput
+                            registerId="dataKey"
+                            register={register}
+                            defaultValue={editGraphObject?.dataKey}
+                            label={'Data Key: '}
+                            optionsArray={keys}
+                            formatLabel={true}
+                        />
                     }
 
-                    <Button type='submit'>Add Area!!</Button>
+                    <Button type='submit'>{editGraphObject ? 'Edit Graph' : 'Add Area!!'}</Button>
 
                 </div>
             </form>

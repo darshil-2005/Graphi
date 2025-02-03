@@ -22,6 +22,8 @@ function CreateTextComponent({ planeId, editGraphObject }) {
 
   function handleTextFormSubmit(data) {
 
+    console.log("Text component dta: ", data)
+
     if (editGraphObject) {
 
       const textTemp = {

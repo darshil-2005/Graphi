@@ -1,15 +1,20 @@
+
+
+
+
+
+//!  IMPLEMENT TOP AND LEFT PROPERTIES IN FORM
+
+
+
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import ColorInput from '../formElements/colorInput';
-import FileInput from '../formElements/fileInput';
 import NumberInput from '../formElements/numberInput';
-import { generateId } from '../../utils/manualUtils';
-import { fileReader } from '../../utils/manualUtils';
-import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import FormWrapper from '@/components/ui/formWrapper';
-import {v4} from 'uuid';
+import DropdownFileInput from '@/components/formElements/dropdownFileInput'
 
 const CreatePieGraph = ({ planeId, editGraphObject }) => {
 
@@ -21,24 +26,17 @@ const CreatePieGraph = ({ planeId, editGraphObject }) => {
 
     async function addPieGraphInThePlaneElementsArray(data) {
 
-        const fileData = await data.fileUploadPie[0]?.text().then(fileReader);
-
 
         if (editGraphObject) {
 
-            let editedFileData;
-            if (!fileData) {
-                editedFileData = editGraphObject.data;
-            } else {
-                editedFileData = fileData;
-            }
-
             const temp = {
                 graphId: editGraphObject.graphId,
-                data: editedFileData,
+                data: data[`fileUpload${planeId}`],
                 height: String(data.height) + 'px',
                 width: String(data.width) + 'px',
                 zIndex: Number(data.zIndex),
+                // top: Number(data.top),
+                // left: Number(data.left),
                 borderRadius: (data.borderRadius + 'px'),
                 backgroundColor: data.bgColor,
                 backgroundColorOpacity: Number(data.bgColorOpacity),
@@ -51,7 +49,7 @@ const CreatePieGraph = ({ planeId, editGraphObject }) => {
                 planeId: planeId,
                 graphId: (String(planeId) + String(crypto.randomUUID())),
                 type: 'pieGraph',
-                data: fileData,
+                data: data[`fileUpload${planeId}`],
                 top: Number(0),
                 left: Number(0),
                 height: String(data.height) + 'px',
@@ -60,7 +58,6 @@ const CreatePieGraph = ({ planeId, editGraphObject }) => {
                 borderRadius: (data.borderRadius + 'px'),
                 backgroundColor: data.bgColor,
                 backgroundColorOpacity: Number(data.bgColorOpacity),
-                zIndex: 0,
                 graphElementsArray: [],
             }
 
@@ -77,7 +74,8 @@ const CreatePieGraph = ({ planeId, editGraphObject }) => {
             <form onSubmit={handleSubmit(addPieGraphInThePlaneElementsArray)}>
                 <FormWrapper className='grid gap-y-4 w-[20rem] bg-primary-foreground p-4 mt-4 rounded-lg shadow-lg mx-auto'>
                     <div className='font-bold grid'>Create Pie Graph!!</div>
-                    <FileInput registerId="fileUploadPie" label="Choose File" register={register} defaultValue={editGraphObject?.data} />
+                    {/* <FileInput registerId="fileUploadPie" label="Choose File" register={register} defaultValue={editGraphObject?.data} /> */}
+                    <DropdownFileInput registerId={`fileUpload${planeId}`} register={register} defaultValue={editGraphObject?.data} />
                     <div className='grid grid-cols-2'>
                         <NumberInput registerId="height" label="Height" defaultValue={parseInt(editGraphObject?.height) || 200} suffix="px" register={register} />
                         <NumberInput registerId="width" label="Width" defaultValue={parseInt(editGraphObject?.width) || 200} suffix="px" register={register} />

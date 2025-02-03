@@ -116,6 +116,7 @@ model fileDataAccess {
   userId   String
   fileName String
   fileSize Int
+  fileKeys Json
   addedAt  DateTime @default(now())
 
   dataOwner user @relation(fields: [userId], references: [id], onDelete: Cascade)

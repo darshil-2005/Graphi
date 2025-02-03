@@ -1,39 +1,32 @@
-import React, { useState, useEffect } from 'react';
+
+//! IMPLEMENT LEFT AND TOP IN FORM
+
+
+
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import { generateId } from '../../utils/manualUtils';
 import ColorInput from '../formElements/colorInput';
-import FileInput from '../formElements/fileInput';
 import NumberInput from '../formElements/numberInput';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import { fileReader } from '../../utils/manualUtils';
 import FormWrapper from '@/components/ui/formWrapper';
+import DropdownFileInput from '@/components/formElements/dropdownFileInput'
 
 const CreateRadialBarGraph = ({ planeId, editGraphObject }) => {
 
   const { register, handleSubmit } = useForm();
-  const graphId = usePlaneElementsStore((state) => (state.nextGraphId));
   
   const addPlaneElements = usePlaneElementsStore((state) => (state.addPlaneElements));
   const handleEditing = usePlaneElementsStore((state) => (state.handleEditing))
 
   async function addRadialBarGraphInThePlaneElementsArray(data) {
 
-    const fileData = await data.fileUploadRadialBar[0]?.text().then(fileReader);
-
     if (editGraphObject) {
-
-      let editedFileData;
-      if (!fileData) {
-        editedFileData = editGraphObject.data;
-      } else {
-        editedFileData = fileData;
-      }
 
       const temp = {
         graphId: editGraphObject.graphId,
-        data: editedFileData,
+        data: data[`fileUpload${planeId}`],
         height: String(data.height) + 'px',
         width: String(data.width) + 'px',
         zIndex: Number(data.zIndex),
@@ -52,9 +45,9 @@ const CreateRadialBarGraph = ({ planeId, editGraphObject }) => {
 
       const temp = {
         planeId: planeId,
-        graphId: Number(String(planeId) + String(crypto.randomUUID())),
+        graphId: (String(planeId) + String(crypto.randomUUID())),
         type: 'radialBarGraph',
-        data: fileData,
+        data: data[`fileUpload${planeId}`],
         top: Number(0),
         left: Number(0),
         height: String(data.height) + 'px',
@@ -83,7 +76,8 @@ const CreateRadialBarGraph = ({ planeId, editGraphObject }) => {
       <FormWrapper className='grid gap-y-4 w-[20rem] bg-primary-foreground p-4 mt-4 rounded-lg shadow-lg mx-auto'>
 
         <div className='font-bold grid'>Create Radial Bar Graph!!</div>
-        <FileInput registerId="fileUploadRadialBar" label="Choose File" register={register} />
+        {/* <FileInput registerId="fileUploadRadialBar" label="Choose File" register={register} /> */}
+        <DropdownFileInput registerId={`fileUpload${planeId}`} register={register} defaultValue={editGraphObject?.data} />
 
         <div className='grid grid-cols-2'>
           <NumberInput registerId="height" label="Height" defaultValue={parseInt(editGraphObject?.height) || 200} suffix="px" register={register} />

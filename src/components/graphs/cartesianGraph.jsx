@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ComposedChart, XAxis, YAxis, ResponsiveContainer, Scatter, CartesianGrid } from 'recharts';
 import AddLineElement from '../createGraphElements/createCartesianGraphElements/addLineElement';
 import AddXAxisElement from '../createGraphElements/createCartesianGraphElements/addXAxisElement';
@@ -12,6 +12,7 @@ import AddToolTip from '../createGraphElements/createCartesianGraphElements/addT
 import ContextMenuWrapper from '../ui/contextMenuWrapper';
 import CommonGraphWrapper from '../ui/commonGraphWrapper';
 import { createGraphElements } from '../../utils/manualUtils';
+import { retrieveDataFromIndexedDBWithFileId } from '@/utils/manualUtils'
 import CreateCartesianGraph from '../createGraph/createCartesianGraph';
 import {
   Popover,
@@ -22,6 +23,19 @@ import {
 
 function CartesianGraph({ graphObject, index, setDraggedElement, setFocusedElementIndex, editMode }) {
 
+  const [data, setData] = useState();
+
+  useEffect(() => {
+
+    async function retriever() {
+      const data = await retrieveDataFromIndexedDBWithFileId(graphObject.data);
+      setData(data);
+    }
+
+    retriever();
+
+  }, [])
+
   
   return (
     <>
@@ -29,7 +43,7 @@ function CartesianGraph({ graphObject, index, setDraggedElement, setFocusedEleme
 
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart
-            data={graphObject.data || {}}
+            data={data || {}}
             margin={graphObject.margin}
           >
             {
@@ -37,7 +51,6 @@ function CartesianGraph({ graphObject, index, setDraggedElement, setFocusedEleme
                 return createGraphElements(d, i);
               })
             }
-
           </ComposedChart>
         </ResponsiveContainer>
 

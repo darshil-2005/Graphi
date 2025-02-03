@@ -8,28 +8,46 @@ import ColorInput from '../../formElements/colorInput';
 import DropdownInput from '../../formElements/dropdownInput';
 import { CheckBox } from 'src/components/formElements/checkBox.jsx';
 import { retrieveGraphObjectIndex } from '../../../utils/manualUtils.jsx';
-import { generateId } from '../../../utils/manualUtils.jsx';
+import { retrieveFileIndex } from '@/utils/manualUtils';
+import { retrieveDataFromIndexedDBWithFileId } from '@/utils/manualUtils'
 
 
 function AddRadialBarChart({ graphId, editGraphObject }) {
 
+
   const { register, handleSubmit } = useForm();
   const [graphObjIndex, setGraphObjIndex] = useState();
+  const [fileIndex, setFileIndex] = useState();
+  const [fileData, setFileData] = useState();
   const graphObjects = usePlaneElementsStore((state) => (state.planeElements));
   const addGraphObjGraphElementsArray = usePlaneElementsStore((state) => state.addGraphObjGraphElementsArray);
   const handleGraphElementsArrayEditing = usePlaneElementsStore((state) => state.handleGraphElementsArrayEditing);
-
+  const userDataFiles = usePlaneElementsStore((state) => state.userDataFiles);
+  const keys = userDataFiles[fileIndex]?.fileKeys?.fileKeys;
   useEffect(() => {
-    setGraphObjIndex(retrieveGraphObjectIndex(graphId, graphObjects));
-  });
+      setGraphObjIndex(retrieveGraphObjectIndex(graphId, graphObjects));
+      setFileIndex(retrieveFileIndex(userDataFiles, graphObjects[graphObjIndex]?.data));
+
+      async function dataSetter() {
+        if (graphObjects && (typeof graphObjIndex == 'number')) {
+            const fetchedData = await retrieveDataFromIndexedDBWithFileId(graphObjects[graphObjIndex]?.data);
+            if (fetchedData)
+                setFileData(fetchedData.userData);
+        }
+    }
+
+    dataSetter()
+  }, [graphObjects, graphId, graphObjIndex, userDataFiles]);
+
 
   function handleLineFormSubmit(data) {
+
     const radialBarGraphTemp = {
       elementId: editGraphObject ? editGraphObject.elementId : crypto.randomUUID(),
       graphId: editGraphObject ? editGraphObject.graphId : graphId,
       planeId: editGraphObject ? editGraphObject?.planeId : graphObjects[graphObjIndex].planeId,
       type: 'radialBarGraph',
-      data: graphObjects[graphObjIndex].data,
+      data: fileData,
       dataKey: data.dataKey,
       background: data.background,
       labelFill: data.labelFill,
@@ -49,8 +67,8 @@ function AddRadialBarChart({ graphId, editGraphObject }) {
       <form onSubmit={handleSubmit(handleLineFormSubmit)}>
         <div className='flex flex-col gap-y-5'>
           <div className='font-bold'>Create Radial Bar Graph!!</div>
-          {graphObjects[graphObjIndex]?.data &&
-            <DropdownInput registerId='dataKey' label='Data Key:' defaultValue={editGraphObject?.dataKey} optionsArray={graphObjects[graphObjIndex]?.data?.columns} register={register} />
+          {keys &&
+            <DropdownInput registerId='dataKey' label='Data Key:' defaultValue={editGraphObject?.dataKey} optionsArray={keys} register={register} />
           }
 
           <CheckBox registerId='background' register={register} label='Background' defaultChecked={editGraphObject?.background || false} />

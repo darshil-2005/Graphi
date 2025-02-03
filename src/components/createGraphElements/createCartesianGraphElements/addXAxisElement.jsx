@@ -1,3 +1,7 @@
+//!  FIX THIS 
+
+
+
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
@@ -6,23 +10,24 @@ import { getAllColumnsOfSpecificDataType, retrieveGraphObjectIndex } from '../..
 import DropdownInput from '../../formElements/dropdownInput.jsx';
 import NumberInput from '../../formElements/numberInput.jsx';
 import TextInput from 'src/components/formElements/textInput.jsx';
-import { Input } from '../../ui/input.jsx';
-import { Label } from '../../ui/label.jsx';
 import { CheckBox } from '../../formElements/checkBox.jsx';
-import { generateId } from '../../../utils/manualUtils.jsx';
+import { retrieveFileIndex } from '@/utils/manualUtils'
 
 
 function AddXAxisElement({ graphId, editGraphObject }) {
 
     const { register, handleSubmit } = useForm();
     const [graphObjIndex, setGraphObjIndex] = useState();
+    const [fileIndex, setFileIndex] = useState();
     const graphObjects = usePlaneElementsStore((state) => (state.planeElements));
     const addGraphObjGraphElementsArray = usePlaneElementsStore((state) => state.addGraphObjGraphElementsArray);
     const handleGraphElementsArrayEditing = usePlaneElementsStore((state) => state.handleGraphElementsArrayEditing);
-
+    const userDataFiles = usePlaneElementsStore((state) => state.userDataFiles);
+    const keys = userDataFiles[fileIndex]?.fileKeys?.fileKeys;
     useEffect(() => {
         setGraphObjIndex(retrieveGraphObjectIndex(graphId, graphObjects));
-    });
+        setFileIndex(retrieveFileIndex(userDataFiles, graphObjects[graphObjIndex]?.data))
+    }, [graphObjects, graphId, graphObjIndex, userDataFiles]);
 
     function handleLineFormSubmit(data) {
 
@@ -123,7 +128,7 @@ function AddXAxisElement({ graphId, editGraphObject }) {
                             className='w-[8rem]' suffix={'°'} />
                     </div>
 
-                    <DropdownInput registerId="dataKey" label="Axis Datakey" register={register} optionsArray={graphObjects[graphObjIndex]?.data?.columns} />
+                    <DropdownInput registerId="dataKey" label="Axis Datakey" register={register} optionsArray={keys} />
                     <DropdownInput registerId='orientation' label="Orinentation" register={register} optionsArray={['bottom', 'top']} defaultValue={editGraphObject ? editGraphObject.orientation : 'bottom'} formatLabel={true} />
 
                     <DropdownInput registerId="scale" label="Scale" register={register} optionsArray={[

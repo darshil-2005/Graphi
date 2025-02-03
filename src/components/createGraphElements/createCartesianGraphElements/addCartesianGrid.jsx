@@ -5,9 +5,6 @@ import usePlaneElementsStore from '../../../features/store/planeElementsStore';
 import { Button } from '../../ui/button';
 import { retrieveGraphObjectIndex } from '../../../utils/manualUtils.jsx';
 import ColorInput from '../../formElements/colorInput';
-import { Label } from '../../ui/label';
-import { Input } from '../../ui/input';
-import { generateId } from '../../../utils/manualUtils.jsx';
 
 function AddCartesianElement({ graphId, editGraphObject }) {
 

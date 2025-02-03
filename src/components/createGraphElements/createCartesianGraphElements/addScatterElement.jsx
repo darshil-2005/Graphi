@@ -8,17 +8,21 @@ import ColorInput from '../../formElements/colorInput';
 import DropdownInput from '../../formElements/dropdownInput';
 import { retrieveGraphObjectIndex, generateId } from '../../../utils/manualUtils.jsx';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
+import {retrieveFileIndex} from '@/utils/manualUtils'
 
 function AddScatterElement({ graphId, editGraphObject }) {
     const { register, handleSubmit } = useForm();
     const [graphObjIndex, setGraphObjIndex] = useState();
-    const graphObjects = usePlaneElementsStore((state) => state.planeElements);
+    const [fileIndex, setFileIndex] = useState();
+    const graphObjects = usePlaneElementsStore((state) => (state.planeElements));
     const addGraphObjGraphElementsArray = usePlaneElementsStore((state) => state.addGraphObjGraphElementsArray);
     const handleGraphElementsArrayEditing = usePlaneElementsStore((state) => state.handleGraphElementsArrayEditing);
-
+    const userDataFiles = usePlaneElementsStore((state) => state.userDataFiles);
+    const keys = userDataFiles[fileIndex]?.fileKeys?.fileKeys;
     useEffect(() => {
         setGraphObjIndex(retrieveGraphObjectIndex(graphId, graphObjects));
-    }, [graphId, graphObjects]);
+        setFileIndex(retrieveFileIndex(userDataFiles, graphObjects[graphObjIndex]?.data))
+    }, [graphObjects, graphId, graphObjIndex, userDataFiles]);
 
     const onSubmit = (data) => {
         const scatterElement = {
@@ -27,7 +31,7 @@ function AddScatterElement({ graphId, editGraphObject }) {
             planeId: editGraphObject ? undefined : graphObjects[graphObjIndex].planeId,
             type: 'scatter',
             scatterName: data.scatterName,
-            dataKey: data.yAxisData,
+            dataKey: data.dataKey,
             legendType: data.legendType,
             shape: data.shape,
             fill: data.fill,
@@ -88,12 +92,12 @@ function AddScatterElement({ graphId, editGraphObject }) {
                     formatLabel={true}
                 />
 
-                {graphObjects[graphObjIndex]?.data && (
+                {keys && (
                     <DropdownInput
-                        registerId="yAxisData"
+                        registerId="dataKey"
                         register={register}
                         defaultValue={editGraphObject?.dataKey}
-                        optionsArray={graphObjects[graphObjIndex]?.data?.columns}
+                        optionsArray={keys}
                         label="Choose the Y-Axis Data"
                         formatLabel
                         className="w-[8rem]"
