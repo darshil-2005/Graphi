@@ -5,6 +5,7 @@ import ContextMenuWrapper from '../ui/contextMenuWrapper';
 import AddLegend from '../createGraphElements/createCartesianGraphElements/addLegend';
 import AddToolTip from '../createGraphElements/createCartesianGraphElements/addToolTip';
 import AddSingleColoredPieChart from '../createGraphElements/createPieElements/addSingleColoredPieELement';
+import usePlaneElementsStore from '@/features/store/planeElementsStore';
 import {
   Popover,
   PopoverContent,
@@ -15,12 +16,17 @@ import CreatePieGraph from '../createGraph/createPieGraph.jsx';
 
 function PieGraph({ graphObject, index, setDraggedElement, setFocusedElementIndex, editMode }) {
 
+  const graphObjectElements = usePlaneElementsStore((state) => (state.graphElements));
+
   return (
     <CommonGraphWrapper graphObject={graphObject} index={index} setDraggedElement={setDraggedElement} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode}>
       <ResponsiveContainer width="100%" height="100%" >
         <PieChart>
           {
-            graphObject.graphElementsArray.map((d, i) => {
+            graphObjectElements.filter((d, i) => {
+              return d.graphId == graphObject.graphId
+
+            }).map((d, i) => {
               return createGraphElements(d, i);
             })
           }

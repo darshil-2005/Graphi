@@ -185,7 +185,7 @@ export async function handleAddingFileEntryInDb(dbEntryObject) {
 }
 
 
-export async function fetchAllFilesUserHasAccessTo(){
+export async function fetchAllFilesUserHasAccessTo() {
   const session = await auth();
 
   return await prisma.fileDataAccess.findMany({
@@ -193,5 +193,90 @@ export async function fetchAllFilesUserHasAccessTo(){
       userId: session.user.id,
     }
   })
-  
+
+}
+
+export async function DBSync(planeElements, graphElements) {
+
+  try {
+
+    for (let planeElement of planeElements) {
+      await prisma.planeElement.upsert({
+        where: {
+          planeElementId: planeElement.graphId,
+        },
+        update: {
+          planeElementId: planeElement.graphId,
+          planeId: planeElement.planeId,
+          planeElementJsonData: planeElement,
+        },
+        create: {
+          planeElementId: planeElement.graphId,
+          planeId: planeElement.planeId,
+          planeElementJsonData: planeElement,
+        }
+
+      })
+    }
+
+    for (let graphElement of graphElements) {
+      await prisma.graphElement.upsert({
+        where: {
+          elementId: graphElement.elementId,
+        },
+        update: {
+          elementId: graphElement.elementId,
+          planeElementId: graphElement.graphId,
+          graphElementsJsonData: graphElement,
+        },
+        create: {
+          elementId: graphElement.elementId,
+          planeElementId: graphElement.graphId,
+          graphElementsJsonData: graphElement,
+        }
+
+      })
+    }
+
+    return 1
+
+  } catch (error) {
+
+    console.error("Error Syncing Changes: ", error);
+    return error
+
+  }
+}
+
+export async function planeElementsAndGraphElementFetcher(planeIdArray) {
+
+  const planeElements = [];
+  const graphElements = [];
+
+  for (let i = 0; i < planeIdArray.length; i++) {
+
+    const temp = await prisma.planeElement.findMany({
+      where: {
+        planeId: planeIdArray[i],
+      }
+
+    })
+    planeElements.push(...planeElements, ...temp);
+  }
+
+
+  for (let i = 0; i < planeElements.length; i++) {
+
+    const temp = await prisma.graphElement.findMany({
+      where: {
+        planeElementId: planeElements[i].planeElementId,
+      }
+    })
+
+    graphElements.push(...graphElements, ...temp);
+
+  }
+
+  return { planeElements, graphElements }
+
 }

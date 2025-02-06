@@ -16,6 +16,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../components/ui/popover"
+import usePlaneElementsStore from '@/features/store/planeElementsStore';
 
 function RadarGraph({ graphObject, index, setDraggedElement, setFocusedElementIndex, editMode }) {
 
@@ -32,16 +33,21 @@ function RadarGraph({ graphObject, index, setDraggedElement, setFocusedElementIn
 
   }, [])
 
+  const graphObjectElements = usePlaneElementsStore((state) => (state.graphElements));
+
   return (
     <CommonGraphWrapper graphObject={graphObject} index={index} setDraggedElement={setDraggedElement} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode}>
 
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart innerRadius={graphObject.innerRadius} outerRadius={graphObject.outerRadius} data={data}>
-          {
-            graphObject.graphElementsArray.map((d, i) => {
-              return createGraphElements(d, i);
-            })
-          }
+        {
+              graphObjectElements.filter((d, i) => {
+                return d.graphId == graphObject.graphId
+
+              }).map((d, i) => {
+                return createGraphElements(d, i);
+              })
+            }
         </RadarChart>
       </ResponsiveContainer>
 

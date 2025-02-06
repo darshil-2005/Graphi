@@ -13,6 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../components/ui/popover"
+import usePlaneElementsStore from '@/features/store/planeElementsStore';
 
 
 
@@ -31,6 +32,8 @@ function RadialBarGraph({ graphObject, index, setDraggedElement, setFocusedEleme
 
   }, [])
 
+  const graphObjectElements = usePlaneElementsStore((state) => (state.graphElements));
+
   return (
 
     <CommonGraphWrapper graphObject={graphObject} index={index} setDraggedElement={setDraggedElement} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode}>
@@ -46,7 +49,10 @@ function RadialBarGraph({ graphObject, index, setDraggedElement, setFocusedEleme
         >
 
           {
-            graphObject.graphElementsArray.map((d, i) => {
+            graphObjectElements.filter((d, i) => {
+              return d.graphId == graphObject.graphId
+
+            }).map((d, i) => {
               return createGraphElements(d, i);
             })
           }

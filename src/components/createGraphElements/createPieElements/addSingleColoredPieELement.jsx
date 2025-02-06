@@ -30,7 +30,7 @@ function AddSingleColoredPieChart({ graphId, editGraphObject }) {
             if (graphObjects && (typeof graphObjIndex == 'number')) {
                 const fetchedData = await retrieveDataFromIndexedDBWithFileId(graphObjects[graphObjIndex]?.data);
                 if (fetchedData)
-                    setFileData(fetchedData.userData);
+                    setFileData(fetchedData);
             }
         }
 

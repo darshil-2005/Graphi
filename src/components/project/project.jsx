@@ -28,34 +28,60 @@ import AddRadialBarChart from '../createGraphElements/createRadialBarGraphElemen
 function Project({ projectId }) {
 
   const router = useRouter();
+
+
   const elements = usePlaneElementsStore((state) => state.planeElements);
   const deleteElementFromGraphElementsArray = usePlaneElementsStore((state) => state.deleteElementFromGraphElementsArray);
+  const setUserFiles = usePlaneElementsStore((state) => state.setUserFiles);
+  const graphElements = usePlaneElementsStore((state) => state.graphElements);
+  const syncDeltasInDB = usePlaneElementsStore((state) => state.syncDeltasInDB);
+  const elementsFetcherFromDatabaseOnOpeningProject = usePlaneElementsStore((state) => state.elementsFetcherFromDatabaseOnOpeningProject)
+  const deltas = usePlaneElementsStore((state) => state.deltas)
+
+
   const [showGraphElements, setShowGraphElements] = useState(false);
   const [editMode, setEditMode] = useState(true);
   const [focusedElementIndex, setFocusedElementIndex] = useState(null);
-  const [planes, setPlanes] = useState(null);
+  const [planes, setPlanes] = useState(undefined);
   const [planeNumber, setPlaneNumber] = useState(0);
-  const setUserFiles = usePlaneElementsStore((state) => state.setUserFiles);
+  const [planeIdArray, setPlaneIdArray] = useState(undefined);
+  const [fetched, setFetched] = useState(false)
 
   async function handleSavingChanges(){
-
-    
+    await syncDeltasInDB(planeIdArray);
   }
-
-
-
-
-
+  
   useEffect(() => {
-    async function handleFetchingPlanes() {
+    async function temp() {
       setUserFiles();
       const fetchedPlanes = await handleFetchingPlanesFromDatabase(projectId);
       setPlanes(fetchedPlanes);
     }
-    handleFetchingPlanes();
+    temp();
 
-  }, [planeNumber])
+    
+  }, [projectId, planeNumber])
 
+  useEffect(() => {
+    if (planes){
+      setPlaneIdArray(planes.map((d) => {return d.planeId}));
+    }
+  }, [planes]);
+
+  useEffect(() => {
+    
+    async function temp(){
+      if (planeIdArray && !fetched ){
+        
+        await elementsFetcherFromDatabaseOnOpeningProject(planeIdArray);
+      }
+    }
+    
+    temp();
+
+  }, [planeIdArray])
+  
+  console.log("Graph Elements: ", graphElements);
 
   async function handleCreatingPlanes() {
 
@@ -96,7 +122,11 @@ function Project({ projectId }) {
         <div className='absolute right-0 top-0 bg-background h-[200vh] w-[30rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center '>
           <span className='text-4xl my-4 font-bold text-primary block text-center'>Current Components</span>
 
-          {elements[focusedElementIndex]?.graphElementsArray?.map((currItem, index) => (
+          {graphElements.filter((d, i) => {
+
+            return elements[focusedElementIndex]?.graphId == d.graphId
+
+          }).map((currItem, index) => (
             <div key={index}>
               <Popover>
                 <PopoverTrigger className='text-accent capitalize bg-blue-200 py-2 px-4 rounded-xl text-3xl'>

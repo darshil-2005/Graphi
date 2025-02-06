@@ -19,6 +19,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../components/ui/popover"
+import usePlaneElementsStore from '@/features/store/planeElementsStore';
 
 
 function CartesianGraph({ graphObject, index, setDraggedElement, setFocusedElementIndex, editMode }) {
@@ -36,7 +37,9 @@ function CartesianGraph({ graphObject, index, setDraggedElement, setFocusedEleme
 
   }, [])
 
-  
+  const graphObjectElements = usePlaneElementsStore((state) => (state.graphElements));
+
+
   return (
     <>
       <CommonGraphWrapper graphObject={graphObject} index={index} setDraggedElement={setDraggedElement} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode}>
@@ -47,7 +50,10 @@ function CartesianGraph({ graphObject, index, setDraggedElement, setFocusedEleme
             margin={graphObject.margin}
           >
             {
-              graphObject.graphElementsArray.map((d, i) => {
+              graphObjectElements.filter((d, i) => {
+                return d.graphId == graphObject.graphId
+
+              }).map((d, i) => {
                 return createGraphElements(d, i);
               })
             }

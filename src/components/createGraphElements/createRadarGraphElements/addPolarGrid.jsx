@@ -6,6 +6,7 @@ import { Button } from '../../ui/button';
 import { retrieveGraphObjectIndex } from '../../../utils/manualUtils.jsx';
 import { isTheElementInGraphElementsArray, retrieveGraphObjectIndexAndElementIndex } from '../../../utils/manualUtils.jsx';
 import { generateId } from '../../../utils/manualUtils.jsx';
+import { toast } from "sonner";
 
 const AddPolarGrid = ({ graphId, editGraphObject }) => {
 
@@ -15,6 +16,7 @@ const AddPolarGrid = ({ graphId, editGraphObject }) => {
     const graphObjects = usePlaneElementsStore((state) => (state.planeElements));
     const addGraphObjGraphElementsArray = usePlaneElementsStore((state) => state.addGraphObjGraphElementsArray);
     const handleGraphElementsArrayEditing = usePlaneElementsStore((state) => state.handleGraphElementsArrayEditing);
+    const graphElements = usePlaneElementsStore((state) => state.graphElements)
 
     useEffect(() => {
            setGraphObjIndex(retrieveGraphObjectIndex(graphId, graphObjects));
@@ -35,8 +37,8 @@ const AddPolarGrid = ({ graphId, editGraphObject }) => {
 
         } else {
 
-            if (!(isTheElementInGraphElementsArray(graphObjects[graphObjIndex].graphElementsArray, 'radar'))) {
-                alert('Please add a radar first!');
+            if (!(isTheElementInGraphElementsArray(graphElements, graphId, 'radar'))) {
+                toast.warning('Please add a radar first!');
                 return;
             }
 

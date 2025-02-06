@@ -2,13 +2,20 @@ import * as d3 from 'd3';
 import { openDB } from 'idb'
 import { Line, Area, Bar, Scatter, Pie, CartesianGrid, Tooltip, Legend, RadialBar, PolarGrid, PolarRadiusAxis, PolarAngleAxis, Radar, XAxis, YAxis } from 'recharts';
 
-export function isTheElementInGraphElementsArray(graphElementsArray, element) {
+export function isTheElementInGraphElementsArray(graphElementsArray, graphId, element) {
 
-  for (let j = 0; j < graphElementsArray.length; j++) {
-    if (graphElementsArray[j].type == element) {
-      return true;
-    }
+  const temp = graphElementsArray.filter((d) => {
+    return d.graphId == graphId
+  });
+
+  const temp2 = temp.filter((d) => {
+    d.type == element;
+  })
+
+  if (temp2.length > 0){
+    return true
   }
+  
   return false;
 }
 
