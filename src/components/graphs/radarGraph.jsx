@@ -9,13 +9,13 @@ import AddPolarAngleAxis from '../createGraphElements/createRadarGraphElements/a
 import AddPolarRadiusAxis from '../createGraphElements/createRadarGraphElements/addPolarRadiusAxis';
 import CreateRadarGraph from '../createGraph/createRadarGraph.jsx';
 import { RadarChart, Radar, PolarAngleAxis, PolarRadiusAxis, Legend, ResponsiveContainer, PolarGrid } from 'recharts';
-import { createGraphElements } from '../../utils/manualUtils.jsx';
+import { createGraphElements } from '@/utils/manualUtils.jsx';
 import { retrieveDataFromIndexedDBWithFileId } from '@/utils/manualUtils'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../../components/ui/popover"
+} from "@/components/ui/shadcnComponent/popover"
 import usePlaneElementsStore from '@/features/store/planeElementsStore';
 
 function RadarGraph({ graphObject, index, setDraggedElement, setFocusedElementIndex, editMode }) {
@@ -44,7 +44,7 @@ function RadarGraph({ graphObject, index, setDraggedElement, setFocusedElementIn
               graphObjectElements.filter((d, i) => {
                 return d.graphId == graphObject.graphId
 
-              }).map((d, i) => {
+              }).filter((d) => d.isdeleted == false).map((d, i) => {
                 return createGraphElements(d, i);
               })
             }

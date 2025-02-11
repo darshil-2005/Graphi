@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { useForm } from 'react-hook-form'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/shadcnComponent/input'
+import { Label } from '@/components/ui/shadcnComponent/label'
+import { Button } from '@/components/ui/shadcnComponent/button'
 import { isUsernameAvailable, usernameSetter } from '@/app/server/actions'
 import { redirect } from 'next/navigation';
 import { CircleCheck, CircleAlert } from 'lucide-react';

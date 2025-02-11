@@ -1,6 +1,6 @@
 import React from 'react';
 import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
-import { createGraphElements } from '../../utils/manualUtils.jsx';
+import { createGraphElements } from '@/utils/manualUtils.jsx';
 import ContextMenuWrapper from '../ui/contextMenuWrapper';
 import AddLegend from '../createGraphElements/createCartesianGraphElements/addLegend';
 import AddToolTip from '../createGraphElements/createCartesianGraphElements/addToolTip';
@@ -10,7 +10,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../../components/ui/popover"
+} from "@/components/ui/shadcnComponent/popover"
 import CommonGraphWrapper from '../ui/commonGraphWrapper';
 import CreatePieGraph from '../createGraph/createPieGraph.jsx';
 
@@ -26,7 +26,7 @@ function PieGraph({ graphObject, index, setDraggedElement, setFocusedElementInde
             graphObjectElements.filter((d, i) => {
               return d.graphId == graphObject.graphId
 
-            }).map((d, i) => {
+            }).filter((d) => d.isdeleted == false).map((d, i) => {
               return createGraphElements(d, i);
             })
           }

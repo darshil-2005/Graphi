@@ -1,7 +1,7 @@
 "use client";
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Rectangle } from 'recharts';
-import { CustomTooltip } from '../../utils/manualUtils';
+import { CustomTooltip } from '@/utils/manualUtils';
 
 const data = [
   { name: 'A', Revenue: 4000, Likes: 2400, amt: 2400 },

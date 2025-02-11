@@ -1,6 +1,6 @@
 'use client';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { CustomTooltip } from '../../utils/manualUtils';
+import { CustomTooltip } from '@/utils/manualUtils';
 
 const data = [
   { name: 'Group A', value: 400 },

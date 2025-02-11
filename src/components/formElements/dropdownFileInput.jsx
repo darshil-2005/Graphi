@@ -1,5 +1,5 @@
 import React from 'react'
-import { Label } from '../ui/label'
+import { Label } from '@/components/ui/shadcnComponent/label'
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 
 const DropdownFileInput = ({ registerId, register, defaultValue, onChangeHandler = () => null, formatLabel = false, type }) => {

@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react'
 import { openDB } from 'idb';
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/shadcnComponent/input'
+import { Label } from '@/components/ui/shadcnComponent/label'
 import { Plus } from 'lucide-react'
 import { useRouter } from 'next/navigation';
 import { handleAddingFileEntryInDb } from '@/app/server/actions'
@@ -46,7 +46,6 @@ function FileUploaderInput({ className }) {
 
       if (jsonResponse.success) {
         const response = await handleAddingFileEntryInDb(dbEntryObject);
-        console.log(response);
       }
 
 
@@ -72,7 +71,6 @@ function FileUploaderInput({ className }) {
 
       if (jsonResponse.success) {
         const response = await handleAddingFileEntryInDb(dbEntryObject);
-        console.log(response)
       }
     }
 

@@ -14,6 +14,14 @@ import CreateTextComponent from '../createGraph/createTextComponent.jsx';
 import CreateImageComponent from '../createGraph/createImageComponent.jsx';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import ImageComponent from '../graphs/image.jsx';
+import PlusUi from '../ui/plus-ui.jsx';
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/shadcnComponent/accordion";
 
 
 function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode }) {
@@ -59,20 +67,29 @@ function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode
         onDrop={handleDrop}
       >
         <div className="h-full w-full relative bg-foreground-secondary bg-[linear-gradient(to_right,#4f4f4f4e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f4e_1px,transparent_1px)] bg-[size:60px_60px]">
-          {elements.filter((item) => item.planeId === planeId).map((currItem, index) => (
-            createGraph(currItem, index, { setDraggedElement: setDraggedElement, setFocusedElementIndex: setFocusedElementIndex })
-          ))}                  
+          {elements.filter((item) => item.planeId === planeId)
+            .filter((item) => item.isdeleted == false)
+            .map((currItem, index) => (
+              createGraph(currItem, index, { setDraggedElement: setDraggedElement, setFocusedElementIndex: setFocusedElementIndex })
+            ))}
         </div>
       </div>
 
-      <div className='flex flex-col justify-center mt-8 gap-y-4'>
-        <CreateCartesianGraph planeId={planeId} />
-        <CreatePieGraph planeId={planeId} />
-        <CreateRadialBarGraph planeId={planeId} />
-        <CreateRadarGraph planeId={planeId} />
-        <CreateTextComponent planeId={planeId} />
-        <CreateImageComponent planeId={planeId} />
-      </div>
+
+
+      <Accordion type="single" collapsible className="w-[30rem] mx-auto my-4 border px-6 rounded-xl">
+        <AccordionItem value="Graph Add Menu">
+          <AccordionTrigger className='text-lg'><span className='flex gap-x-2 items-center'>Add Graphs</span></AccordionTrigger>
+          <AccordionContent>
+              <CreateCartesianGraph planeId={planeId} />
+              <CreatePieGraph planeId={planeId} />
+              <CreateRadialBarGraph planeId={planeId} />
+              <CreateRadarGraph planeId={planeId} />
+              <CreateTextComponent planeId={planeId} />
+              <CreateImageComponent planeId={planeId} />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
     </>
   );

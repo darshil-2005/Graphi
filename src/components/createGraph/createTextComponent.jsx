@@ -1,14 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Label } from '../ui/label.jsx';
-import { Button } from '../ui/button.jsx';
-import { Input } from '../ui/input.jsx';
+import { Button } from '@/components/ui/shadcnComponent/button.jsx';
 import ColorInput from '../formElements/colorInput.jsx';
 import NumberInput from '../formElements/numberInput.jsx';
 import DropdownInput from '../formElements/dropdownInput.jsx';
-import { generateId } from '../../utils/manualUtils.jsx';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
-import { Textarea } from '../ui/textarea.jsx';
+import { Textarea } from '@/components/ui/shadcnComponent/textarea.jsx';
 import FormWrapper from '@/components/ui/formWrapper';
 
 function CreateTextComponent({ planeId, editGraphObject }) {
@@ -21,8 +18,6 @@ function CreateTextComponent({ planeId, editGraphObject }) {
 
 
   function handleTextFormSubmit(data) {
-
-    console.log("Text component dta: ", data)
 
     if (editGraphObject) {
 

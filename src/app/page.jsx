@@ -1,13 +1,13 @@
 import { Orbitron } from 'next/font/google';
-import { Button } from '../components/ui/button';
+import { Button } from '@/components/ui/shadcnComponent/button';
 import { ArrowRight } from 'lucide-react';
 import '../globals.css';
-import LineChartExample from '../components/heroSectionExamples/exLineChart'
-import AreaChartExample from '../components/heroSectionExamples/exAreaChart'
-import BarChartExample from '../components/heroSectionExamples/exBarChart'
-import PieChartExample from '../components/heroSectionExamples/exPieChart'
+import LineChartExample from '@/components/ui/heroSectionExamples/exLineChart';
+import AreaChartExample from '@/components/ui/heroSectionExamples/exAreaChart';
+import BarChartExample from '@/components/ui/heroSectionExamples/exBarChart';
+import PieChartExample from '@/components/ui/heroSectionExamples/exPieChart';
 import Link from 'next/link'
-import Navbar from '../components/ui/navbar'
+import Navbar from '@/components/ui/navbar'
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] })
 

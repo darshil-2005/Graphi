@@ -1,7 +1,7 @@
 'use client';
 
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { CustomTooltip } from '../../utils/manualUtils';
+import { CustomTooltip } from '@/utils/manualUtils';
 
 const data = [
   { name: 'Jan', uv: 4000, pv: 2400, amt: 2400 },

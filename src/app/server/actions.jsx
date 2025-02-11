@@ -4,8 +4,6 @@ import { redirect } from 'next/navigation'
 import { usernameSchema } from '@/zod/schemas';
 import { auth, signIn, signOut } from '@/auth';
 import { prisma } from '@/../../prisma/prisma'
-import { v4 } from 'uuid';
-import fs from 'fs';
 
 
 export async function isUsernameAvailable(username) {
@@ -72,21 +70,21 @@ export async function usernameSetter(username) {
   }
 }
 
-export async function hasCompletedOnboarding() {
-  const session = await auth();
-  const isUserOnBoarded = await prisma.user.findFirst({
-    where: {
-      email: session.user.email,
-    },
-    select: {
-      username: true,
-    }
-  });
-  if (!(isUserOnBoarded.username)) {
-    redirect('/onboarding');
-  }
-  return 0
-}
+// export async function hasCompletedOnboarding() {
+//   const session = await auth();
+//   const isUserOnBoarded = await prisma.user.findFirst({
+//     where: {
+//       email: session.user.email,
+//     },
+//     select: {
+//       username: true,
+//     }
+//   });
+//   if (!(isUserOnBoarded.username)) {
+//     redirect('/onboarding');
+//   }
+//   return 0
+// }
 
 export async function handleLogin(method) {
   await signIn(method, { redirectTo: "/" })
@@ -201,48 +199,68 @@ export async function DBSync(planeElements, graphElements) {
   try {
 
     for (let planeElement of planeElements) {
-      await prisma.planeElement.upsert({
-        where: {
-          planeElementId: planeElement.graphId,
-        },
-        update: {
-          planeElementId: planeElement.graphId,
-          planeId: planeElement.planeId,
-          planeElementJsonData: planeElement,
-        },
-        create: {
-          planeElementId: planeElement.graphId,
-          planeId: planeElement.planeId,
-          planeElementJsonData: planeElement,
-        }
 
-      })
+      if (planeElement.isdeleted == true) {
+        await prisma.planeElement.delete({
+          where: {
+            planeElementId: planeElement.graphId,
+          }
+        })
+      } else {
+        await prisma.planeElement.upsert({
+          where: {
+            planeElementId: planeElement.graphId,
+          },
+          update: {
+            planeElementId: planeElement.graphId,
+            planeId: planeElement.planeId,
+            planeElementJsonData: planeElement,
+          },
+          create: {
+            planeElementId: planeElement.graphId,
+            planeId: planeElement.planeId,
+            planeElementJsonData: planeElement,
+          }
+
+        })
+      }
     }
 
-    for (let graphElement of graphElements) {
-      await prisma.graphElement.upsert({
-        where: {
-          elementId: graphElement.elementId,
-        },
-        update: {
-          elementId: graphElement.elementId,
-          planeElementId: graphElement.graphId,
-          graphElementsJsonData: graphElement,
-        },
-        create: {
-          elementId: graphElement.elementId,
-          planeElementId: graphElement.graphId,
-          graphElementsJsonData: graphElement,
-        }
 
-      })
+    for (let graphElement of graphElements) {
+
+
+      if (graphElement.isdeleted == true) {
+        await prisma.graphElement.delete({
+          where: {
+            elementId: graphElement.elementId,
+          }
+        })
+      } else {
+        await prisma.graphElement.upsert({
+          where: {
+            elementId: graphElement.elementId,
+          },
+          update: {
+            elementId: graphElement.elementId,
+            planeElementId: graphElement.graphId,
+            graphElementsJsonData: graphElement,
+          },
+          create: {
+            elementId: graphElement.elementId,
+            planeElementId: graphElement.graphId,
+            graphElementsJsonData: graphElement,
+          }
+
+        })
+      }
     }
 
     return 1
 
   } catch (error) {
 
-    console.error("Error Syncing Changes: ", error);
+    console.error("Error Syncing Changes: ", error.message);
     return error
 
   }
@@ -261,7 +279,7 @@ export async function planeElementsAndGraphElementFetcher(planeIdArray) {
       }
 
     })
-    planeElements.push(...planeElements, ...temp);
+    planeElements.push(...temp);
   }
 
 
@@ -273,7 +291,7 @@ export async function planeElementsAndGraphElementFetcher(planeIdArray) {
       }
     })
 
-    graphElements.push(...graphElements, ...temp);
+    graphElements.push(...temp);
 
   }
 

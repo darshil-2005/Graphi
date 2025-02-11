@@ -2,10 +2,10 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
-import { Button } from '../../ui/button';
-import { retrieveGraphObjectIndex } from '../../../utils/manualUtils.jsx';
-import { isTheElementInGraphElementsArray, retrieveGraphObjectIndexAndElementIndex } from '../../../utils/manualUtils.jsx';
-import { generateId } from '../../../utils/manualUtils.jsx';
+import { Button } from '@/components/ui/shadcnComponent/button';
+import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
+import { isTheElementInGraphElementsArray, retrieveGraphObjectIndexAndElementIndex } from '@/utils/manualUtils';
+import { generateId } from '@/utils/manualUtils';
 import { toast } from "sonner";
 
 const AddPolarGrid = ({ graphId, editGraphObject }) => {

@@ -1,9 +1,9 @@
 import { ThemeProvider } from "../components/themeProvider";
 import { Roboto, Inter } from 'next/font/google';
 import '../globals.css'
-import Navbar from "../components/ui/navbar"
+import Navbar from "@/components/ui/navbar"
 import { SessionProvider } from "next-auth/react";
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster, toast } from 'sonner';
 
 export const metadata = {
   title: "Graphi",
@@ -17,7 +17,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning className='scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background'>
       <body className={`${roboto.className} text-[16px] tracking-widest bg-background text-foreground `}>
-      <Toaster />
+      <Toaster richColors />
         <SessionProvider>
           <ThemeProvider
             attribute="class"

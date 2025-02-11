@@ -6,8 +6,7 @@ import { toast } from "sonner";
 import Plane from '../plane/plane';
 import { generateId } from '@/utils/manualUtils'
 import { createProjectPlanes, handleFetchingPlanesFromDatabase } from '@/app/server/actions'
-import { Button } from '../ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Button } from '@/components/ui/shadcnComponent/button';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import AddAreaElement from '../createGraphElements/createCartesianGraphElements/addAreaElement.jsx';
 import AddLineElement from '../createGraphElements/createCartesianGraphElements/addLineElement.jsx';
@@ -23,7 +22,13 @@ import AddPolarAngleAxis from '../createGraphElements/createRadarGraphElements/a
 import AddPolarRadiusAxis from '../createGraphElements/createRadarGraphElements/addPolarRadiusAxis.jsx';
 import AddPolarGrid from '../createGraphElements/createRadarGraphElements/addPolarGrid.jsx';
 import AddRadar from '../createGraphElements/createRadarGraphElements/addRadar.jsx';
-import AddRadialBarChart from '../createGraphElements/createRadialBarGraphElements/addRadialBarGraphElement.jsx'
+import AddRadialBarChart from '../createGraphElements/createRadialBarGraphElements/addRadialBarGraphElement.jsx';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/shadcnComponent/accordion";
 
 function Project({ projectId }) {
 
@@ -35,8 +40,7 @@ function Project({ projectId }) {
   const setUserFiles = usePlaneElementsStore((state) => state.setUserFiles);
   const graphElements = usePlaneElementsStore((state) => state.graphElements);
   const syncDeltasInDB = usePlaneElementsStore((state) => state.syncDeltasInDB);
-  const elementsFetcherFromDatabaseOnOpeningProject = usePlaneElementsStore((state) => state.elementsFetcherFromDatabaseOnOpeningProject)
-  const deltas = usePlaneElementsStore((state) => state.deltas)
+  const elementsFetcherFromDatabaseOnOpeningProject = usePlaneElementsStore((state) => state.elementsFetcherFromDatabaseOnOpeningProject);
 
 
   const [showGraphElements, setShowGraphElements] = useState(false);
@@ -45,12 +49,20 @@ function Project({ projectId }) {
   const [planes, setPlanes] = useState(undefined);
   const [planeNumber, setPlaneNumber] = useState(0);
   const [planeIdArray, setPlaneIdArray] = useState(undefined);
-  const [fetched, setFetched] = useState(false)
+  const [fetched, setFetched] = useState(false);
 
-  async function handleSavingChanges(){
+
+  const [syncingChanges, setSyncingChanges] = useState(false); 
+
+  async function handleSavingChanges() {
+
+    setSyncingChanges(true);    
     await syncDeltasInDB(planeIdArray);
+    setSyncingChanges(false);    
+
+    toast.success('Changes saved successfully!!');
   }
-  
+
   useEffect(() => {
     async function temp() {
       setUserFiles();
@@ -59,29 +71,28 @@ function Project({ projectId }) {
     }
     temp();
 
-    
   }, [projectId, planeNumber])
 
   useEffect(() => {
-    if (planes){
-      setPlaneIdArray(planes.map((d) => {return d.planeId}));
+
+    if (planes) {
+      setPlaneIdArray(planes.map((d) => { return d.planeId }));
     }
   }, [planes]);
 
   useEffect(() => {
-    
-    async function temp(){
-      if (planeIdArray && !fetched ){
-        
-        await elementsFetcherFromDatabaseOnOpeningProject(planeIdArray);
-      }
+
+    async function temp() {
+      await elementsFetcherFromDatabaseOnOpeningProject(planeIdArray);
     }
-    
-    temp();
+
+    if (!fetched && planeIdArray) {
+      temp();
+      setFetched(true);
+    }
 
   }, [planeIdArray])
-  
-  console.log("Graph Elements: ", graphElements);
+
 
   async function handleCreatingPlanes() {
 
@@ -102,14 +113,14 @@ function Project({ projectId }) {
     }
 
   }
-
+``
   return (
     <div className='px-6'>
 
       <div className='flex mb-4 p-2'>
         <Button className='w-60 m-auto' variant='secondary' onClick={() => { setShowGraphElements(!showGraphElements); }}>Show Graph Elements</Button>
         <Button className='w-60 m-auto' variant='secondary' onClick={() => { setEditMode(!editMode); }}>Edit Mode</Button>
-        <Button className='w-60 m-auto bg-blue-600 hover:bg-blue-500 text-primary' onClick={handleSavingChanges}>Save Changes</Button>
+        <Button className='w-60 m-auto bg-blue-600 hover:bg-blue-500 text-primary' onClick={handleSavingChanges} disabled={syncingChanges}>{syncingChanges ? 'Saving Changes...' : 'Save Changes'}</Button>
       </div>
 
       {planes?.map((data, index) => {
@@ -119,20 +130,22 @@ function Project({ projectId }) {
       <Button className='w-full mb-4' variant='secondary' onClick={handleCreatingPlanes}>Add New Plane</Button>
 
       {(showGraphElements) &&
-        <div className='absolute right-0 top-0 bg-background h-[200vh] w-[30rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center '>
+        <div className='fixed right-0 top-0 bg-background h-full w-[30rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background'>
           <span className='text-4xl my-4 font-bold text-primary block text-center'>Current Components</span>
 
-          {graphElements.filter((d, i) => {
+          {graphElements.filter((d) => {
 
             return elements[focusedElementIndex]?.graphId == d.graphId
 
-          }).map((currItem, index) => (
+          }).filter((d) => d.isdeleted == false)
+          .map((currItem, index) => (
             <div key={index}>
-              <Popover>
-                <PopoverTrigger className='text-accent capitalize bg-blue-200 py-2 px-4 rounded-xl text-3xl'>
+              <Accordion type="single" collapsible className='mx-auto border px-6 py-2 w-80 grid justify-center'>
+                <AccordionItem value="Graph Add Menu">
+                <AccordionTrigger className='capitalize py-2 gap-x-4 rounded-xl text-3xl'>
                   {currItem?.type}
-                </PopoverTrigger>
-                <PopoverContent className='w-fit flex flex-col justify-center gap-y-4'>
+                </AccordionTrigger>
+                <AccordionContent className='w-fit flex flex-col justify-center gap-y-4'>
                   {currItem?.type === 'area' &&
                     <AddAreaElement graphId={currItem?.graphId} editGraphObject={currItem} />}
                   {currItem?.type === 'bar' &&
@@ -164,8 +177,9 @@ function Project({ projectId }) {
                   {currItem?.type === 'radialBarGraph' &&
                     <AddRadialBarChart graphId={currItem?.graphId} editGraphObject={currItem} />}
                   <Button variant={'destructive'} id={currItem?.graphId} onClick={() => deleteElementFromGraphElementsArray(currItem)}>Delete</Button>
-                </PopoverContent>
-              </Popover>
+                </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </div>
           ))
           }

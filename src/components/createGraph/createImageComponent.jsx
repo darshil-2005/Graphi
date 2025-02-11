@@ -1,12 +1,12 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
+import { Input } from '@/components/ui/shadcnComponent/input';
+import { Button } from '@/components/ui/shadcnComponent/button';
 import ColorInput from '../formElements/colorInput';
 import NumberInput from '../formElements/numberInput';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import FileInput from '../formElements/fileInput';
-import { generateId } from '../../utils/manualUtils';
+import { generateId } from '@/utils/manualUtils';
 import FormWrapper from '@/components/ui/formWrapper';
 import DropdownFileInput from '@/components/formElements/dropdownFileInput'
 

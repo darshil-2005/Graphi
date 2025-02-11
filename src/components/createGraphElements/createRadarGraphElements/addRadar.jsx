@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
-import { Button } from '../../ui/button';
-import { retrieveGraphObjectIndex, generateId } from '../../../utils/manualUtils.jsx';
+import { Button } from '@/components/ui/shadcnComponent/button';
+import { retrieveGraphObjectIndex, generateId } from '@/utils/manualUtils';
 import DropdownInput from '../../formElements/dropdownInput';
 import ColorInput from '../../../components/formElements/colorInput';
 import NumberInput from '../../../components/formElements/numberInput';
@@ -25,8 +25,6 @@ const AddRadar = ({ graphId, editGraphObject }) => {
 
 
     function handleLineFormSubmit(data) {
-
-        console.log("hekkee", data)
 
         let radarTemp = {
             elementId: editGraphObject ? editGraphObject.elementId : crypto.randomUUID(),

@@ -1,13 +1,13 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
-import { Label } from '../../ui/label';
-import { Button } from '../../ui/button';
+import { Label } from '@/components/ui/shadcnComponent/label';
+import { Button } from '@/components/ui/shadcnComponent/button';
 import { useState, useEffect } from 'react';
 import ColorInput from '../../formElements/colorInput';
 import DropdownInput from '../../formElements/dropdownInput';
 import { CheckBox } from 'src/components/formElements/checkBox.jsx';
-import { retrieveGraphObjectIndex } from '../../../utils/manualUtils.jsx';
+import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import { retrieveFileIndex } from '@/utils/manualUtils';
 import { retrieveDataFromIndexedDBWithFileId } from '@/utils/manualUtils'
 

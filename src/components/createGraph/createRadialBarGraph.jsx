@@ -5,11 +5,11 @@
 
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/shadcnComponent/button';
 import ColorInput from '../formElements/colorInput';
 import NumberInput from '../formElements/numberInput';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
-import { fileReader } from '../../utils/manualUtils';
+import { fileReader } from '@/utils/manualUtils';
 import FormWrapper from '@/components/ui/formWrapper';
 import DropdownFileInput from '@/components/formElements/dropdownFileInput'
 

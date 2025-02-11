@@ -5,8 +5,8 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
-import { Button } from '../../ui/button.jsx';
-import { getAllColumnsOfSpecificDataType, retrieveGraphObjectIndex } from '../../../utils/manualUtils.jsx';
+import { Button } from '@/components/ui/shadcnComponent/button.jsx';
+import { getAllColumnsOfSpecificDataType, retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import DropdownInput from '../../formElements/dropdownInput.jsx';
 import NumberInput from '../../formElements/numberInput.jsx';
 import TextInput from 'src/components/formElements/textInput.jsx';

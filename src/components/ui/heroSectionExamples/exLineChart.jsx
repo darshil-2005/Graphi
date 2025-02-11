@@ -1,7 +1,7 @@
 "use client"; 
 
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { CustomTooltip } from '../../utils/manualUtils';
+import { CustomTooltip } from '@/utils/manualUtils';
 
 const data = [
   { name: 'Jan', Sold: 4000, Left: 2400, amt: 2400 },

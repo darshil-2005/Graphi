@@ -11,14 +11,14 @@ import AddLegend from '../createGraphElements/createCartesianGraphElements/addLe
 import AddToolTip from '../createGraphElements/createCartesianGraphElements/addToolTip';
 import ContextMenuWrapper from '../ui/contextMenuWrapper';
 import CommonGraphWrapper from '../ui/commonGraphWrapper';
-import { createGraphElements } from '../../utils/manualUtils';
+import { createGraphElements } from '@/utils/manualUtils';
 import { retrieveDataFromIndexedDBWithFileId } from '@/utils/manualUtils'
 import CreateCartesianGraph from '../createGraph/createCartesianGraph';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../../components/ui/popover"
+} from "@/components/ui/shadcnComponent/popover"
 import usePlaneElementsStore from '@/features/store/planeElementsStore';
 
 
@@ -53,7 +53,7 @@ function CartesianGraph({ graphObject, index, setDraggedElement, setFocusedEleme
               graphObjectElements.filter((d, i) => {
                 return d.graphId == graphObject.graphId
 
-              }).map((d, i) => {
+              }).filter((d) => d.isdeleted == false).map((d, i) => {
                 return createGraphElements(d, i);
               })
             }

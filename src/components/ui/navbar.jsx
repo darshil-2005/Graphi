@@ -3,16 +3,8 @@ import { Orbitron } from 'next/font/google'
 import { auth } from '../../auth'
 import Link from 'next/link'
 import ModeToggle from '../modeToogle'
-import { Button } from './button'
+import { Button } from '@/components/ui/shadcnComponent/button'
 import LogoutButton from '@/components/authButtons/logoutButton'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] })
 
@@ -25,9 +17,12 @@ async function Navbar() {
       <div className={`${orbitron.className} text-3xl tracking-[0.6rem] text-primary`}><Link href='/'>GRAPHI</Link></div>
       <div className='mt-1'>
         <ul className={`flex gap-x-16 px-6 py-1 rounded-full text-primary bg-secondary/60 border-2 border-border overflow-hidden`}>
-          <Link href='/templates'><li className='relative before:absolute before:content-[""] before:top-1/2 before:-translate-y-1/2 before:left-1/2 before:-translate-x-1/2 before:bg-chart-4/0 hover:before:bg-chart-4/40 before:transition-all duration-5000 before:h-[60%] before:w-[120%] before:blur-[10px]'>Templates</li></Link>
+          <a href='/templates'><li className='relative before:absolute before:content-[""] before:top-1/2 before:-translate-y-1/2 before:left-1/2 before:-translate-x-1/2 before:bg-chart-4/0 hover:before:bg-chart-4/40 before:transition-all duration-5000 before:h-[60%] before:w-[120%] before:blur-[10px]'>Templates</li></a>
+          <a href='/dashboard'><li className='relative before:absolute before:content-[""] before:top-1/2 before:-translate-y-1/2 before:left-1/2 before:-translate-x-1/2 before:bg-chart-4/0 hover:before:bg-chart-4/40 before:transition-all duration-5000 before:h-[60%] before:w-[120%] before:blur-[10px]'>Dashboard</li></a>
+          <a href='/pricing'><li className='relative before:absolute before:content-[""] before:top-1/2 before:-translate-y-1/2 before:left-1/2 before:-translate-x-1/2 before:bg-chart-4/0 hover:before:bg-chart-4/40 before:transition-all duration-5000 before:h-[60%] before:w-[120%] before:blur-[10px]'>Pricing</li></a>
+          {/* <Link href='/templates'><li className='relative before:absolute before:content-[""] before:top-1/2 before:-translate-y-1/2 before:left-1/2 before:-translate-x-1/2 before:bg-chart-4/0 hover:before:bg-chart-4/40 before:transition-all duration-5000 before:h-[60%] before:w-[120%] before:blur-[10px]'>Templates</li></Link>
           <Link href='/dashboard'><li className='relative before:absolute before:content-[""] before:top-1/2 before:-translate-y-1/2 before:left-1/2 before:-translate-x-1/2 before:bg-chart-4/0 hover:before:bg-chart-4/40 before:transition-all duration-5000 before:h-[60%] before:w-[120%] before:blur-[10px]'>Dashboard</li></Link>
-          <Link href='/pricing'><li className='relative before:absolute before:content-[""] before:top-1/2 before:-translate-y-1/2 before:left-1/2 before:-translate-x-1/2 before:bg-chart-4/0 hover:before:bg-chart-4/40 before:transition-all duration-5000 before:h-[60%] before:w-[120%] before:blur-[10px]'>Pricing</li></Link>
+          <Link href='/pricing'><li className='relative before:absolute before:content-[""] before:top-1/2 before:-translate-y-1/2 before:left-1/2 before:-translate-x-1/2 before:bg-chart-4/0 hover:before:bg-chart-4/40 before:transition-all duration-5000 before:h-[60%] before:w-[120%] before:blur-[10px]'>Pricing</li></Link> */}
         </ul>
       </div>
       <div className='flex gap-x-8'>

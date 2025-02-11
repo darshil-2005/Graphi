@@ -1,7 +1,7 @@
 import React, { Children } from 'react'
 import { Ellipsis } from 'lucide-react';
-import { Button } from './button';
-import { showContextMenu } from '../../utils/manualUtils';
+import { Button } from '@/components/ui/shadcnComponent/button';
+import { showContextMenu } from '@/utils/manualUtils';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 
 const ContextMenuWrapper = ({ children, graphObject }) => {

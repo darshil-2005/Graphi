@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/shadcnComponent/button'
 import { Plus } from 'lucide-react'
 import { prisma } from '@/../../prisma/prisma'
 import { generateId } from '@/utils/manualUtils'

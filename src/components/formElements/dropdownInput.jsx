@@ -1,9 +1,7 @@
 import React from 'react'
-import { Label } from '../ui/label'
+import { Label } from '@/components/ui/shadcnComponent/label'
 
 const DropdownInput = ({ registerId, register, optionsArray, label, defaultValue, onChangeHandler = () => null, formatLabel = false }) => {
-
-    // console.log('Keys: ', optionsArray, typeof optionsArray);    
 
 
     return (

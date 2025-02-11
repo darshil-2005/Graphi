@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
-import { Button } from '../../ui/button';
-import { retrieveGraphObjectIndex } from '../../../utils/manualUtils.jsx';
+import { Button } from '@/components/ui/shadcnComponent/button';
+import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import DropdownInput from '../../formElements/dropdownInput';
 import NumberInput from '../../formElements/numberInput';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/shadcnComponent/button';
 import ColorInput from '../formElements/colorInput';
 import NumberInput from '../formElements/numberInput';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
@@ -15,8 +15,6 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
 
 
     async function addCartesianGraphInThePlaneElementsArray(data) {
-
-        console.log("heelo: ", editGraphObject?.margin?.top)
 
         if (editGraphObject) {
 
