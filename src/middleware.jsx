@@ -6,6 +6,8 @@ import { isUserOnBoarded } from '@/app/server/actions'
 export async function middleware(request) {
   const session = await auth();
 
+  console.log("session", session)
+
   if (!session) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
