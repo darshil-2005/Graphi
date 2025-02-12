@@ -10,7 +10,7 @@ import { FaGithub } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { ArrowRight } from 'lucide-react';
-import { Separator } from '../../components/ui/separator';
+import { Separator } from '@/components/ui/shadcnComponent/separator';
 import LoginButton from '../../components/authButtons/loginButton'
 import Link from 'next/link'
 import { auth } from '@/auth'
