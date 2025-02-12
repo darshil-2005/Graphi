@@ -7,11 +7,8 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
-import { ArrowRight } from 'lucide-react';
 import { Separator } from '@/components/ui/shadcnComponent/separator';
 import LoginButton from '../../components/authButtons/loginButton'
-import Link from 'next/link'
-import { auth } from '@/auth'
 import Navbar from '@/components/ui/navbar'
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] })
