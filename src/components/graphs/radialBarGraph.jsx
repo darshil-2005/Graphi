@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { RadialBarChart, RadialBar, Legend, Tooltip, Text, ResponsiveContainer } from 'recharts';
+import { useEffect, useState } from 'react';
+import { RadialBarChart, ResponsiveContainer } from 'recharts';
 import ContextMenuWrapper from '../ui/contextMenuWrapper';
 import CommonGraphWrapper from '../ui/commonGraphWrapper';
 import AddLegend from '../createGraphElements/createCartesianGraphElements/addLegend';

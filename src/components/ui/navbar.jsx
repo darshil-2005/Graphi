@@ -1,4 +1,3 @@
-import React from 'react'
 import { Orbitron } from 'next/font/google'
 import { auth } from '../../auth'
 import Link from 'next/link'

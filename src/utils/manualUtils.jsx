@@ -43,7 +43,7 @@ export function showContextMenu(e) {
 }
 
 export function generateId() {
-  return String(crypto.randomUUID().replace(/-/g, ''))
+  return String(crypto.randomUUID().replace(/-/g, ''));
 }
 
 export async function fileReader(text) {

@@ -1,6 +1,5 @@
-"use client";
-
-import React, { useState } from 'react';
+"use client";;
+import { useState } from 'react';
 import CartesianGraph from '../graphs/cartesianGraph.jsx';
 import PieGraph from '../graphs/pieGraph.jsx';
 import RadarGraph from '../graphs/radarGraph.jsx';
@@ -14,7 +13,6 @@ import CreateTextComponent from '../createGraph/createTextComponent.jsx';
 import CreateImageComponent from '../createGraph/createImageComponent.jsx';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import ImageComponent from '../graphs/image.jsx';
-import PlusUi from '../ui/plus-ui.jsx';
 
 import {
   Accordion,

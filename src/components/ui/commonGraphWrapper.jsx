@@ -1,4 +1,3 @@
-import React from 'react';
 import { hexToRgbA } from '@/utils/manualUtils';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import { retrieveGraphObjectIndex } from '@/utils/manualUtils';

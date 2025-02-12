@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ComposedChart, XAxis, YAxis, ResponsiveContainer, Scatter, CartesianGrid } from 'recharts';
+import { ComposedChart, ResponsiveContainer } from 'recharts';
 import AddLineElement from '../createGraphElements/createCartesianGraphElements/addLineElement';
 import AddXAxisElement from '../createGraphElements/createCartesianGraphElements/addXAxisElement';
 import AddYAxisElement from '../createGraphElements/createCartesianGraphElements/addYAxisElement';

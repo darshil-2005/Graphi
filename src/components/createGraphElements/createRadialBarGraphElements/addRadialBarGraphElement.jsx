@@ -1,7 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
-import { Label } from '@/components/ui/shadcnComponent/label';
 import { Button } from '@/components/ui/shadcnComponent/button';
 import { useState, useEffect } from 'react';
 import ColorInput from '../../formElements/colorInput';

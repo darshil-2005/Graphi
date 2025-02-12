@@ -1,10 +1,8 @@
-import React from 'react'
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
 import { Button } from '@/components/ui/shadcnComponent/button';
 import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
-import { generateId } from '@/utils/manualUtils';
 
 function AddLegend({ graphId, editGraphObject }) {
 

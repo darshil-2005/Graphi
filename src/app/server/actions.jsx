@@ -1,6 +1,5 @@
 'use server';
 
-import { redirect } from 'next/navigation'
 import { usernameSchema } from '@/zod/schemas';
 import { auth, signIn, signOut } from '@/auth';
 import { prisma } from '@/../../prisma/prisma'

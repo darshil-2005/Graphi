@@ -1,6 +1,4 @@
-import React from 'react'
 import { hexToRgbA } from '@/utils/manualUtils'
-import { ResponsiveContainer, ComposedChart } from 'recharts'
 import CommonGraphWrapper from '../ui/commonGraphWrapper'
 import ContextMenuWrapper from '../ui/contextMenuWrapper'
 import CreateTextComponent from '../createGraph/createTextComponent'

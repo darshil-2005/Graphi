@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/shadcnComponent/card'
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/shadcnComponent/card'
 import { Orbitron } from 'next/font/google';
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";

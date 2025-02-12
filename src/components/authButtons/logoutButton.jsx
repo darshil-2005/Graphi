@@ -1,8 +1,5 @@
-'use client';
-
-import React from 'react';
+'use client';;
 import { handleLogout } from '@/app/server/actions'
-import { signOut } from '@/auth'
 import { Button } from '@/components/ui/shadcnComponent/button'
 
 const LogOutButton = ({ children, variant, className }) => {

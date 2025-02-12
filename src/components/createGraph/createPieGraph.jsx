@@ -3,11 +3,6 @@
 
 
 
-//!  IMPLEMENT TOP AND LEFT PROPERTIES IN FORM
-
-
-
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import ColorInput from '../formElements/colorInput';
 import NumberInput from '../formElements/numberInput';

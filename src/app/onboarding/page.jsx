@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from '@/../../prisma/prisma'
-import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/shadcnComponent/card'
+import { Card, CardHeader, CardTitle, CardDescription} from '@/components/ui/shadcnComponent/card'
 import { redirect } from 'next/navigation';
 import { auth } from '@/auth'
 import Navbar from '@/components/ui/navbar'

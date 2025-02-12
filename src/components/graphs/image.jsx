@@ -1,8 +1,6 @@
 import React from 'react'
 import CommonGraphWrapper from '../ui/commonGraphWrapper'
 import { ResponsiveContainer } from 'recharts'
-import Image from 'next/image'
-// import universe from '/universe.jpg'
 
 const ImageComponent = ({ graphObject, index, setDraggedElement, setFocusedElementIndex, editMode }) => {
   

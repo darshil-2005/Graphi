@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';;
+import { useState, useEffect } from 'react';;
 import ContextMenuWrapper from '../ui/contextMenuWrapper';
 import CommonGraphWrapper from '../ui/commonGraphWrapper';
 import AddLegend from '../createGraphElements/createCartesianGraphElements/addLegend';
@@ -8,7 +8,7 @@ import AddPolarGrid from '../createGraphElements/createRadarGraphElements/addPol
 import AddPolarAngleAxis from '../createGraphElements/createRadarGraphElements/addPolarAngleAxis';
 import AddPolarRadiusAxis from '../createGraphElements/createRadarGraphElements/addPolarRadiusAxis';
 import CreateRadarGraph from '../createGraph/createRadarGraph.jsx';
-import { RadarChart, Radar, PolarAngleAxis, PolarRadiusAxis, Legend, ResponsiveContainer, PolarGrid } from 'recharts';
+import { RadarChart, ResponsiveContainer } from 'recharts';
 import { createGraphElements } from '@/utils/manualUtils.jsx';
 import { retrieveDataFromIndexedDBWithFileId } from '@/utils/manualUtils'
 import {

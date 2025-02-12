@@ -1,4 +1,3 @@
-import React from 'react'
 import { Button } from '@/components/ui/shadcnComponent/button'
 import { format } from 'date-fns';
 import Link from 'next/link';

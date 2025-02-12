@@ -1,9 +1,8 @@
 import { ThemeProvider } from "../components/themeProvider";
 import { Roboto, Inter } from 'next/font/google';
 import '../globals.css'
-import Navbar from "@/components/ui/navbar"
 import { SessionProvider } from "next-auth/react";
-import { Toaster, toast } from 'sonner';
+import { Toaster } from 'sonner';
 
 export const metadata = {
   title: "Graphi",

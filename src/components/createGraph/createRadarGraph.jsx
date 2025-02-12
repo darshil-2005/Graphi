@@ -1,10 +1,6 @@
 
 
 
-//! IMPLEMENT LEFT AND TOP IN FORM!!
-
-
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/shadcnComponent/button';
 import ColorInput from '../formElements/colorInput';
