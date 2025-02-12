@@ -1,10 +1,7 @@
 {
-  "/api/checkOnboardingStatus/route": "app/api/checkOnboardingStatus/route.js",
-  "/api/fileUploader/route": "app/api/fileUploader/route.js",
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
-  "/page": "app/page.js",
   "/login/page": "app/login/page.js",
-  "/onboarding/page": "app/onboarding/page.js",
+  "/project/[projectId]/page": "app/project/[projectId]/page.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/project/[projectId]/page": "app/project/[projectId]/page.js"
+  "/page": "app/page.js",
+  "/onboarding/page": "app/onboarding/page.js"
 }
