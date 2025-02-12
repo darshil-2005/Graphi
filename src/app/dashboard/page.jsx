@@ -1,9 +1,8 @@
-import React from 'react'
 import Navbar from '@/components/ui/navbar.jsx'
 import CreateProjectButton from '@/components/createProject/createProjectButton'
 import FileUploaderInput from '@/components/fileUploader/fileUploaderButton'
 import { auth } from '@/auth'
-import { fetchAllProjectsForAParticularUser, fetchAllFilesUserHasAccessTo } from '@/app/server/actions'
+import { fetchAllProjectsForAParticularUser } from '@/app/server/actions';
 import ProjectDashboardCard from "@/components/ui/projectDashboardCard"
 import DashboardFileDisplayer from './dashboardFileDisplayer'
 

@@ -1,5 +1,5 @@
 import { ThemeProvider } from "../components/themeProvider";
-import { Roboto, Inter } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import '../globals.css'
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from 'sonner';
@@ -10,7 +10,7 @@ export const metadata = {
 };
 
 const roboto = Roboto({ subsets: ['cyrillic'], weight: ['400', '700'] });
-const inter = Inter({ subsets: ['latin'], weight: ['400', '700'] });
+// const inter = Inter({ subsets: ['latin'], weight: ['400', '700'] });
 
 export default function RootLayout({ children }) {
   return (

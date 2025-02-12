@@ -64,7 +64,7 @@ export async function usernameSetter(username) {
     return response;
 
   } catch (error) {
-    console.error('Something wrong with username!!')
+    console.error('Something wrong with username!!', error.message)
     return false
   }
 }

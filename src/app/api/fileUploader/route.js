@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import path from 'path';
 
 
-export async function POST(req, res) {
+export async function POST(req) {
 
     const botToken = '7130242217:AAGDhKHDrmQzQQkSRRHNsUF0Y3q6jxkmpKU'; 
     const chatId = -1002393641410; 
@@ -37,7 +37,7 @@ export async function POST(req, res) {
                 fs.unlinkSync(filePath)
                 return NextResponse.json({ success: true, response }, { status: 201 });
             } catch (error) {
-                return NextResponse.json({ Error: 'Only proper image types allowed!'}, {status: 400})
+                return NextResponse.json({ Error: 'Only proper image types allowed!', message: error.message }, {status: 400})
             }
            
         }
