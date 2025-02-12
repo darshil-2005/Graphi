@@ -6,9 +6,7 @@ import path from 'path';
 
 export async function POST(req) {
 
-    const botToken = '7130242217:AAGDhKHDrmQzQQkSRRHNsUF0Y3q6jxkmpKU'; 
-    const chatId = -1002393641410; 
-    const bot = new TelegramBot(botToken);
+    const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN);
 
     try {
         const formData = await req.formData();
@@ -43,7 +41,7 @@ export async function POST(req) {
         }
 
         if (fileType.startsWith('text/csv')) {
-            const response = await bot.sendDocument(chatId, fs.createReadStream(filePath));
+            const response = await bot.sendDocument(process.env.TELEGRAM_CHAT_ID, fs.createReadStream(filePath));
             fs.unlinkSync(filePath);
             return NextResponse.json({ success: true, response }, { status: 201 });
         }

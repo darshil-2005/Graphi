@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import { openDB } from 'idb'
 import { Line, Area, Bar, Scatter, Pie, CartesianGrid, Tooltip, Legend, RadialBar, PolarGrid, PolarRadiusAxis, PolarAngleAxis, Radar, XAxis, YAxis } from 'recharts';
+// import telegramBot from 'node-telegram-bot-api';
 
 export function isTheElementInGraphElementsArray(graphElementsArray, graphId, element) {
 
@@ -187,15 +188,45 @@ export async function retrieveDataFromIndexedDBWithFileId(fileId) {
   const dbPromise = openDB('GraphiDataBase', 1, {
     upgrade(db) {
       if (!db.objectStoreNames.contains('Data')) {
-        db.createObjectStore('Data', { keyPath: 'id' }); // Ensure 'id' is the keyPath
+        db.createObjectStore('Data', { keyPath: 'id' });
       }
     }
   });
 
   const db = await dbPromise;
-  const data = await db.get('Data', fileId);
+  let data = await db.get('Data', fileId);
+
+  data = data?.userData
+
+  if (!data) {
+
+    const responseOfDataFromTelegramDataFetcher = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/dataRetrieveFromTelegram`, {
+
+      method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ fileId }),
+    });
+
+    const response = await responseOfDataFromTelegramDataFetcher.json();
+
+    data = await fileReader(response.data);    
+
+    const dbPromise = openDB('GraphiDataBase', 1, {
+      upgrade(db) {
+        const dataStore = db.createObjectStore('Data', { keyPath: 'id' });
+        dataStore.createIndex('id', 'id', { unique: true });
+      },
+    });
   
-  return data?.userData
+    const db = await dbPromise;
+    await db.put('Data', { id: fileId, userData: data });
+
+    return data;
+  }
+  
+  return data
 }
 
 export function retrieveFileIndex(userDataFiles, fileId){

@@ -17,22 +17,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/api/auth/[...nextauth]/route.js"
     ],
-    "/login/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/login/page.css",
-      "static/chunks/app/login/page.js"
-    ],
     "/api/checkOnboardingStatus/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/api/checkOnboardingStatus/route.js"
-    ],
-    "/onboarding/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/onboarding/page.css",
-      "static/chunks/app/onboarding/page.js"
     ],
     "/dashboard/page": [
       "static/chunks/webpack.js",
@@ -45,11 +33,22 @@
       "static/chunks/main-app.js",
       "static/chunks/app/api/fileUploader/route.js"
     ],
+    "/onboarding/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/onboarding/page.css",
+      "static/chunks/app/onboarding/page.js"
+    ],
     "/project/[projectId]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/project/[projectId]/page.css",
       "static/chunks/app/project/[projectId]/page.js"
+    ],
+    "/api/dataRetrieveFromTelegram/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/dataRetrieveFromTelegram/route.js"
     ]
   }
 }

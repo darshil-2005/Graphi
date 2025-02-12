@@ -1,7 +1,8 @@
 {
-  "/login/page": "app/login/page.js",
+  "/api/checkOnboardingStatus/route": "app/api/checkOnboardingStatus/route.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
+  "/api/dataRetrieveFromTelegram/route": "app/api/dataRetrieveFromTelegram/route.js",
   "/project/[projectId]/page": "app/project/[projectId]/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
   "/page": "app/page.js",
-  "/onboarding/page": "app/onboarding/page.js"
+  "/dashboard/page": "app/dashboard/page.js"
 }

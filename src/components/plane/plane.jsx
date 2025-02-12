@@ -84,7 +84,7 @@ function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode
               <CreateRadialBarGraph planeId={planeId} />
               <CreateRadarGraph planeId={planeId} />
               <CreateTextComponent planeId={planeId} />
-              <CreateImageComponent planeId={planeId} />
+              {/* <CreateImageComponent planeId={planeId} /> */}
           </AccordionContent>
         </AccordionItem>
       </Accordion>
