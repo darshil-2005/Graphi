@@ -1,8 +1,7 @@
 // 'use client';
 
 import React from 'react';
-import { signIn } from '@/auth'
-import { Button } from '../../components/ui/button'
+import { Button } from '@/components/ui/shadcnComponent/button'
 import { handleLogin } from '@/app/server/actions';
 
 async function LoginButton({ children, method, variant, className }) {

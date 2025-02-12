@@ -1,10 +1,8 @@
 
 
 import React from 'react'
-import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '../../components/ui/card'
-import { Button } from '../../components/ui/button'
+import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from '@/components/ui/shadcnComponent/card'
 import { Orbitron } from 'next/font/google';
-import { Input } from '../../components/ui/input'
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
