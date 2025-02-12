@@ -219,9 +219,15 @@ export async function retrieveDataFromIndexedDBWithFileId(fileId) {
         dataStore.createIndex('id', 'id', { unique: true });
       },
     });
+
+    try {
+      const db = await dbPromise;
+      await db.put('Data', { id: fileId, userData: data });
+      
+    } catch (error) {
+      console.error(`Could not store data in local indexed database!!`);      
+    }  
   
-    const db = await dbPromise;
-    await db.put('Data', { id: fileId, userData: data });
 
     return data;
   }
