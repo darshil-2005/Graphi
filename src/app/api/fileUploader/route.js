@@ -20,7 +20,7 @@ export async function POST(req) {
 
         const fileType = file.type;
         const fileName = `${Date.now()}-${file.name}`;
-        const uploadDir = "tmp/uploads";
+        const uploadDir = "/tmp/uploads";
 
         if (!fs.existsSync(uploadDir)) {
             fs.mkdirSync(uploadDir, { recursive: true });
