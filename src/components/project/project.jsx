@@ -34,14 +34,12 @@ function Project({ projectId }) {
 
   const router = useRouter();
 
-
   const elements = usePlaneElementsStore((state) => state.planeElements);
   const deleteElementFromGraphElementsArray = usePlaneElementsStore((state) => state.deleteElementFromGraphElementsArray);
   const setUserFiles = usePlaneElementsStore((state) => state.setUserFiles);
   const graphElements = usePlaneElementsStore((state) => state.graphElements);
   const syncDeltasInDB = usePlaneElementsStore((state) => state.syncDeltasInDB);
   const elementsFetcherFromDatabaseOnOpeningProject = usePlaneElementsStore((state) => state.elementsFetcherFromDatabaseOnOpeningProject);
-
 
   const [showGraphElements, setShowGraphElements] = useState(false);
   const [editMode, setEditMode] = useState(true);
@@ -51,11 +49,9 @@ function Project({ projectId }) {
   const [planeIdArray, setPlaneIdArray] = useState(undefined);
   const [fetched, setFetched] = useState(false);
 
-
   const [syncingChanges, setSyncingChanges] = useState(false); 
 
   async function handleSavingChanges() {
-
     setSyncingChanges(true);    
     await syncDeltasInDB(planeIdArray);
     setSyncingChanges(false);    
@@ -70,39 +66,32 @@ function Project({ projectId }) {
       setPlanes(fetchedPlanes);
     }
     temp();
-
   }, [projectId, planeNumber])
 
   useEffect(() => {
-
     if (planes) {
       setPlaneIdArray(planes.map((d) => { return d.planeId }));
     }
   }, [planes]);
-
   useEffect(() => {
 
     async function temp() {
       await elementsFetcherFromDatabaseOnOpeningProject(planeIdArray);
     }
-
     if (!fetched && planeIdArray) {
       temp();
       setFetched(true);
     }
-
   }, [planeIdArray])
 
 
   async function handleCreatingPlanes() {
-
     setPlaneNumber(planeNumber + 1);
     const newPlaneData = {
       planeId: generateId(),
       projectId: projectId,
       planeData: {}
     }
-
     try {
       await createProjectPlanes(newPlaneData);
       toast.success("Plane created successfully!");
@@ -111,7 +100,6 @@ function Project({ projectId }) {
     } catch (error) {
       console.error("Failed to create project: ", error.message);
     }
-
   }
 ``
   return (
