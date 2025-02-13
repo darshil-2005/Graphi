@@ -88,7 +88,8 @@ function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
-        <div className="h-full w-full relative bg-foreground-secondary bg-[linear-gradient(to_right,#4f4f4f4e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f4e_1px,transparent_1px)] bg-[size:60px_60px]">
+        {/* <div className="h-full w-full relative bg-foreground-secondary bg-[linear-gradient(to_right,#4f4f4f4e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f4e_1px,transparent_1px)] bg-[size:60px_60px]"> */}
+        <div className="h-full w-full relative bg-foreground-secondary ">
           {elements.filter((item) => item.planeId === planeId)
             .filter((item) => item.isdeleted == false)
             .map((currItem, index) => (

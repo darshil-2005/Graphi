@@ -21,7 +21,7 @@ export default function LineChartExample() {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
-        <Tooltip content={<CustomTooltip/>}/>
+        {/* <Tooltip content={<CustomTooltip/>}/> */}
         <Legend />
         <Line type="monotone" dataKey="Left" stroke="#39FF14" activeDot={{ r: 8 }} />
         <Line type="monotone" dataKey="Sold" stroke="#F08080" />

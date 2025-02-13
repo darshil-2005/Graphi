@@ -20,7 +20,7 @@ export default function AreaChartExample() {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
-        <Tooltip content={<CustomTooltip/>}/>
+        {/* <Tooltip content={<CustomTooltip/>}/> */}
         <Area type="monotone" dataKey="uv" stroke="#8A2BE2" fill="#8A2BE2" opacity={0.3} />
         <Area type="monotone" dataKey="pv" stroke="#FF1493" fill="#FF1493" opacity={0.3} />
       </AreaChart>

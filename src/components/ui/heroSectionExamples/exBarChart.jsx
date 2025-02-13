@@ -20,7 +20,7 @@ export default function BarChartExample() {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
-        <Tooltip content={<CustomTooltip/>}/>
+        {/* <Tooltip content={<CustomTooltip/>}/> */}
         <Legend />
         <Bar dataKey="Likes" fill="#00CED1" opacity={0.8} activeBar={false}/>
         <Bar dataKey="Revenue" fill="#FF4500" opacity={0.8} activeBar={false}/>
