@@ -112,7 +112,7 @@ function Project({ projectId }) {
       </div>
 
       {planes?.map((data, index) => {
-        return <Plane key={index} planeId={data.planeId} projectId={data.projectId} planeData={data.planeData} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} />
+        return <Plane key={index} planeId={data.planeId} projectId={data.projectId} planeData={data.planeData} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} setEditMode={setEditMode}/>
       })}
 
       <Button className='w-full mb-4' variant='secondary' onClick={handleCreatingPlanes}>Add New Plane</Button>

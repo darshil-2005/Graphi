@@ -1,5 +1,7 @@
-"use client";;
-import { useState } from 'react';
+"use client";
+
+import { toPng } from "html-to-image";
+import { useRef, useState } from 'react';
 import CartesianGraph from '../graphs/cartesianGraph.jsx';
 import PieGraph from '../graphs/pieGraph.jsx';
 import RadarGraph from '../graphs/radarGraph.jsx';
@@ -13,7 +15,9 @@ import CreateTextComponent from '../createGraph/createTextComponent.jsx';
 import CreateImageComponent from '../createGraph/createImageComponent.jsx';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import ImageComponent from '../graphs/image.jsx';
+import ContextMenuWrapper from "../ui/contextMenuWrapper.jsx";
 
+import { Button } from "../ui/shadcnComponent/button.jsx";
 import {
   Accordion,
   AccordionContent,
@@ -22,7 +26,7 @@ import {
 } from "@/components/ui/shadcnComponent/accordion";
 
 
-function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode }) {
+function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode, setEditMode }) {
 
   const elements = usePlaneElementsStore((state) => state.planeElements);
   const updatePosition = usePlaneElementsStore((state) => state.updatePosition);
@@ -57,9 +61,29 @@ function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode
     updatePosition({ graphId: draggedElement, top: top, left: left });
   };
 
+  const chartRef = useRef(null);
+  const downloadImage = () => {
+    setEditMode(false);
+    if (!chartRef.current) return;
+
+    toPng(chartRef.current, { cacheBust: true })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = "chart.png";
+        link.click();
+        setEditMode(true);
+      })
+      .catch((error) => {
+        console.error("Failed to capture the chart:", error);
+        setEditMode(true);
+      });
+  };
+
   return (
     <>
       <div
+        ref={chartRef}
         className="h-[70vh] w-full m-auto overflow-hidden border shadow-sm "
         onDragOver={handleDragOver}
         onDrop={handleDrop}
@@ -70,6 +94,12 @@ function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode
             .map((currItem, index) => (
               createGraph(currItem, index, { setDraggedElement: setDraggedElement, setFocusedElementIndex: setFocusedElementIndex })
             ))}
+
+          {editMode &&
+            <ContextMenuWrapper>
+              <Button onClick={downloadImage}>Download</Button>
+            </ContextMenuWrapper>
+          }
         </div>
       </div>
 
@@ -79,12 +109,12 @@ function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode
         <AccordionItem value="Graph Add Menu">
           <AccordionTrigger className='text-lg'><span className='flex gap-x-2 items-center'>Add Graphs</span></AccordionTrigger>
           <AccordionContent>
-              <CreateCartesianGraph planeId={planeId} />
-              <CreatePieGraph planeId={planeId} />
-              <CreateRadialBarGraph planeId={planeId} />
-              <CreateRadarGraph planeId={planeId} />
-              <CreateTextComponent planeId={planeId} />
-              {/* <CreateImageComponent planeId={planeId} /> */}
+            <CreateCartesianGraph planeId={planeId} />
+            <CreatePieGraph planeId={planeId} />
+            <CreateRadialBarGraph planeId={planeId} />
+            <CreateRadarGraph planeId={planeId} />
+            <CreateTextComponent planeId={planeId} />
+            {/* <CreateImageComponent planeId={planeId} /> */}
           </AccordionContent>
         </AccordionItem>
       </Accordion>

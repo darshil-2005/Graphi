@@ -20,7 +20,9 @@ const ContextMenuWrapper = ({ children, graphObject }) => {
                 <div className="absolute hidden right-2 bg-primary-foreground w-40">
                     <div className='flex flex-col m-auto gap-4 p-2 '>
                         {children}
-                        <Button variant={"destructive"} id={graphObject.graphId} onClick={(e) => deleteElementFromElementsArray(e.target.id)}>Delete</Button>
+                        {graphObject &&
+                            <Button variant={"destructive"} id={graphObject.graphId} onClick={(e) => deleteElementFromElementsArray(e.target.id)}>Delete</Button>
+                        }
                     </div>
                 </div>
             </div>
