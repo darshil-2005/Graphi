@@ -120,7 +120,7 @@ function Project({ projectId }) {
   return (
     <div className='mx-auto w-full overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground'>
 
-      <div className=' flex mb-4 justify-between py-4 items-center px-4 border'>
+      <div className=' flex mb-4 justify-between py-4 items-center px-4 shadow-md dark:shadow-slate-200/10'>
 
         <div className={`${orbitron.className} flex items-center ml-4 text-3xl tracking-[0.6rem] text-primary`}><Link href='/'>GRAPHI</Link></div>
 
@@ -130,7 +130,7 @@ function Project({ projectId }) {
             {<Pencil />}
             {<span>Edit Mode</span>}
           </Button>
-          <Button className={`${orbitron.className} w-32 px-4 py-4 rounded text-foreground mr-4 bg-blue-600 disabled:opacity-90 disabled:bg-blue-400 hover:bg-blue-600/80 ${syncingChanges ? 'border-2 border-blue-900' : ''}`} onClick={handleSavingChanges} disabled={syncingChanges}>
+          <Button className={`${orbitron.className} w-32 px-4 py-4 rounded text-white mr-4 bg-blue-600 disabled:opacity-90 disabled:bg-blue-400 hover:bg-blue-600/80 ${syncingChanges ? 'border-2 border-blue-900' : ''}`} onClick={handleSavingChanges} disabled={syncingChanges}>
             {syncingChanges && <span className=''>Saving...</span>}
             {!syncingChanges && <div className={`flex justify-center items-center gap-x-3 text-md h-10 `}> <Save absoluteStrokeWidth /> <span>Save</span></div>}
           </Button>

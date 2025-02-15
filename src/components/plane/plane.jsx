@@ -95,7 +95,7 @@ function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode
     <>
       <div
         ref={chartRef}
-        className="h-[70vh] w-full m-auto overflow-hidden dark:shadow-[0px_0px_15px_1px_rgba(255_255_255/_0.4)] shadow-[0px_0px_15px_1px_rgba(0_0_0/_0.4)]"
+        className="h-[70vh] w-full m-auto overflow-hidden dark:shadow-[0px_0px_15px_5px_rgba(50_255_255/_0.2)] shadow-[0px_0px_15px_1px_rgba(50_150_255/_0.8)]"
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
