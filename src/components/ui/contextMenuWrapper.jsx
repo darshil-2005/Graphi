@@ -1,4 +1,4 @@
-import { Ellipsis } from 'lucide-react';
+import { Ellipsis, EllipsisVertical } from 'lucide-react';
 import { Button } from '@/components/ui/shadcnComponent/button';
 import { showContextMenu } from '@/utils/manualUtils';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
@@ -10,10 +10,10 @@ const ContextMenuWrapper = ({ children, graphObject }) => {
             <div className="absolute top-0 right-0">
                 {/* Context Menu Button */}
                 <Button
-                    className="bg-transparent hover:bg-transparent"
+                    className="bg-transparent p-0 mr-1 flex items-center hover:bg-transparent"
                     onClick={(e) => showContextMenu(e)}
                 >
-                    <Ellipsis color="white" />
+                    <EllipsisVertical className='text-muted-foreground' />
                 </Button>
 
                 {/* Context Menu Content */}

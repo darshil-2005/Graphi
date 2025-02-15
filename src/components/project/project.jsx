@@ -137,7 +137,7 @@ function Project({ projectId }) {
         </div>
       </div>
 
-      <div className='mx-4'>
+      <div className='mx-4 mt-8'>
         {planes?.map((data, index) => {
           return <Plane key={index} planeId={data.planeId} projectId={data.projectId} planeData={data.planeData} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} setEditMode={setEditMode} />
         })}
