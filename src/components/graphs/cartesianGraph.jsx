@@ -56,7 +56,7 @@ function CartesianGraph({ graphObject, index, setDraggedElement, setFocusedEleme
               }).filter((d) => d.isdeleted == false).map((d, i) => {
                 return createGraphElements(d, i);
               })
-            }
+            } 
           </ComposedChart>
         </ResponsiveContainer>
 

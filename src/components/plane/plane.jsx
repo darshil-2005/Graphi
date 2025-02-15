@@ -16,6 +16,7 @@ import CreateImageComponent from '../createGraph/createImageComponent.jsx';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import ImageComponent from '../graphs/image.jsx';
 import ContextMenuWrapper from "../ui/contextMenuWrapper.jsx";
+import D3LineChart from "../d3Charts/lineChart.jsx";
 
 import { Button } from "../ui/shadcnComponent/button.jsx";
 import {
@@ -80,6 +81,15 @@ function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode
       });
   };
 
+  const sampleData = [
+    { x: 1, y: 10 },
+    { x: 2, y: 20 },
+    { x: 3, y: 15 },
+    { x: 4, y: 30 },
+    { x: 5, y: 25 },
+]; 
+
+
   return (
     <>
       <div
@@ -90,6 +100,7 @@ function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode
       >
         {/* <div className="h-full w-full relative bg-foreground-secondary bg-[linear-gradient(to_right,#4f4f4f4e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f4e_1px,transparent_1px)] bg-[size:60px_60px]"> */}
         <div className="h-full w-full relative bg-foreground-secondary ">
+          {/* <D3LineChart data={sampleData}/> */}
           {elements.filter((item) => item.planeId === planeId)
             .filter((item) => item.isdeleted == false)
             .map((currItem, index) => (

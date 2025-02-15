@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from 'recharts';
+import { PieChart, ResponsiveContainer } from 'recharts';
 import { createGraphElements } from '@/utils/manualUtils.jsx';
 import ContextMenuWrapper from '../ui/contextMenuWrapper';
 import AddLegend from '../createGraphElements/createCartesianGraphElements/addLegend';
@@ -17,6 +17,7 @@ import CreatePieGraph from '../createGraph/createPieGraph.jsx';
 function PieGraph({ graphObject, index, setDraggedElement, setFocusedElementIndex, editMode }) {
 
   const graphObjectElements = usePlaneElementsStore((state) => (state.graphElements));
+
 
   return (
     <CommonGraphWrapper graphObject={graphObject} index={index} setDraggedElement={setDraggedElement} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode}>

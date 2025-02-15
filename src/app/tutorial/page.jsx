@@ -1,6 +1,16 @@
-const Tutorial = () => {
+import { auth } from "@/auth"
+import Sidebar from "@/components/ui/sidebar"
+
+
+const Tutorial = async () => {
+
+  const session = await auth();
+
   return (
-    <div>Tutorial</div>
+    <div className="flex h-screen">
+      <Sidebar session={session}/>
+      Tutorial
+    </div>
   )
 }
 

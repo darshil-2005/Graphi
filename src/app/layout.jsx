@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning className='scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background'>
       <body className={`${roboto.className} text-[16px] tracking-widest bg-background text-foreground `}>
-      <Toaster richColors />
+        <Toaster richColors />
         <SessionProvider>
           <ThemeProvider
             attribute="class"
@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
           >
             {children}
           </ThemeProvider>
-          </SessionProvider>
+        </SessionProvider>
       </body>
     </html>
   );

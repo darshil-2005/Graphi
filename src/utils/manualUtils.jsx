@@ -95,7 +95,7 @@ export function createGraphElements(elementObject, index) {
   }
 
   else if (elementObject.type === 'line') {
-    return <Line key={index} type={elementObject.lineType} dataKey={elementObject.dataKey} stroke={elementObject.lineColor} strokeWidth={elementObject.strokeWidth} />
+    return <Line key={index} type={elementObject.lineType} dataKey={elementObject.dataKey} stroke={elementObject.lineColor} strokeWidth={elementObject.strokeWidth} dot={false} />
   }
 
   else if (elementObject.type === 'area') {

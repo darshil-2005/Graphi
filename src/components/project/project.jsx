@@ -29,6 +29,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/shadcnComponent/accordion";
+import { Pencil, Save } from 'lucide-react';
 
 function Project({ projectId }) {
 
@@ -40,6 +41,7 @@ function Project({ projectId }) {
   const graphElements = usePlaneElementsStore((state) => state.graphElements);
   const syncDeltasInDB = usePlaneElementsStore((state) => state.syncDeltasInDB);
   const elementsFetcherFromDatabaseOnOpeningProject = usePlaneElementsStore((state) => state.elementsFetcherFromDatabaseOnOpeningProject);
+  const deltas = usePlaneElementsStore((state) => state.deltas);
 
   const [showGraphElements, setShowGraphElements] = useState(false);
   const [editMode, setEditMode] = useState(true);
@@ -49,7 +51,15 @@ function Project({ projectId }) {
   const [planeIdArray, setPlaneIdArray] = useState(undefined);
   const [fetched, setFetched] = useState(false);
 
+
+  //? UI Use States
+
   const [syncingChanges, setSyncingChanges] = useState(false); 
+  const [creatingPlane, setCreatingPlane] = useState(false); 
+
+  console.log("Plane Elements: ", elements); 
+  console.log("Graph Elements: ", graphElements);
+  console.log("Deltas: ", deltas);
 
   async function handleSavingChanges() {
     setSyncingChanges(true);    
@@ -66,7 +76,7 @@ function Project({ projectId }) {
       setPlanes(fetchedPlanes);
     }
     temp();
-  }, [projectId, planeNumber])
+  }, [projectId, creatingPlane])
 
   useEffect(() => {
     if (planes) {
@@ -86,7 +96,7 @@ function Project({ projectId }) {
 
 
   async function handleCreatingPlanes() {
-    setPlaneNumber(planeNumber + 1);
+    setCreatingPlane(true);
     const newPlaneData = {
       planeId: generateId(),
       projectId: projectId,
@@ -100,20 +110,25 @@ function Project({ projectId }) {
     } catch (error) {
       console.error("Failed to create project: ", error.message);
     }
+    setCreatingPlane(false);
   }
 ``
   return (
-    <div className='px-6'>
+    <div className='mx-auto w-full overflow-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background'>
 
-      <div className='flex mb-4 p-2'>
-        <Button className='w-60 m-auto' variant='secondary' onClick={() => { setShowGraphElements(!showGraphElements); }}>Show Graph Elements</Button>
-        <Button className='w-60 m-auto' variant='secondary' onClick={() => { setEditMode(!editMode); }}>Edit Mode</Button>
-        <Button className='w-60 m-auto bg-blue-600 hover:bg-blue-500 text-primary' onClick={handleSavingChanges} disabled={syncingChanges}>{syncingChanges ? 'Saving Changes...' : 'Save Changes'}</Button>
+      <div className='flex mb-4 rounded-b-md justify-between  p-4 border'>
+        <Button className='w-60 h-10' variant='secondary' onClick={() => { setShowGraphElements(!showGraphElements); }}>Show Graph Elements</Button>
+        <Button className=' h-10 w-12 border-1 border-foreground' variant='secondary' onClick={() => { setEditMode(!editMode); }}>{<Pencil/>}</Button>
+        <Button className='w-fit px-2 py-4 text-primary rounded text-black mr-4' size={'large'} onClick={handleSavingChanges} disabled={syncingChanges}>
+          {syncingChanges && 'Saving...'}
+          {!syncingChanges && <div className='flex justify-center items-center gap-x-2 '> <Save size={48} absoluteStrokeWidth/> <span>Save</span></div>}
+        </Button>
       </div>
 
       {planes?.map((data, index) => {
         return <Plane key={index} planeId={data.planeId} projectId={data.projectId} planeData={data.planeData} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} setEditMode={setEditMode}/>
       })}
+      
 
       <Button className='w-full mb-4' variant='secondary' onClick={handleCreatingPlanes}>Add New Plane</Button>
 

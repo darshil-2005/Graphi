@@ -1,6 +1,15 @@
-const Pricing = () => {
+import Sidebar from "@/components/ui/sidebar"
+import { auth } from "@/auth";
+
+const Pricing = async () => {
+
+  const session = await auth();
+
   return (
-    <div>Pricing</div>
+    <div className="flex h-screen">
+      <Sidebar session={session}/>
+      Pricing
+    </div>
   )
 }
 

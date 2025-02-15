@@ -12,9 +12,9 @@ export async function middleware(request) {
   
   const onBoarded = await isUserOnBoarded(session.user.email);  
 
-  if (!onBoarded && !(request.url.endsWith('onboarding'))){
-    return NextResponse.redirect(new URL('/onboarding', request.url));
-  }
+  // if (!onBoarded && !(request.url.endsWith('onboarding'))){
+  //   return NextResponse.redirect(new URL('/onboarding', request.url));
+  // }
 
   return NextResponse.next();
 }
