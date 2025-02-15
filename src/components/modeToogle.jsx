@@ -10,14 +10,14 @@ export default function ModeToggle( {className}) {
     <div className="relative">
       <Button
         variant='secondary'
-        className={`h-[2.5rem] w-[2.5rem] hidden dark:flex ${className}`}
+        className={`h-[2.5rem] w-[2.5rem] hidden dark:flex ${className} p-3`}
         onClick={() => setTheme("light")}
       >
-        <Sun className="h-[1.2rem] w-[1.2rem]" />
+        <Sun className=""/>
       </Button>
       <Button
         variant='secondary'
-        className={`h-[2.5rem] w-[2.5rem] dark:hidden ${className}`}
+        className={`h-[2.5rem] w-[2.5rem] dark:hidden ${className} p-3`}
         onClick={() => setTheme("dark")}
       >
         <Moon className="h-[1.2rem] w-[1.2rem] " />
