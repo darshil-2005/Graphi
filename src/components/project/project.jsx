@@ -118,9 +118,9 @@ function Project({ projectId }) {
   }
   ``
   return (
-    <div className='mx-auto w-full overflow-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background'>
+    <div className='mx-auto w-full overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground'>
 
-      <div className='flex mb-4 rounded-b-md justify-between py-4 items-center px-4 border'>
+      <div className=' flex mb-4 justify-between py-4 items-center px-4 border'>
 
         <div className={`${orbitron.className} flex items-center ml-4 text-3xl tracking-[0.6rem] text-primary`}><Link href='/'>GRAPHI</Link></div>
 
@@ -137,9 +137,11 @@ function Project({ projectId }) {
         </div>
       </div>
 
-      {planes?.map((data, index) => {
-        return <Plane key={index} planeId={data.planeId} projectId={data.projectId} planeData={data.planeData} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} setEditMode={setEditMode} />
-      })}
+      <div className='mx-4'>
+        {planes?.map((data, index) => {
+          return <Plane key={index} planeId={data.planeId} projectId={data.projectId} planeData={data.planeData} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} setEditMode={setEditMode} />
+        })}
+      </div>
 
 
       <Button className='w-full mb-4' variant='secondary' onClick={handleCreatingPlanes}>Add New Plane</Button>
