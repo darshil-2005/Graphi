@@ -120,9 +120,9 @@ function Project({ projectId }) {
   return (
     <div className='mx-auto w-full overflow-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background'>
 
-      <div className='flex mb-4 rounded-b-md justify-between  p-4 border'>
+      <div className='flex mb-4 rounded-b-md justify-between py-4 items-center px-4 border'>
 
-        <div className={`${orbitron.className} text-3xl tracking-[0.6rem] text-primary`}><Link href='/'>GRAPHI</Link></div>
+        <div className={`${orbitron.className} flex items-center ml-4 text-3xl tracking-[0.6rem] text-primary`}><Link href='/'>GRAPHI</Link></div>
 
         <div className='flex gap-x-10'>
           <Button className={`h-10 px-4 text-sm ${orbitron.className} ${showGraphElements ? 'border border-blue-800' : 'bg-secondary/40 border'}`} variant='secondary' onClick={() => { setShowGraphElements(!showGraphElements); }}>Edit Graph Elements</Button>
