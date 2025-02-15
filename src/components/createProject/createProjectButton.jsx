@@ -27,8 +27,8 @@ function CreateProjectButton({ session, className }) {
   return (
     <Button className={`bg-secondary/80 hover:bg-secondary h-full w-full flex justify-center rounded-xl items-center group transition-all duration-100 border-[3px] ${className}`} onClick={handleCreatingProjectClient} disabled={creatingProject}>
       {!creatingProject &&
-        <div className='group-hover:bg-chart-2 bg-chart-2/80 p-1 transition-all duration-100'>
-          <Plus />
+        <div className='group-hover:bg-vibrant-2 bg-vibrant-2/90 rounded p-[2px] transition-all duration-100'>
+          <Plus className='h-5 w-5 text-foreground'/>
         </div>
       }
       <div className='ml-3 group-hover:text-muted-foreground text-muted-foreground/70 tracking-widest text-2xl transition-all duration-100'>

@@ -16,7 +16,7 @@ export default function DashboardFileDisplayer() {
     const userDataFiles =  usePlaneElementsStore((state) => (state.userDataFiles));
      
     return (
-        <div className='flex-1 p-2 bg-background border flex flex-col gap-y-[8px] overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background '>
+        <div className='rounded shadow-md flex-1 p-2 bg-background border flex flex-col gap-y-[8px] overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background '>
             {userDataFiles.map((fileDisplayObject, index) => {
                 return <DataDashboardCard key={index} fileDisplayObject={fileDisplayObject} />
             })}

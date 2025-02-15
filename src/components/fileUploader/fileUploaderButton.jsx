@@ -83,8 +83,8 @@ function FileUploaderInput({ className }) {
       <Label htmlFor='dashboardFileUploadHandler' className={`bg-secondary/80 hover:bg-secondary flex justify-center rounded-xl items-center group transition-all duration-100 border-[3px] ${className}`}>
         {isUploading ? <div className='text-2xl text-muted-foreground/70'>Uploading...</div> : (
           <>
-            <div className='group-hover:bg-chart-1 bg-chart-1/80 p-1 transition-all duration-100 grid justify-center items-center '>
-              <Plus className='h-4 w-4' />
+            <div className='group-hover:bg-chart-5 bg-chart-5/90 p-[2px] rounded transition-all duration-100 grid justify-center items-center '>
+              <Plus className='h-5 w-5 ' />
             </div>
             <div className='ml-4 text-2xl group-hover:text-muted-foreground text-muted-foreground/70 tracking-widest transition-all duration-100'>
               Upload New File

@@ -40,9 +40,9 @@ async function Dashboard() {
             <DashboardFileDisplayer />
 
           </div>
-          <div className='w-[60%] bg-background p-3 gap-y-4 x flex flex-col'>
+          <div className='w-[60%] bg-background p-3 gap-y-4 flex flex-col'>
             <CreateProjectButton session={session} className={'h-[70px]'} />
-            <div className='flex-1 p-2 bg-background border flex flex-col gap-y-[8px] overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background '>
+            <div className='shadow-xl rounded flex-1 p-2 bg-background border flex flex-col gap-y-[8px] overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background '>
               {finalProjectObjectsForAUser.map((ProjectInfoObject, index) => {
                 return <ProjectDashboardCard key={index} projectCardObject={ProjectInfoObject} />
               })}
