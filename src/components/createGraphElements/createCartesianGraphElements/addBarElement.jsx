@@ -30,6 +30,7 @@ function AddBarElement({ graphId, editGraphObject }) {
             elementId: editGraphObject.elementId,
             graphId: editGraphObject.graphId,
             fill: data.fill,
+            fillOpacity: data.fillOpacity,
             dataKey: data.dataKey,
             radius: data.radius,
         } : {
@@ -38,6 +39,7 @@ function AddBarElement({ graphId, editGraphObject }) {
             elementId: crypto.randomUUID(),
             type: 'bar',
             fill: data.fill,
+            fillOpacity: data.fillOpacity,
             dataKey: data.dataKey,
             radius: data.radius,
         };
@@ -55,11 +57,13 @@ function AddBarElement({ graphId, editGraphObject }) {
             <form onSubmit={handleSubmit(handleLineFormSubmit)}>
                 <div className='w-fit grid gap-y-5'>
                     <ColorInput
-                        label='Fill Color: '
+                        label='Color'
                         registerId='fill'
                         register={register}
-                        className='w-[8rem]'
+                        className='w-fit'
                         defaultValue={editGraphObject?.fill || '#0000ff'}
+                        showOpacity
+                        defaultOpacity={editGraphObject ? editGraphObject.fillOpacity : 1}
                     />
                     {keys &&
                         <DropdownInput registerId='dataKey' defaultValue={editGraphObject?.dataKey} register={register} optionsArray={keys} label='Choose the Y-Axis Data:' formatLabel={true} />

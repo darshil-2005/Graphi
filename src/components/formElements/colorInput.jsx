@@ -9,7 +9,7 @@ const ColorInput = ({ registerId, label, defaultValue, className, register, show
 
     <div className={`${ showOpacity ? 'grid grid-cols-2' : ''} ${className}`}>
 
-      <div className='flex flex-col gap-y-3'>
+      <div className='flex flex-col gap-y-2'>
       <Label htmlFor={registerId}>{label}</Label>
       <Input
         {...register(registerId)}
@@ -22,7 +22,7 @@ const ColorInput = ({ registerId, label, defaultValue, className, register, show
 
       
       {showOpacity && (
-        <div className='flex flex-col gap-y-2'>
+        <div className='flex flex-col gap-y-2 ml-2'>
           <Label htmlFor={registerId + 'Opacity'}>Opacity</Label>
           <Input
             {...register(registerId + 'Opacity')}

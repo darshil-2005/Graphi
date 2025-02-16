@@ -118,9 +118,9 @@ function Project({ projectId }) {
   }
   ``
   return (
-    <div className='mx-auto w-full overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground'>
+    <div className=' mx-auto w-full overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground'>
 
-      <div className=' flex mb-4 justify-between py-4 items-center px-4 shadow-md dark:shadow-slate-200/10'>
+      <div className='sticky top-0 z-[100] flex mb-10 justify-between py-4 items-center px-4 shadow-md bg-background dark:shadow-slate-200/10'>
 
         <div className={`${orbitron.className} flex items-center ml-4 text-3xl tracking-[0.6rem] text-primary`}><Link href='/'>GRAPHI</Link></div>
 

@@ -103,7 +103,7 @@ export function createGraphElements(elementObject, index) {
   }
 
   else if (elementObject.type === 'bar') {
-    return <Bar key={index} dataKey={elementObject.dataKey} fill={elementObject.fill} radius={[elementObject.radius, elementObject.radius, 0, 0]}/>
+    return <Bar key={index} dataKey={elementObject.dataKey} fill={elementObject.fill} opacity={elementObject.fillOpacity} radius={[elementObject.radius, elementObject.radius, 0, 0]}/>
   }
 
   else if (elementObject.type === 'scatter') {
