@@ -103,7 +103,7 @@ export function createGraphElements(elementObject, index) {
   }
 
   else if (elementObject.type === 'bar') {
-    return <Bar key={index} dataKey={elementObject.dataKey} fill={elementObject.fill} />
+    return <Bar key={index} dataKey={elementObject.dataKey} fill={elementObject.fill} radius={[elementObject.radius, elementObject.radius, 0, 0]}/>
   }
 
   else if (elementObject.type === 'scatter') {
@@ -111,7 +111,7 @@ export function createGraphElements(elementObject, index) {
   }
 
   else if (elementObject.type === 'radialBarGraph') {
-    return <RadialBar key={index} data={elementObject.data} label={{ fill: elementObject.fill, position: elementObject.position }} background={elementObject.background} clockWise={elementObject.clockWise} dataKey={elementObject.dataKey} />
+    return <RadialBar key={index} data={elementObject.data} cornerRadius={elementObject.cornerRadius} label={{ fill: elementObject.fill, position: elementObject.position }} background={elementObject.background} clockWise={elementObject.clockWise} dataKey={elementObject.dataKey} />
   }
 
   else if (elementObject.type === 'polarGrid') {
@@ -131,7 +131,7 @@ export function createGraphElements(elementObject, index) {
   }
 
   else if (elementObject.type === 'cartesianGrid') {
-    return <CartesianGrid key={index} stroke={elementObject.cartesianGridColor} />
+    return <CartesianGrid key={index} stroke={elementObject.cartesianGridColor} opacity={elementObject.cartesianGridColorOpacity} strokeDasharray="5 5"  />
   }
 
   else if (elementObject.type === 'legend') {

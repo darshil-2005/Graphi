@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/shadcnComponent/button';
 import { useState, useEffect } from 'react';
 import ColorInput from '../../formElements/colorInput';
 import DropdownInput from '../../formElements/dropdownInput';
+import NumberInput from '@/components/formElements/numberInput';
 import { CheckBox } from 'src/components/formElements/checkBox.jsx';
 import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import { retrieveFileIndex } from '@/utils/manualUtils';
@@ -51,6 +52,7 @@ function AddRadialBarChart({ graphId, editGraphObject }) {
       background: data.background,
       labelFill: data.labelFill,
       labelPosition: data.labelPosition,
+      cornerRadius: data.cornerRadius,
     };
 
     if (editGraphObject) {
@@ -69,6 +71,8 @@ function AddRadialBarChart({ graphId, editGraphObject }) {
           {keys &&
             <DropdownInput registerId='dataKey' label='Data Key:' defaultValue={editGraphObject?.dataKey} optionsArray={keys} register={register} />
           }
+
+          <NumberInput register={register} registerId='cornerRadius' label={'Corner Radius'} defaultValue={parseInt(editGraphObject?.cornerRadius) || 0}/>
 
           <CheckBox registerId='background' register={register} label='Background' defaultChecked={editGraphObject?.background || false} />
           <ColorInput registerId='labelFill' register={register} label={'Label Fill'} className='w-[8rem]' defaultValue={editGraphObject?.labelFill} />

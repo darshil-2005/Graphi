@@ -21,6 +21,8 @@ import {
 } from "@/components/ui/shadcnComponent/popover"
 import usePlaneElementsStore from '@/features/store/planeElementsStore';
 
+import { ReferenceLine, Brush } from 'recharts';
+
 
 function CartesianGraph({ graphObject, index, setDraggedElement, setFocusedElementIndex, editMode }) {
 

@@ -26,7 +26,7 @@ function Sidebar({ session }) {
     { label: 'Tutorials', icon: <BookOpenCheck size={32} absoluteStrokeWidth />, link: '/tutorial' }]
 
     return (
-        <aside className={`${extended ? 'w-[25rem] pl-8 pr-6' : 'w-20 items-center'} border py-8 flex flex-col justify-between transition-all duration-200`}>
+        <aside className={`${extended ? 'w-[25rem] pl-8 pr-6' : 'w-[4.8rem] items-center'} border py-8 flex flex-col justify-between transition-all duration-200`}>
             <div className='flex items-center gap-x-12'>
 
                 {extended &&

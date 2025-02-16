@@ -101,9 +101,8 @@ function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode
       >
         {/* <div className="h-full w-full relative bg-foreground-secondary bg-[linear-gradient(to_right,#4f4f4f4e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f4e_1px,transparent_1px)] bg-[size:60px_60px]"> */}
 
-        <div className="h-full w-full relative  [background-size:20px_20px] 
-                    [background-image:linear-gradient(to_right,rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.1)_1px,transparent_1px)] 
-                    dark:[background-image:linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)]">
+        <div className={`h-full w-full relative  
+                    ${ editMode ? '[background-size:18px_18px] [background-image:linear-gradient(to_right,rgba(0,0,0,0.1)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.1)_1px,transparent_1px)] dark:[background-image:linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)]' : ''}`}>
 
           {/* <D3LineChart data={sampleData}/> */}
           {elements.filter((item) => item.planeId === planeId)

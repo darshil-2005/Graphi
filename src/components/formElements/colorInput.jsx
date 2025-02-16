@@ -3,6 +3,8 @@ import { Label } from '@/components/ui/shadcnComponent/label'
 import { Input } from '@/components/ui/shadcnComponent/input'
 
 const ColorInput = ({ registerId, label, defaultValue, className, register, showOpacity = false, defaultOpacity }) => {
+
+  console.log("Opa: ", defaultOpacity)
   return (
 
     <div className={`${ showOpacity ? 'grid grid-cols-2' : ''} ${className}`}>

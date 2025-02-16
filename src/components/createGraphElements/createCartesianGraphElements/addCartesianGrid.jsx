@@ -13,6 +13,8 @@ function AddCartesianElement({ graphId, editGraphObject }) {
     const addGraphObjGraphElementsArray = usePlaneElementsStore((state) => state.addGraphObjGraphElementsArray);
     const handleGraphElementsArrayEditing = usePlaneElementsStore((state) => state.handleGraphElementsArrayEditing);
 
+    console.log("nbcjsdbnj", editGraphObject)
+
     useEffect(() => {
         setGraphObjIndex(retrieveGraphObjectIndex(graphId, graphObjects));
     }, [graphId, graphObjects]);
@@ -24,6 +26,7 @@ function AddCartesianElement({ graphId, editGraphObject }) {
             planeId: editGraphObject ? undefined : graphObjects[graphObjIndex].planeId,
             type: 'cartesianGrid',
             cartesianGridColor: data.cartesianGridColor,
+            cartesianGridColorOpacity: Number(data.cartesianGridColorOpacity),
         };
 
         if (editGraphObject) {
@@ -39,9 +42,11 @@ function AddCartesianElement({ graphId, editGraphObject }) {
             <div className='w-fit grid gap-y-5'>
                 <ColorInput
                     registerId='cartesianGridColor'
-                    label='Cartesian Grid Color'
-                    defaultValue={editGraphObject?.cartesianGridColor || '#000000'}
+                    label='Color'
+                    defaultValue={editGraphObject?.cartesianGridColor || '#ffffff'}
+                    defaultOpacity={editGraphObject ? editGraphObject.cartesianGridColorOpacity : 1}
                     register={register}
+                    showOpacity
 
                 />
                 <Button type='submit'>Add Cartesian Grid!!</Button>

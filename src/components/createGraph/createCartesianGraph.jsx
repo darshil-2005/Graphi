@@ -13,6 +13,9 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
     const handleEditing = usePlaneElementsStore((state) => (state.handleEditing));
 
 
+    console.log("Edit: ", editGraphObject?.backgroundColorOpacity)
+
+
     async function addCartesianGraphInThePlaneElementsArray(data) {
 
         if (editGraphObject) {
@@ -78,7 +81,7 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
                     <NumberInput registerId={'borderRadius'} label={'Border Radius: '} defaultValue={parseInt(editGraphObject?.borderRadius) || 12} register={register} suffix={'px'} />
                     <NumberInput registerId={'zIndex'} label={'Z Index'} defaultValue={parseInt(editGraphObject?.zIndex) || 0} min={0} register={register} />
                     </div>
-                    <ColorInput registerId={'bgColor'} label={'Background Color'} defaultValue={editGraphObject?.backgroundColor || '#000000'} register={register} showOpacity={true} defaultOpacity={editGraphObject?.backgroundColorOpacity || 1} />
+                    <ColorInput registerId={'bgColor'} label={'Background Color'} defaultValue={editGraphObject?.backgroundColor || '#000000'} register={register} showOpacity={true} defaultOpacity={editGraphObject ? editGraphObject.backgroundColorOpacity : 1} />
 
                     <div className='grid gap-y-4 relative'>
                         <div className='font-semibold text-xl tracking-wider'>Margin</div>

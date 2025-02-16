@@ -6,6 +6,7 @@ import DropdownInput from '../../formElements/dropdownInput';
 import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
 import { retrieveFileIndex } from '@/utils/manualUtils'
+import NumberInput from '@/components/formElements/numberInput';
 
 function AddBarElement({ graphId, editGraphObject }) {
 
@@ -30,6 +31,7 @@ function AddBarElement({ graphId, editGraphObject }) {
             graphId: editGraphObject.graphId,
             fill: data.fill,
             dataKey: data.dataKey,
+            radius: data.radius,
         } : {
             planeId: graphObjects[graphObjIndex].planeId,
             graphId: graphId,
@@ -37,6 +39,7 @@ function AddBarElement({ graphId, editGraphObject }) {
             type: 'bar',
             fill: data.fill,
             dataKey: data.dataKey,
+            radius: data.radius,
         };
 
         if (editGraphObject) {
@@ -61,6 +64,8 @@ function AddBarElement({ graphId, editGraphObject }) {
                     {keys &&
                         <DropdownInput registerId='dataKey' defaultValue={editGraphObject?.dataKey} register={register} optionsArray={keys} label='Choose the Y-Axis Data:' formatLabel={true} />
                     }
+
+                    <NumberInput registerId={'radius'} label={'Radius'} defaultValue={parseInt(editGraphObject?.radius) || 0} register={register} />
                     <Button type='submit'>{editGraphObject ? 'Edit Bar' : 'Add Bars!!'}</Button>
                 </div>
             </form>
