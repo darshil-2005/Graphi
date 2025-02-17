@@ -24,6 +24,15 @@ import AddPolarGrid from '../createGraphElements/createRadarGraphElements/addPol
 import AddRadar from '../createGraphElements/createRadarGraphElements/addRadar.jsx';
 import AddRadialBarChart from '../createGraphElements/createRadialBarGraphElements/addRadialBarGraphElement.jsx';
 import { Orbitron } from 'next/font/google'
+
+
+import CreateRadarGraph from '../createGraph/createRadarGraph.jsx';
+import CreateCartesianGraph from '../createGraph/createCartesianGraph.jsx';
+import CreatePieGraph from '../createGraph/createPieGraph.jsx';
+import CreateRadialBarGraph from '../createGraph/createRadialBarGraph.jsx';
+import CreateTextComponent from '../createGraph/createTextComponent.jsx';
+
+
 import Link from 'next/link';
 import {
   Accordion,
@@ -31,8 +40,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/shadcnComponent/accordion";
-import { Pencil, Save, CircleEllipsis, SquareMenu, CircleX, X } from 'lucide-react';
+import { Pencil, Save, ChevronDown, SquareMenu, CircleX, X, ChartNoAxesColumn, ChartColumnIcon, ChartNoAxesColumnDecreasing, ChartNoAxesColumnIncreasing, Plus, SquarePlus } from 'lucide-react';
 import { Separator } from '@/components/ui/shadcnComponent/separator';
+
+
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] })
 
@@ -46,13 +57,13 @@ function Project({ projectId }) {
   const graphElements = usePlaneElementsStore((state) => state.graphElements);
   const syncDeltasInDB = usePlaneElementsStore((state) => state.syncDeltasInDB);
   const elementsFetcherFromDatabaseOnOpeningProject = usePlaneElementsStore((state) => state.elementsFetcherFromDatabaseOnOpeningProject);
-  const deltas = usePlaneElementsStore((state) => state.deltas);
 
   const [showGraphElements, setShowGraphElements] = useState(false);
+  const [showAddGraphList, setShowAddGraphList] = useState(false);
   const [editMode, setEditMode] = useState(true);
   const [focusedElementIndex, setFocusedElementIndex] = useState(null);
+  const [focusedPlaneId, setFocusedPlaneId] = useState(null);
   const [planes, setPlanes] = useState(undefined);
-  const [planeNumber, setPlaneNumber] = useState(0);
   const [planeIdArray, setPlaneIdArray] = useState(undefined);
   const [fetched, setFetched] = useState(false);
 
@@ -62,9 +73,9 @@ function Project({ projectId }) {
   const [syncingChanges, setSyncingChanges] = useState(false);
   const [creatingPlane, setCreatingPlane] = useState(false);
 
-  console.log("Plane Elements: ", elements);
-  console.log("Graph Elements: ", graphElements);
-  console.log("Deltas: ", deltas);
+  console.log("Focused Plane: ", focusedPlaneId)
+
+
 
   async function handleSavingChanges() {
     setSyncingChanges(true);
@@ -124,8 +135,9 @@ function Project({ projectId }) {
       <div className='sticky top-0 z-[10] flex mb-10 justify-between py-4 items-center px-4 shadow-md bg-background dark:shadow-slate-200/10'>
 
         <div className={`${orbitron.className} flex items-center ml-4 text-3xl tracking-[0.6rem] text-primary`}><Link href='/'>GRAPHI</Link></div>
-
         <div className='flex gap-x-10'>
+        <Button className={`h-10 px-4 text-sm ${orbitron.className}`} variant='secondary' onClick={handleCreatingPlanes}>{<SquarePlus strokeWidth={1.5} />}Add New Plane</Button>
+          <Button className={`h-10 px-4 text-sm ${orbitron.className} ${showAddGraphList ? 'border border-blue-800' : 'bg-secondary/40 border'}`} disabled={!focusedPlaneId} variant='secondary' onClick={() => { setShowAddGraphList(!showAddGraphList); }}>{<ChartNoAxesColumnIncreasing absoluteStrokeWidth />}Add Graph</Button>
           <Button className={`h-10 px-4 text-sm ${orbitron.className} ${showGraphElements ? 'border border-blue-800' : 'bg-secondary/40 border'}`} variant='secondary' onClick={() => { setShowGraphElements(!showGraphElements); }}>{<SquareMenu absoluteStrokeWidth />}Context Menu</Button>
           <Button className={`h-10 w-fit text-sm flex gap-x-3 ${orbitron.className} ${editMode ? 'border border-blue-800' : 'bg-secondary/40 border'}`} variant='secondary' onClick={() => { setEditMode(!editMode); }}>
             {<Pencil />}
@@ -140,28 +152,28 @@ function Project({ projectId }) {
 
       <div className='mx-4 mt-8'>
         {planes?.map((data, index) => {
-          return <Plane key={index} planeId={data.planeId} projectId={data.projectId} planeData={data.planeData} setFocusedElementIndex={setFocusedElementIndex} editMode={editMode} setEditMode={setEditMode} />
+          return <Plane key={index} planeId={data.planeId} projectId={data.projectId} planeData={data.planeData} focusedPlaneId={focusedPlaneId} setFocusedElementIndex={setFocusedElementIndex} setFocusedPlaneId={setFocusedPlaneId} editMode={editMode} setEditMode={setEditMode} />
         })}
       </div>
 
 
-      <Button className='w-full mb-4' variant='secondary' onClick={handleCreatingPlanes}>Add New Plane</Button>
+      
 
       {/* {(showGraphElements) && */}
-      <div className={`fixed top-0 z-50 h-full w-[40rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background ${showGraphElements ? 'right-0' : '-right-[42rem]'} transition-all duration-300 ease-in-out 
-        bg-[#f2f2f2] dark:bg-popover shadow-2xl shadow-foreground`}>
+      <div className={`fixed top-0 z-50 h-full w-[32rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background ${showGraphElements ? 'right-0' : '-right-[42rem]'} transition-all duration-300 ease-in-out 
+        bg-[#f2f2f2] dark:bg-popover shadow-2xl shadow-chart-5`}>
 
         <div className='flex items-center mt-6 mb-0.5 justify-between w-full'>
 
           <button className={`w-fit p-0 bg-transparent ml-2 `} onClick={() => { setShowGraphElements(!showGraphElements); }}>
-            <X size={36} className='absolute -translate-y-1/2 bg-red-900 text-white rounded-lg shadow-[0_0_10px_#ff0000]'/>
+            <X size={36} className='absolute -translate-y-1/2 bg-red-900 text-white rounded-lg shadow-[0_0_10px_#ff0000]' />
           </button>
 
-            <span className={`m-auto text-4xl font-bold text-primary block text-center tracking-widest ${orbitron.className}`}>Context Menu</span>
+          <span className={`m-auto text-4xl font-bold text-primary block text-center tracking-widest ${orbitron.className}`}>Context Menu</span>
         </div>
 
-        <Separator className='h-0.5 mb-2'/>
-        
+        <Separator className='h-0.5 mb-2' />
+
 
         {graphElements.filter((d) => {
 
@@ -176,7 +188,7 @@ function Project({ projectId }) {
                     {currItem?.type}
                   </AccordionTrigger>
                   <AccordionContent className='w-fit flex flex-col justify-center gap-y-4'>
-                  <Separator className='h-[1.5px] mb-2' />
+                    <Separator className='h-[1.5px] mb-2' />
                     {currItem?.type === 'area' &&
                       <AddAreaElement graphId={currItem?.graphId} editGraphObject={currItem} />}
                     {currItem?.type === 'bar' &&
@@ -215,7 +227,97 @@ function Project({ projectId }) {
           ))
         }
       </div>
-      {/* } */}
+
+
+    <div
+      className={`fixed top-0 z-50 h-full w-[32rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background ${
+        showAddGraphList ? 'right-0' : '-right-[42rem]'
+      } transition-all duration-300 ease-in-out bg-[#f2f2f2] dark:bg-popover shadow-2xl shadow-vibrant-1`}
+    >
+      {/* Header */}
+      <div className="flex items-center mt-6 mb-0.5 justify-between w-full">
+        <button
+          className="w-fit p-0 bg-transparent ml-2"
+          onClick={() => setShowAddGraphList(!showAddGraphList)}
+        >
+          <X size={36} className="absolute -translate-y-1/2 bg-red-900 text-white rounded-lg shadow-[0_0_10px_#ff0000]" />
+        </button>
+        <span className={`m-auto text-4xl font-bold text-primary block text-center tracking-widest ${orbitron.className}`}>
+          Create Graphs
+        </span>
+      </div>
+
+      <Separator className="h-0.5 mb-2" />
+
+
+
+      {/* Accordion for Forms */}
+      <Accordion type="multiple" className="w-full grid gap-y-4 px-10">
+        {/* Cartesian Graph */}
+        <AccordionItem value="cartesian">
+          <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+            <div className={`flex items-center gap-2 ${orbitron.className}`}>   
+              <span className="text-lg font-semibold">Cartesian Graph</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-4">
+            <CreateCartesianGraph planeId={focusedPlaneId} />
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Pie Graph */}
+        <AccordionItem value="pie">
+          <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+          <div className={`flex items-center gap-2 ${orbitron.className}`}> 
+              <span className="text-lg font-semibold">Pie Graph</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-4">
+            <CreatePieGraph planeId={focusedPlaneId} />
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Radial Bar Graph */}
+        <AccordionItem value="radialBar">
+          <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+          <div className={`flex items-center gap-2 ${orbitron.className}`}> 
+              <span className="text-lg font-semibold">Radial Bar Graph</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-4">
+            <CreateRadialBarGraph planeId={focusedPlaneId} />
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Radar Graph */}
+        <AccordionItem value="radar">
+          <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+          <div className={`flex items-center gap-2 ${orbitron.className}`}> 
+              <span className="text-lg font-semibold">Radar Graph</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-4">
+            <CreateRadarGraph planeId={focusedPlaneId} />
+          </AccordionContent>
+        </AccordionItem>
+
+        {/* Text Component */}
+        <AccordionItem value="text">
+          <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+          <div className={`flex items-center gap-2 ${orbitron.className}`}> 
+              <span className="text-lg font-semibold">Text Component</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-4">
+            <CreateTextComponent planeId={focusedPlaneId} />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
+
+
+
+
 
     </div>
   )

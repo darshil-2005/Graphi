@@ -13,8 +13,6 @@ function AddCartesianElement({ graphId, editGraphObject }) {
     const addGraphObjGraphElementsArray = usePlaneElementsStore((state) => state.addGraphObjGraphElementsArray);
     const handleGraphElementsArrayEditing = usePlaneElementsStore((state) => state.handleGraphElementsArrayEditing);
 
-    console.log("nbcjsdbnj", editGraphObject)
-
     useEffect(() => {
         setGraphObjIndex(retrieveGraphObjectIndex(graphId, graphObjects));
     }, [graphId, graphObjects]);

@@ -13,9 +13,6 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
     const handleEditing = usePlaneElementsStore((state) => (state.handleEditing));
 
 
-    console.log("Edit: ", editGraphObject?.backgroundColorOpacity)
-
-
     async function addCartesianGraphInThePlaneElementsArray(data) {
 
         if (editGraphObject) {

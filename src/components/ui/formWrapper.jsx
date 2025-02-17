@@ -1,6 +1,6 @@
-function FormWrapper({children}) {
+function FormWrapper({children, className}) {
   return (
-    <div className='grid gap-y-4 w-[20rem] border text-card-foreground bg-card p-4 mt-4 rounded-md border-border mx-auto'>
+    <div className={`grid gap-y-4 w-[20rem] border text-card-foreground bg-card p-4 mt-4 rounded-md border-border mx-auto`}>
         {children}
     </div>
   )

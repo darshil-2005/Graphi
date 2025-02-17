@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/shadcnComponent/accordion";
 
 
-function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode, setEditMode }) {
+function Plane({ planeId, projectId, planeData, setFocusedElementIndex, focusedPlaneId, setFocusedPlaneId, editMode, setEditMode }) {
 
   const elements = usePlaneElementsStore((state) => state.planeElements);
   const updatePosition = usePlaneElementsStore((state) => state.updatePosition);
@@ -81,23 +81,15 @@ function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode
       });
   };
 
-  const sampleData = [
-    { x: 1, y: 10 },
-    { x: 2, y: 20 },
-    { x: 3, y: 15 },
-    { x: 4, y: 30 },
-    { x: 5, y: 25 },
-]; 
-
-
 
   return (
     <>
       <div
         ref={chartRef}
-        className="h-[70vh] w-full m-auto overflow-hidden dark:shadow-[0px_0px_15px_5px_rgba(50_255_255/_0.2)] shadow-[0px_0px_15px_1px_rgba(50_150_255/_0.8)]"
+        className={`h-[70vh] w-full m-auto my-10 overflow-hidden ${ focusedPlaneId == planeId ? 'shadow-[0px_0px_15px_1px_rgba(106_0_139/_0.8)]' : 'dark:shadow-[0px_0px_15px_5px_rgba(50_255_255/_0.2)] shadow-[0px_0px_15px_1px_rgba(50_150_255/_0.8)]'}`}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
+        onClick={(e) => {setFocusedPlaneId(planeId)}}
       >
         {/* <div className="h-full w-full relative bg-foreground-secondary bg-[linear-gradient(to_right,#4f4f4f4e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f4e_1px,transparent_1px)] bg-[size:60px_60px]"> */}
 
@@ -118,22 +110,6 @@ function Plane({ planeId, projectId, planeData, setFocusedElementIndex, editMode
           }
         </div>
       </div>
-
-
-
-      <Accordion type="single" collapsible className="w-[30rem] mx-auto my-4 border px-6 rounded-xl">
-        <AccordionItem value="Graph Add Menu">
-          <AccordionTrigger className='text-lg'><span className='flex gap-x-2 items-center'>Add Graphs</span></AccordionTrigger>
-          <AccordionContent>
-            <CreateCartesianGraph planeId={planeId} />
-            <CreatePieGraph planeId={planeId} />
-            <CreateRadialBarGraph planeId={planeId} />
-            <CreateRadarGraph planeId={planeId} />
-            <CreateTextComponent planeId={planeId} />
-            {/* <CreateImageComponent planeId={planeId} /> */}
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
 
     </>
   );

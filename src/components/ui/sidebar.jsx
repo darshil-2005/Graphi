@@ -18,7 +18,6 @@ function Sidebar({ session }) {
     const [extended, setExtended] = useState(false);
 
     const path = usePathname();
-    console.log("paht: ", path)
 
     const sidebarMenuOptions = [{ label: 'Home', icon: <House size={32} absoluteStrokeWidth />, link: '/' },
     { label: 'Dashboard', icon: <LucideLayoutDashboard size={32} absoluteStrokeWidth />, link: '/dashboard' },
