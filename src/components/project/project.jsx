@@ -31,7 +31,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/shadcnComponent/accordion";
-import { Pencil, Save } from 'lucide-react';
+import { Pencil, Save, CircleEllipsis, SquareMenu } from 'lucide-react';
+import { Separator } from '@/components/ui/shadcnComponent/separator';
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] })
 
@@ -120,12 +121,12 @@ function Project({ projectId }) {
   return (
     <div className=' mx-auto w-full overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground'>
 
-      <div className='sticky top-0 z-[100] flex mb-10 justify-between py-4 items-center px-4 shadow-md bg-background dark:shadow-slate-200/10'>
+      <div className='sticky top-0 z-[10] flex mb-10 justify-between py-4 items-center px-4 shadow-md bg-background dark:shadow-slate-200/10'>
 
         <div className={`${orbitron.className} flex items-center ml-4 text-3xl tracking-[0.6rem] text-primary`}><Link href='/'>GRAPHI</Link></div>
 
         <div className='flex gap-x-10'>
-          <Button className={`h-10 px-4 text-sm ${orbitron.className} ${showGraphElements ? 'border border-blue-800' : 'bg-secondary/40 border'}`} variant='secondary' onClick={() => { setShowGraphElements(!showGraphElements); }}>Edit Graph Elements</Button>
+          <Button className={`h-10 px-4 text-sm ${orbitron.className} ${showGraphElements ? 'border border-blue-800' : 'bg-secondary/40 border'}`} variant='secondary' onClick={() => { setShowGraphElements(!showGraphElements); }}>{<SquareMenu absoluteStrokeWidth/>}Context Menu</Button>
           <Button className={`h-10 w-fit text-sm flex gap-x-3 ${orbitron.className} ${editMode ? 'border border-blue-800' : 'bg-secondary/40 border'}`} variant='secondary' onClick={() => { setEditMode(!editMode); }}>
             {<Pencil />}
             {<span>Edit Mode</span>}
@@ -146,9 +147,10 @@ function Project({ projectId }) {
 
       <Button className='w-full mb-4' variant='secondary' onClick={handleCreatingPlanes}>Add New Plane</Button>
 
-      {(showGraphElements) &&
-        <div className='fixed right-0 top-0 bg-background h-full w-[30rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background'>
-          <span className='text-4xl my-4 font-bold text-primary block text-center'>Current Components</span>
+      {/* {(showGraphElements) && */}
+        <div className={`fixed top-0 z-50 bg-background h-full w-[30rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background ${showGraphElements ? 'right-0' : '-right-[30rem]'} transition-all duration-300 ease-out`}>
+          <span className={`text-4xl mt-6 font-bold text-primary block text-center tracking-widest ${orbitron.className}`}>Context Menu</span>
+          <Separator className='h-0.5'/>
 
           {graphElements.filter((d) => {
 
@@ -201,7 +203,7 @@ function Project({ projectId }) {
             ))
           }
         </div>
-      }
+      {/* } */}
 
     </div>
   )
