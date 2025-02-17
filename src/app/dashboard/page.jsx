@@ -13,6 +13,8 @@ async function Dashboard() {
   const session = await auth();
   const projects = await fetchAllProjectsForAParticularUser();
 
+  console.log(session);
+
 
   const finalProjectObjectsForAUser = projects.map((projectObject) => {
     return {

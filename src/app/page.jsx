@@ -9,6 +9,8 @@ import PieChartExample from '@/components/ui/heroSectionExamples/exPieChart';
 import Link from 'next/link'
 import Navbar from '@/components/ui/navbar'
 
+import { auth } from '@/auth';
+
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] })
 
 export default async function Default() {

@@ -1,5 +1,6 @@
 import { auth } from "@/auth"
 import Sidebar from "@/components/ui/sidebar"
+import Navbar from "@/components/ui/navbar";
 
 
 const Tutorial = async () => {

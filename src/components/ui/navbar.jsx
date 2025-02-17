@@ -12,7 +12,7 @@ async function Navbar() {
   const session = await auth();
   
   return (
-    <div className='flex flex-grow justify-between py-6 items-center px-10 h-[13vh]'>
+    <div className='flex justify-between py-6 items-center px-10'>
       <div className={`${orbitron.className} text-3xl tracking-[0.6rem] text-primary`}><Link href='/'>GRAPHI</Link></div>
       <div className='mt-1'>
         <ul className={`flex gap-x-16 px-6 py-1 rounded-full text-primary bg-secondary/60 border-2 border-border overflow-hidden`}>
