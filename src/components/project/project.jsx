@@ -40,7 +40,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/shadcnComponent/accordion";
-import { Pencil, Save, ChevronDown, SquareMenu, CircleX, X, ChartNoAxesColumn, ChartColumnIcon, ChartNoAxesColumnDecreasing, ChartNoAxesColumnIncreasing, Plus, SquarePlus } from 'lucide-react';
+import { Pencil, Save, SquareMenu, ChartNoAxesColumnIncreasing, X, SquarePlus } from 'lucide-react';
 import { Separator } from '@/components/ui/shadcnComponent/separator';
 
 
@@ -232,7 +232,7 @@ function Project({ projectId }) {
     <div
       className={`fixed top-0 z-50 h-full w-[32rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background ${
         showAddGraphList ? 'right-0' : '-right-[42rem]'
-      } transition-all duration-300 ease-in-out bg-[#f2f2f2] dark:bg-popover shadow-2xl shadow-vibrant-1`}
+      } transition-all duration-300 ease-in-out bg-[#f2f2f2] dark:bg-popover shadow-2xl shadow-chart-3`}
     >
       {/* Header */}
       <div className="flex items-center mt-6 mb-0.5 justify-between w-full">
