@@ -15,7 +15,7 @@ const roboto = Roboto({ subsets: ['cyrillic'], weight: ['400', '700'] });
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning className='scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background'>
-      <body className={`${roboto.className} text-[16px] tracking-widest bg-background text-foreground `}>
+      <body className={`${roboto.className} text-[16px] tracking-wider bg-background text-foreground `}>
         <Toaster richColors />
         <SessionProvider>
           <ThemeProvider

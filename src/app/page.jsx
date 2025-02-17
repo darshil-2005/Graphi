@@ -27,7 +27,7 @@ export default async function Default() {
           </div>
         </div>
         <div className='mx-auto grid grid-cols-2 w-[50%]'>
-          <Button variant='secondary' className='w-44 mx-auto z-20'><Link href='/tutorial' className='flex items-center gap-x-2'>Tutorial<ArrowRight /></Link></Button>
+          <Button variant='outline' className='w-44 mx-auto z-20'><Link href='/tutorial' className='flex items-center gap-x-2'>Tutorial<ArrowRight /></Link></Button>
           <Button className='w-44 mx-auto z-20'><Link href='/login'>Get Started</Link></Button>
         </div>
 

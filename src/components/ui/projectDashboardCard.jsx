@@ -5,7 +5,7 @@ import Link from 'next/link';
 function ProjectDashboardCard({ projectCardObject }) {
 
   return (
-    <div className="shadow-lg w-full h-20 rounded-md bg-background border hover:bg-primary-foreground text-primary grid grid-cols-4 whitespace-nowrap p-4 items-center justify-center">
+    <div className="shadow-md shadow-foreground/5 w-full h-20 rounded-md bg-background border hover:bg-primary-foreground text-primary grid grid-cols-4 whitespace-nowrap p-4 items-center justify-center">
       <div className='text-start'>
         <div className='text-xl font-bold'>{projectCardObject.projectName}</div>
         <div className='w-60 sm:w-40 text-ellipsis overflow-hidden text-muted-foreground/60'>Project Id: {projectCardObject.projectId}</div>

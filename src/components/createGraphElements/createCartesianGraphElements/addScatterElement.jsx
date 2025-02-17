@@ -46,14 +46,15 @@ function AddScatterElement({ graphId, editGraphObject }) {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="w-fit grid gap-y-5 ">
-                <Label htmlFor="scatterName">Scatter Name</Label>
+            <div className="w-fit grid gap-y-3 tracking-wider">
+                <Label htmlFor="scatterName" >Scatter Name</Label>
                 <Input
                     id="scatterName"
                     name="scatterName"
                     {...register('scatterName')}
                     type="text"
-                    className="w-[8rem] bg-black"
+                    placeholder={'Name'}
+                    className="w-[8rem] bg-secondary border-2 border-foreground/20"
                     defaultValue={editGraphObject?.scatterName}
                 />
 

@@ -15,7 +15,7 @@ const ColorInput = ({ registerId, label, defaultValue, className, register, show
         {...register(registerId)}
         defaultValue={defaultValue}
         id={registerId}
-        className={`w-20 h-10 bg-secondary border text-foreground focus:border-2 focus:border-primary`}
+        className={`w-20 h-10 bg-secondary border-2 border-foreground/20 text-foreground focus:border-2 focus:border-primary`}
         type="color"
       />
       </div>
@@ -29,7 +29,7 @@ const ColorInput = ({ registerId, label, defaultValue, className, register, show
             defaultValue={defaultOpacity}
             id={registerId + 'Opacity'}
             name={registerId + 'Opacity'}
-            className={`w-20 h-10 bg-secondary border text-foreground focus:border-2 focus:border-primary`}
+            className={`w-20 h-10 bg-secondary border-2 border-foreground/20 text-foreground focus:border-2 focus:border-primary`}
             type="number"
             step={0.01}
             min={0}

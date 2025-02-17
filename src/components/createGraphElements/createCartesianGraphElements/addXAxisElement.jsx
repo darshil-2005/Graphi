@@ -120,7 +120,7 @@ function AddXAxisElement({ graphId, editGraphObject }) {
                     </div>
 
                     <div className='grid grid-cols-2'>
-                        <TextInput registerId='unit' label='Unit' defaultValue={editGraphObject ? editGraphObject.unit : ''} register={register} />
+                        <TextInput registerId='unit' label='Unit' placeHolder={'px'} defaultValue={editGraphObject ? editGraphObject.unit : ''} register={register} />
                         <NumberInput registerId='tickAngle'
                             label='Tick Angle'
                             defaultValue={editGraphObject ? editGraphObject.tickAngle : 0}
@@ -153,7 +153,7 @@ function AddXAxisElement({ graphId, editGraphObject }) {
 
                     <div className='grid gap-y-5 mt-2'>
                         <div className='font-semibold text-xl tracking-wider'>Label</div>
-                        <TextInput registerId='labelValue' label='Label Text' defaultValue={editGraphObject ? editGraphObject.labelValue : ''} register={register} />
+                        <TextInput registerId='labelValue' label='Label Text' placeHolder={'Label'} defaultValue={editGraphObject ? editGraphObject.labelValue : ''} register={register} />
                         <DropdownInput registerId="labelposition" label="Label Position" register={register} optionsArray={[
                             "top",
                             "left",
