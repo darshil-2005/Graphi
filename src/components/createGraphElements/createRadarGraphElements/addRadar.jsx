@@ -49,7 +49,7 @@ const AddRadar = ({ graphId, editGraphObject }) => {
     }
     return (
         <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-            <div className='w-fit grid gap-y-5'>
+            <div className='w-64 grid gap-y-5'>
 
                 <TextInput registerId='name' label='Name' register={register} defaultValue={editGraphObject?.name} />
 

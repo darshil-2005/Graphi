@@ -46,7 +46,7 @@ function AddScatterElement({ graphId, editGraphObject }) {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="w-fit grid gap-y-3 tracking-wider">
+            <div className="w-64 grid gap-y-3 tracking-wider">
                 <Label htmlFor="scatterName" >Scatter Name</Label>
                 <Input
                     id="scatterName"

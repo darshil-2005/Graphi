@@ -57,7 +57,7 @@ function AddLineElement({ graphId, editGraphObject }) {
     return (
         <>
             <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-                <div className='w-fit grid gap-y-5'>
+                <div className='w-64 grid gap-y-5'>
                     <DropdownInput
                         registerId='interpolationType'
                         optionsArray={['basis', 'basisClosed', 'basisOpen', 'bumpX', 'bumpY', 'bump', 'linear', 'linearClosed', 'natural', 'monotoneX', 'monotoneY', 'monotone', 'step', 'stepBefore', 'stepAfter']}

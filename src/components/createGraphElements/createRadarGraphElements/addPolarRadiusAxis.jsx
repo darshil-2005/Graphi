@@ -40,7 +40,7 @@ const AddPolarRadiusAxis = ({ graphId, editGraphObject }) => {
     return (
         <form onSubmit={handleSubmit(handleLineFormSubmit)} className='flex flex-col gap-y-6'>
 
-            <div className='grid gap-y-5 w-fit'>
+            <div className='grid gap-y-5 w-64'>
 
                 <NumberInput
                     register={register}

@@ -55,7 +55,7 @@ const AddPolarGrid = ({ graphId, editGraphObject }) => {
 
     return (
         <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-            <div className='w-fit grid gap-y-4'>
+            <div className='w-64 grid gap-y-4'>
                 <Button type='submit'>Add Polar Grid!!</Button>
             </div>
         </form>

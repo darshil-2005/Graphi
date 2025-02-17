@@ -7,7 +7,7 @@ const ColorInput = ({ registerId, label, defaultValue, className, register, show
   console.log("Opa: ", defaultOpacity)
   return (
 
-    <div className={`${ showOpacity ? 'grid grid-cols-2' : ''} ${className}`}>
+    <div className={`${ showOpacity ? 'grid grid-cols-2 ' : ''} ${className} w-full`}>
 
       <div className='flex flex-col gap-y-2'>
       <Label htmlFor={registerId}>{label}</Label>

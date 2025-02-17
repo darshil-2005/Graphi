@@ -55,12 +55,11 @@ function AddBarElement({ graphId, editGraphObject }) {
     return (
         <>
             <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-                <div className='w-fit grid gap-y-5'>
+                <div className='w-64 grid gap-y-5'>
                     <ColorInput
                         label='Color'
                         registerId='fill'
                         register={register}
-                        className='w-fit'
                         defaultValue={editGraphObject?.fill || '#0000ff'}
                         showOpacity
                         defaultOpacity={editGraphObject ? editGraphObject.fillOpacity : 1}

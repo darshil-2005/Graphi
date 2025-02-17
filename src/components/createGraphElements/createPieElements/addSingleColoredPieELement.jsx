@@ -87,7 +87,7 @@ function AddSingleColoredPieChart({ graphId, editGraphObject }) {
         <>
             <form onSubmit={handleSubmit(handleLineFormSubmit)}>
 
-                <div className='grid w-fit gap-y-5'>
+                <div className='grid w-64 gap-y-5'>
                     <div className='font-bold grid'>Create Pie Graph!!</div>
 
                     {keys &&
