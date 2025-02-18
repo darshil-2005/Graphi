@@ -41,6 +41,8 @@ function CartesianGraph({ graphObject, index, setDraggedElement, setFocusedEleme
 
   const graphObjectElements = usePlaneElementsStore((state) => (state.graphElements));
 
+  console.log("Comp2: ", graphObject, graphObject.planeId)
+
 
   return (
     <>

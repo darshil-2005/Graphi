@@ -12,8 +12,14 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
     const addPlaneElements = usePlaneElementsStore((state) => (state.addPlaneElements));
     const handleEditing = usePlaneElementsStore((state) => (state.handleEditing));
 
+    console.log("Edit: ", editGraphObject)
+    console.log("Edit2: ", editGraphObject?.height)
+    console.log("Edit3: ", parseInt(editGraphObject?.height))
+
 
     async function addCartesianGraphInThePlaneElementsArray(data) {
+
+        console.log("Data: ", data)
 
         if (editGraphObject) {
 
@@ -67,8 +73,8 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
                     <DropdownFileInput registerId={`fileUpload${planeId}`} register={register} defaultValue={editGraphObject?.data} />
 
                     <div className='grid grid-cols-2'>
-                        <NumberInput registerId={'height'} label={'Height'} defaultValue={parseInt(editGraphObject?.height) || 200} register={register} suffix={'px'} />
-                        <NumberInput registerId={'width'} label={'Width'} defaultValue={parseInt(editGraphObject?.width) || 200} register={register} suffix={'px'} />
+                        <NumberInput registerId={'height'} label={'Height'} defaultValue={editGraphObject ? parseInt(editGraphObject.height) : 200} register={register} suffix={'px'} />
+                        <NumberInput registerId={'width'} label={'Width'} defaultValue={editGraphObject ? parseInt(editGraphObject.width) : 200} register={register} suffix={'px'} />
                     </div>
                     <div className='grid grid-cols-2'>
                         <NumberInput registerId={'top'} label={'Top'} defaultValue={parseInt(editGraphObject?.top) || 0} min={0} register={register} suffix={'px'}/>

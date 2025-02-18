@@ -174,6 +174,11 @@ function Project({ projectId }) {
 
         <Separator className='h-0.5 mb-2' />
 
+        <CreateCartesianGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
+
+        {console.log("ELemenet: ", elements)}
+        {console.log("Comp1: ", elements[focusedElementIndex], focusedPlaneId)}
+
 
         {graphElements.filter((d) => {
 
@@ -184,7 +189,7 @@ function Project({ projectId }) {
             <div key={index}>
               <Accordion type="single" collapsible className='mx-auto border px-6 py-2 w-80 grid justify-center rounded'>
                 <AccordionItem value="Graph Add Menu">
-                  <AccordionTrigger className='capitalize py-2 gap-x-4 rounded-xl text-3xl'>
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>
                     {currItem?.type}
                   </AccordionTrigger>
                   <AccordionContent className='w-fit flex flex-col justify-center gap-y-4'>
