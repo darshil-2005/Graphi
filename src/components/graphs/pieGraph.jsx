@@ -39,11 +39,6 @@ function PieGraph({ graphObject, index, setDraggedElement, setFocusedElementInde
         <ContextMenuWrapper graphObject={graphObject}>
 
           <Popover>
-            <PopoverTrigger>Edit Graph!!</PopoverTrigger>
-            <PopoverContent className="w-fit"><CreatePieGraph graphId={graphObject.graphId} editGraphObject={graphObject} /></PopoverContent>
-          </Popover>
-
-          <Popover>
             <PopoverTrigger>Add single colored Pie</PopoverTrigger>
             <PopoverContent className="w-fit"><AddSingleColoredPieChart graphId={graphObject.graphId} /></PopoverContent>
           </Popover>

@@ -1,6 +1,6 @@
 import { auth } from '@/auth'
 import { NextResponse } from 'next/server'
-import { isUserOnBoarded } from '@/app/server/actions'
+// import { isUserOnBoarded } from '@/app/server/actions'
 
 
 export async function middleware(request) {
@@ -10,7 +10,7 @@ export async function middleware(request) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
   
-  const onBoarded = await isUserOnBoarded(session.user.email);  
+  // const onBoarded = await isUserOnBoarded(session.user.email);  
 
   // if (!onBoarded && !(request.url.endsWith('onboarding'))){
   //   return NextResponse.redirect(new URL('/onboarding', request.url));

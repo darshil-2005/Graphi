@@ -13,9 +13,7 @@ import DropdownFileInput from '@/components/formElements/dropdownFileInput'
 
 const CreatePieGraph = ({ planeId, editGraphObject }) => {
 
-    const { register, handleSubmit } = useForm();
-    const graphId = usePlaneElementsStore((state) => (state.nextGraphId));
-    
+    const { register, handleSubmit } = useForm();    
     const addPlaneElements = usePlaneElementsStore((state) => (state.addPlaneElements));
     const handleEditing = usePlaneElementsStore((state) => (state.handleEditing));
 

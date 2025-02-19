@@ -24,25 +24,6 @@ export async function generateId() {
   return String(crypto.randomUUID().replace(/-/g, ''));
 }
 
-export async function isUserOnBoarded(email) {
-  return await fetch(`${process.env.NEXTAUTH_URL}/api/checkOnboardingStatus`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (!(data.onBoarded)) {
-        return false
-      }
-      return true
-    })
-    .catch((error) => console.error('Error:', error));
-}
-
-
 export async function usernameSetter(username) {
   const session = await auth();
 
@@ -68,22 +49,6 @@ export async function usernameSetter(username) {
     return false
   }
 }
-
-// export async function hasCompletedOnboarding() {
-//   const session = await auth();
-//   const isUserOnBoarded = await prisma.user.findFirst({
-//     where: {
-//       email: session.user.email,
-//     },
-//     select: {
-//       username: true,
-//     }
-//   });
-//   if (!(isUserOnBoarded.username)) {
-//     redirect('/onboarding');
-//   }
-//   return 0
-// }
 
 export async function handleLogin(method) {
   await signIn(method, { redirectTo: "/" })
@@ -122,6 +87,20 @@ export async function handleCreatingProject() {
   });
 
   return response;
+}
+
+export async function isUserOnBoarded() {
+
+  const session = await auth();
+
+  const user = await prisma.user.findUnique({
+
+    where: {
+      id: session.user.id,
+    }
+  })
+
+  return user
 }
 
 export async function fetchAllProjectsForAParticularUser() {

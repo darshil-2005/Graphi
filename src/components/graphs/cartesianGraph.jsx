@@ -41,8 +41,6 @@ function CartesianGraph({ graphObject, index, setDraggedElement, setFocusedEleme
 
   const graphObjectElements = usePlaneElementsStore((state) => (state.graphElements));
 
-  console.log("Comp2: ", graphObject, graphObject.planeId)
-
 
   return (
     <>
@@ -66,14 +64,7 @@ function CartesianGraph({ graphObject, index, setDraggedElement, setFocusedEleme
 
         {editMode &&
 
-          <ContextMenuWrapper graphObject={graphObject}>
-
-            <Popover>
-              <PopoverTrigger>Edit Graph</PopoverTrigger>
-              <PopoverContent className="w-fit">
-                <CreateCartesianGraph planeId={graphObject.planeId} editGraphObject={graphObject} />
-              </PopoverContent>
-            </Popover>
+          <ContextMenuWrapper graphObject={graphObject}>            
 
             <Popover>
               <PopoverTrigger>Add X Axis</PopoverTrigger>

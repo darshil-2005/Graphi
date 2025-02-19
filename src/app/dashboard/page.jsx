@@ -1,16 +1,26 @@
-import Navbar from '@/components/ui/navbar.jsx'
 import CreateProjectButton from '@/components/createProject/createProjectButton'
 import FileUploaderInput from '@/components/fileUploader/fileUploaderButton'
 import { auth } from '@/auth'
-import { fetchAllProjectsForAParticularUser } from '@/app/server/actions';
+import { fetchAllProjectsForAParticularUser, isUserOnBoarded } from '@/app/server/actions';
 import ProjectDashboardCard from "@/components/ui/projectDashboardCard"
 import DashboardFileDisplayer from './dashboardFileDisplayer'
 import Sidebar from '@/components/ui/sidebar';
+import { redirect } from 'next/navigation';
+
 
 
 async function Dashboard() {
 
   const session = await auth();
+
+  const userObjectFromDB = await isUserOnBoarded();
+
+  if ( userObjectFromDB?.username == null ) {
+
+    redirect('/onboarding');
+  }
+
+
   const projects = await fetchAllProjectsForAParticularUser();
 
   const finalProjectObjectsForAUser = projects.map((projectObject) => {

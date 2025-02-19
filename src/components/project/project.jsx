@@ -61,7 +61,7 @@ function Project({ projectId }) {
   const [showGraphElements, setShowGraphElements] = useState(false);
   const [showAddGraphList, setShowAddGraphList] = useState(false);
   const [editMode, setEditMode] = useState(true);
-  const [focusedElementIndex, setFocusedElementIndex] = useState(null);
+  const [focusedElementIndex, setFocusedElementIndex] = useState(undefined);
   const [focusedPlaneId, setFocusedPlaneId] = useState(null);
   const [planes, setPlanes] = useState(undefined);
   const [planeIdArray, setPlaneIdArray] = useState(undefined);
@@ -73,8 +73,7 @@ function Project({ projectId }) {
   const [syncingChanges, setSyncingChanges] = useState(false);
   const [creatingPlane, setCreatingPlane] = useState(false);
 
-  console.log("Focused Plane: ", focusedPlaneId)
-
+  const [accordionIsOpen, setAccordionIsOpen] = useState("");
 
 
   async function handleSavingChanges() {
@@ -136,7 +135,7 @@ function Project({ projectId }) {
 
         <div className={`${orbitron.className} flex items-center ml-4 text-3xl tracking-[0.6rem] text-primary`}><Link href='/'>GRAPHI</Link></div>
         <div className='flex gap-x-10'>
-        <Button className={`h-10 px-4 text-sm ${orbitron.className}`} variant='secondary' onClick={handleCreatingPlanes}>{<SquarePlus strokeWidth={1.5} />}Add New Plane</Button>
+          <Button className={`h-10 px-4 text-sm ${orbitron.className}`} variant='secondary' onClick={handleCreatingPlanes}>{<SquarePlus strokeWidth={1.5} />}Add New Plane</Button>
           <Button className={`h-10 px-4 text-sm ${orbitron.className} ${showAddGraphList ? 'border border-blue-800' : 'bg-secondary/40 border'}`} disabled={!focusedPlaneId} variant='secondary' onClick={() => { setShowAddGraphList(!showAddGraphList); }}>{<ChartNoAxesColumnIncreasing absoluteStrokeWidth />}Add Graph</Button>
           <Button className={`h-10 px-4 text-sm ${orbitron.className} ${showGraphElements ? 'border border-blue-800' : 'bg-secondary/40 border'}`} variant='secondary' onClick={() => { setShowGraphElements(!showGraphElements); }}>{<SquareMenu absoluteStrokeWidth />}Context Menu</Button>
           <Button className={`h-10 w-fit text-sm flex gap-x-3 ${orbitron.className} ${editMode ? 'border border-blue-800' : 'bg-secondary/40 border'}`} variant='secondary' onClick={() => { setEditMode(!editMode); }}>
@@ -150,14 +149,14 @@ function Project({ projectId }) {
         </div>
       </div>
 
-      <div className='mx-4 mt-8'>
+      <div className='mx-4 mt-8' onMouseDown={() => {setShowAddGraphList(false); setShowGraphElements(false); setAccordionIsOpen("")}}>
         {planes?.map((data, index) => {
           return <Plane key={index} planeId={data.planeId} projectId={data.projectId} planeData={data.planeData} focusedPlaneId={focusedPlaneId} setFocusedElementIndex={setFocusedElementIndex} setFocusedPlaneId={setFocusedPlaneId} editMode={editMode} setEditMode={setEditMode} />
         })}
       </div>
 
 
-      
+
 
       {/* {(showGraphElements) && */}
       <div className={`fixed top-0 z-50 h-full w-[32rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background ${showGraphElements ? 'right-0' : '-right-[42rem]'} transition-all duration-300 ease-in-out 
@@ -174,10 +173,37 @@ function Project({ projectId }) {
 
         <Separator className='h-0.5 mb-2' />
 
-        <CreateCartesianGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
 
-        {console.log("ELemenet: ", elements)}
-        {console.log("Comp1: ", elements[focusedElementIndex], focusedPlaneId)}
+        <Accordion type="single" value={accordionIsOpen} collapsible className='mx-auto border px-6 py-2 grid justify-center rounded'>
+          <AccordionItem value="Graph Add Menu">
+
+            <AccordionTrigger onClick={() => {
+               if( accordionIsOpen == "" ){
+                setAccordionIsOpen("Graph Add Menu")
+               } else if ( accordionIsOpen == "Graph Add Menu" ) {
+                setAccordionIsOpen("")
+               }
+            }} className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>
+                {elements[focusedElementIndex]?.type}
+            </AccordionTrigger>
+          
+            <AccordionContent className='w-fit flex flex-col justify-center gap-y-4'>
+              {elements[focusedElementIndex]?.type == 'cartesianGraph' &&
+                <CreateCartesianGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
+              }
+              {elements[focusedElementIndex]?.type == 'pieGraph' &&
+                <CreatePieGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
+              }
+              {elements[focusedElementIndex]?.type == 'radarGraph' &&
+                <CreateRadarGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
+              }
+              {elements[focusedElementIndex]?.type == 'radialBarGraph' &&
+                <CreateRadialBarGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
+              }
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
 
 
         {graphElements.filter((d) => {
@@ -234,97 +260,96 @@ function Project({ projectId }) {
       </div>
 
 
-    <div
-      className={`fixed top-0 z-50 h-full w-[32rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background ${
-        showAddGraphList ? 'right-0' : '-right-[42rem]'
-      } transition-all duration-300 ease-in-out bg-[#f2f2f2] dark:bg-popover shadow-2xl shadow-chart-3`}
-    >
-      {/* Header */}
-      <div className="flex items-center mt-6 mb-0.5 justify-between w-full">
-        <button
-          className="w-fit p-0 bg-transparent ml-2"
-          onClick={() => setShowAddGraphList(!showAddGraphList)}
-        >
-          <X size={36} className="absolute -translate-y-1/2 bg-red-900 text-white rounded-lg shadow-[0_0_10px_#ff0000]" />
-        </button>
-        <span className={`m-auto text-4xl font-bold text-primary block text-center tracking-widest ${orbitron.className}`}>
-          Create Graphs
-        </span>
+      <div
+        className={`fixed top-0 z-50 h-full w-[32rem] shadow-2xl px-4 gap-y-4 flex flex-col items-center overflow-y-auto scrollbar-thin scrollbar-thumb-foreground scrollbar-track-background ${showAddGraphList ? 'right-0' : '-right-[42rem]'
+          } transition-all duration-300 ease-in-out bg-[#f2f2f2] dark:bg-popover shadow-2xl shadow-chart-3`}
+      >
+        {/* Header */}
+        <div className="flex items-center mt-6 mb-0.5 justify-between w-full">
+          <button
+            className="w-fit p-0 bg-transparent ml-2"
+            onClick={() => setShowAddGraphList(!showAddGraphList)}
+          >
+            <X size={36} className="absolute -translate-y-1/2 bg-red-900 text-white rounded-lg shadow-[0_0_10px_#ff0000]" />
+          </button>
+          <span className={`m-auto text-4xl font-bold text-primary block text-center tracking-widest ${orbitron.className}`}>
+            Create Graphs
+          </span>
+        </div>
+
+        <Separator className="h-0.5 mb-2" />
+
+
+
+        {/* Accordion for Forms */}
+        <Accordion type="multiple" className="w-full grid gap-y-4 px-10">
+          {/* Cartesian Graph */}
+          <AccordionItem value="cartesian">
+            <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+              <div className={`flex items-center gap-2 ${orbitron.className}`}>
+                <span className="text-lg font-semibold">Cartesian Graph</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-4">
+              <CreateCartesianGraph planeId={focusedPlaneId} />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Pie Graph */}
+          <AccordionItem value="pie">
+            <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+              <div className={`flex items-center gap-2 ${orbitron.className}`}>
+                <span className="text-lg font-semibold">Pie Graph</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-4">
+              <CreatePieGraph planeId={focusedPlaneId} />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Radial Bar Graph */}
+          <AccordionItem value="radialBar">
+            <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+              <div className={`flex items-center gap-2 ${orbitron.className}`}>
+                <span className="text-lg font-semibold">Radial Bar Graph</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-4">
+              <CreateRadialBarGraph planeId={focusedPlaneId} />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Radar Graph */}
+          <AccordionItem value="radar">
+            <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+              <div className={`flex items-center gap-2 ${orbitron.className}`}>
+                <span className="text-lg font-semibold">Radar Graph</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-4">
+              <CreateRadarGraph planeId={focusedPlaneId} />
+            </AccordionContent>
+          </AccordionItem>
+
+          {/* Text Component */}
+          <AccordionItem value="text">
+            <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+              <div className={`flex items-center gap-2 ${orbitron.className}`}>
+                <span className="text-lg font-semibold">Text Component</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-4">
+              <CreateTextComponent planeId={focusedPlaneId} />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
 
-      <Separator className="h-0.5 mb-2" />
-
-
-
-      {/* Accordion for Forms */}
-      <Accordion type="multiple" className="w-full grid gap-y-4 px-10">
-        {/* Cartesian Graph */}
-        <AccordionItem value="cartesian">
-          <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
-            <div className={`flex items-center gap-2 ${orbitron.className}`}>   
-              <span className="text-lg font-semibold">Cartesian Graph</span>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-4">
-            <CreateCartesianGraph planeId={focusedPlaneId} />
-          </AccordionContent>
-        </AccordionItem>
-
-        {/* Pie Graph */}
-        <AccordionItem value="pie">
-          <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
-          <div className={`flex items-center gap-2 ${orbitron.className}`}> 
-              <span className="text-lg font-semibold">Pie Graph</span>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-4">
-            <CreatePieGraph planeId={focusedPlaneId} />
-          </AccordionContent>
-        </AccordionItem>
-
-        {/* Radial Bar Graph */}
-        <AccordionItem value="radialBar">
-          <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
-          <div className={`flex items-center gap-2 ${orbitron.className}`}> 
-              <span className="text-lg font-semibold">Radial Bar Graph</span>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-4">
-            <CreateRadialBarGraph planeId={focusedPlaneId} />
-          </AccordionContent>
-        </AccordionItem>
-
-        {/* Radar Graph */}
-        <AccordionItem value="radar">
-          <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
-          <div className={`flex items-center gap-2 ${orbitron.className}`}> 
-              <span className="text-lg font-semibold">Radar Graph</span>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-4">
-            <CreateRadarGraph planeId={focusedPlaneId} />
-          </AccordionContent>
-        </AccordionItem>
-
-        {/* Text Component */}
-        <AccordionItem value="text">
-          <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
-          <div className={`flex items-center gap-2 ${orbitron.className}`}> 
-              <span className="text-lg font-semibold">Text Component</span>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-4">
-            <CreateTextComponent planeId={focusedPlaneId} />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </div>
 
 
 
 
-
-    </div>
+    </div >
   )
 }
 

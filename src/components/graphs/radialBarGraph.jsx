@@ -65,11 +65,6 @@ function RadialBarGraph({ graphObject, index, setDraggedElement, setFocusedEleme
         <ContextMenuWrapper graphObject={graphObject}>
 
           <Popover>
-            <PopoverTrigger>Edit Graph!!</PopoverTrigger>
-            <PopoverContent className="w-fit"><CreateRadialBarGraph graphId={graphObject.graphId} editGraphObject={graphObject} /></PopoverContent>
-          </Popover>
-
-          <Popover>
             <PopoverTrigger>Add Radial BarGraph</PopoverTrigger>
             <PopoverContent className="w-fit"><AddRadialBarChart graphId={graphObject.graphId} /></PopoverContent>
           </Popover>

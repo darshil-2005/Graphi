@@ -20,7 +20,7 @@ const CreateRadialBarGraph = ({ planeId, editGraphObject }) => {
 
       const temp = {
         graphId: editGraphObject.graphId,
-        data: data[`fileUpload${planeId}`],
+        data: editGraphObject.data,
         height: String(data.height) + 'px',
         width: String(data.width) + 'px',
         zIndex: Number(data.zIndex),

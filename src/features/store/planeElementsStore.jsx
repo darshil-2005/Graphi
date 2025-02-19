@@ -7,17 +7,17 @@ const initialState = {
   planeElements: [],
   graphElements: [],
   userDataFiles: [],
-  deltas: [],
+  // deltas: [],
 }
 
-function addToDeltasArray(receivedObject, deltas) {
+// function addToDeltasArray(receivedObject, deltas) {
 
-  for (let i = 0; i < deltas.length; i++) {
-    if (deltas[i].id == receivedObject.id) { return false }
-  }
+//   for (let i = 0; i < deltas.length; i++) {
+//     if (deltas[i].id == receivedObject.id) { return false }
+//   }
 
-  return true
-}
+//   return true
+// }
 
 const usePlaneElementsStore = create(
   immer((set, get) => ({
@@ -72,10 +72,10 @@ const usePlaneElementsStore = create(
     
     addPlaneElements: (payload) => {
       set((state) => {
-        const res = addToDeltasArray({ type: 'planeElement', id: payload.graph.graphId }, state.deltas);
-        if (res) {
-          state.deltas.push({ type: 'planeElement', id: payload.graph.graphId })
-        }
+        // const res = addToDeltasArray({ type: 'planeElement', id: payload.graph.graphId }, state.deltas);
+        // if (res) {
+        //   state.deltas.push({ type: 'planeElement', id: payload.graph.graphId })
+        // }
 
         const tempPushObj = payload.graph;
         tempPushObj.isdeleted = false;
@@ -85,10 +85,10 @@ const usePlaneElementsStore = create(
     
     addGraphObjGraphElementsArray: (payload) => {
       set((state) => {
-        const res = addToDeltasArray({ type: 'graphElement', id: payload.newGraphElement.elementId }, state.deltas);
-        if (res) {
-          state.deltas.push({ type: 'graphElement', id: payload.newGraphElement.elementId })
-        }
+        // const res = addToDeltasArray({ type: 'graphElement', id: payload.newGraphElement.elementId }, state.deltas);
+        // if (res) {
+        //   state.deltas.push({ type: 'graphElement', id: payload.newGraphElement.elementId })
+        // }
 
         const tempPushObj = payload.newGraphElement;
         tempPushObj.isdeleted = false;        
@@ -103,10 +103,10 @@ const usePlaneElementsStore = create(
     handleResize: (payload) => {
 
       set((state) => {
-        const res = addToDeltasArray({ type: 'planeElement', id: payload.graphId }, state.deltas);
-        if (res) {
-          state.deltas.push({ type: 'planeElement', id: payload.graphId })
-        }
+        // const res = addToDeltasArray({ type: 'planeElement', id: payload.graphId }, state.deltas);
+        // if (res) {
+        //   state.deltas.push({ type: 'planeElement', id: payload.graphId })
+        // }
 
         for (let i = 0; i < state.planeElements.length; i++) {
           if (String(state.planeElements[i].graphId) === String(payload.graphId)) {
@@ -120,10 +120,10 @@ const usePlaneElementsStore = create(
     updatePosition: (payload) => {
       
       set((state) => {
-        const res = addToDeltasArray({ type: 'planeElement', id: payload.graphId }, state.deltas);
-        if (res) {
-          state.deltas.push({ type: 'planeElement', id: payload.graphId })
-        }
+        // const res = addToDeltasArray({ type: 'planeElement', id: payload.graphId }, state.deltas);
+        // if (res) {
+        //   state.deltas.push({ type: 'planeElement', id: payload.graphId })
+        // }
         
         for (let i = 0; i < state.planeElements.length; i++) {
           if (String(state.planeElements[i].graphId) === String(payload.graphId)) {
@@ -137,10 +137,10 @@ const usePlaneElementsStore = create(
     handleEditing: (payload) => {
       set((state) => {
         
-        const res = addToDeltasArray({ type: 'planeElement', id: payload.graphId }, state.deltas);
-        if (res) {
-          state.deltas.push({ type: 'planeElement', id: payload.graphId })
-        }
+        // const res = addToDeltasArray({ type: 'planeElement', id: payload.graphId }, state.deltas);
+        // if (res) {
+        //   state.deltas.push({ type: 'planeElement', id: payload.graphId })
+        // }
         
         for (let i = 0; i < state.planeElements.length; i++) {
           if (String(state.planeElements[i].graphId) === String(payload.graphId)) {
@@ -155,10 +155,10 @@ const usePlaneElementsStore = create(
     updateGraphObjInPlaneElements: (payload) => {
       if (payload.index >= 0 && payload.index < get().planeElements.length) {
         set((state) => {
-          const res = addToDeltasArray({ type: 'planeElement', id: state.planeElements[payload.index].graphId }, state.deltas);
-          if (res) {
-            state.deltas.push({ type: 'planeElement', id: state.planeElements[payload.index].graphId })
-          }
+          // const res = addToDeltasArray({ type: 'planeElement', id: state.planeElements[payload.index].graphId }, state.deltas);
+          // if (res) {
+          //   state.deltas.push({ type: 'planeElement', id: state.planeElements[payload.index].graphId })
+          // }
 
           state.planeElements[payload.index][payload.property] = payload.propertyValue;
         });
@@ -168,10 +168,10 @@ const usePlaneElementsStore = create(
     handleGraphElementsArrayEditing: (payload) => {
       set((state) => {
 
-        const res = addToDeltasArray({ type: 'graphElement', id: payload.elementId }, state.deltas);
-        if (res) {
-          state.deltas.push({ type: 'graphElement', id: payload.elementId })
-        }
+        // const res = addToDeltasArray({ type: 'graphElement', id: payload.elementId }, state.deltas);
+        // if (res) {
+        //   state.deltas.push({ type: 'graphElement', id: payload.elementId })
+        // }
         for (let j = 0; j < state.graphElements.length; j++) {
           if (String(state.graphElements[j].elementId) === payload.elementId) {
             for (let key in payload) {
@@ -187,10 +187,10 @@ const usePlaneElementsStore = create(
     
     deleteElementFromElementsArray: (graphId) => {
       set((state) => {
-        const res = addToDeltasArray({ type: 'planeElement', id: graphId }, state.deltas);
-        if (res) {
-          state.deltas.push({ type: 'planeElement', id: graphId, isdeleted: true })
-        }
+        // const res = addToDeltasArray({ type: 'planeElement', id: graphId }, state.deltas);
+        // if (res) {
+        //   state.deltas.push({ type: 'planeElement', id: graphId, isdeleted: true })
+        // }
         state.graphElements = state.graphElements.filter((d) => {
           return graphId != d.graphId
         })
@@ -205,10 +205,10 @@ const usePlaneElementsStore = create(
     deleteElementFromGraphElementsArray: (payload) => {
       set((state) => {
 
-        const res = addToDeltasArray({ type: 'graphElement', id: payload.elementId }, state.deltas);
-        if (res) {
-          state.deltas.push({ type: 'graphElement', id: payload.elementId, isdeleted: true })
-        }
+        // const res = addToDeltasArray({ type: 'graphElement', id: payload.elementId }, state.deltas);
+        // if (res) {
+        //   state.deltas.push({ type: 'graphElement', id: payload.elementId, isdeleted: true })
+        // }
         for (let j = 0; j < state.graphElements.length; j++) {
           if (String(state.graphElements[j].elementId) === payload.elementId) {
 

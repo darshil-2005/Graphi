@@ -13,8 +13,6 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
     const handleEditing = usePlaneElementsStore((state) => (state.handleEditing));
 
     console.log("Edit: ", editGraphObject)
-    console.log("Edit2: ", editGraphObject?.height)
-    console.log("Edit3: ", parseInt(editGraphObject?.height))
 
 
     async function addCartesianGraphInThePlaneElementsArray(data) {
