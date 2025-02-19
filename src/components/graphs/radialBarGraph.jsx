@@ -60,27 +60,6 @@ function RadialBarGraph({ graphObject, index, setDraggedElement, setFocusedEleme
         </RadialBarChart>
 
       </ResponsiveContainer>
-
-      {editMode &&
-        <ContextMenuWrapper graphObject={graphObject}>
-
-          <Popover>
-            <PopoverTrigger>Add Radial BarGraph</PopoverTrigger>
-            <PopoverContent className="w-fit"><AddRadialBarChart graphId={graphObject.graphId} /></PopoverContent>
-          </Popover>
-
-          <Popover>
-            <PopoverTrigger>Add Legend</PopoverTrigger>
-            <PopoverContent className="w-fit"><AddLegend graphId={graphObject.graphId} /></PopoverContent>
-          </Popover>
-
-          <Popover>
-            <PopoverTrigger>Add Tool Tip</PopoverTrigger>
-            <PopoverContent className="w-fit"><AddToolTip graphId={graphObject.graphId} /></PopoverContent>
-          </Popover>
-
-        </ContextMenuWrapper>
-      }
     </CommonGraphWrapper>
 
   );

@@ -50,40 +50,6 @@ function RadarGraph({ graphObject, index, setDraggedElement, setFocusedElementIn
             }
         </RadarChart>
       </ResponsiveContainer>
-
-      {editMode &&
-        <ContextMenuWrapper graphObject={graphObject}>
-
-          <Popover>
-            <PopoverTrigger>Edit Graph!!</PopoverTrigger>
-            <PopoverContent className="w-fit"><CreateRadarGraph graphId={graphObject.graphId} editGraphObject={graphObject} /></PopoverContent>
-          </Popover>
-          <Popover>
-            <PopoverTrigger>Add Polar Grid</PopoverTrigger>
-            <PopoverContent className="w-fit"><AddPolarGrid graphId={graphObject.graphId} /></PopoverContent>
-          </Popover>
-          <Popover>
-            <PopoverTrigger>Add Polar Angle axis</PopoverTrigger>
-            <PopoverContent className="w-fit"><AddPolarAngleAxis graphId={graphObject.graphId} /></PopoverContent>
-          </Popover>
-          <Popover>
-            <PopoverTrigger>Add Polar Radius axis</PopoverTrigger>
-            <PopoverContent className="w-fit"><AddPolarRadiusAxis graphId={graphObject.graphId} /></PopoverContent>
-          </Popover>
-          <Popover>
-            <PopoverTrigger>Add Radar</PopoverTrigger>
-            <PopoverContent className="w-fit"><AddRadar graphId={graphObject.graphId} /></PopoverContent>
-          </Popover>
-          <Popover>
-            <PopoverTrigger>Add Legend</PopoverTrigger>
-            <PopoverContent className="w-fit"><AddLegend graphId={graphObject.graphId} /></PopoverContent>
-          </Popover>
-          <Popover>
-            <PopoverTrigger>Add Tool Tip</PopoverTrigger>
-            <PopoverContent className="w-fit"><AddToolTip graphId={graphObject.graphId} /></PopoverContent>
-          </Popover>
-        </ContextMenuWrapper>
-      }
     </CommonGraphWrapper>
   );
 }

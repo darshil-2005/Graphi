@@ -34,27 +34,6 @@ function PieGraph({ graphObject, index, setDraggedElement, setFocusedElementInde
 
         </PieChart>
       </ResponsiveContainer>
-
-      {editMode &&
-        <ContextMenuWrapper graphObject={graphObject}>
-
-          <Popover>
-            <PopoverTrigger>Add single colored Pie</PopoverTrigger>
-            <PopoverContent className="w-fit"><AddSingleColoredPieChart graphId={graphObject.graphId} /></PopoverContent>
-          </Popover>
-
-          <Popover>
-            <PopoverTrigger>Add Legend</PopoverTrigger>
-            <PopoverContent className="w-fit"><AddLegend graphId={graphObject.graphId} /></PopoverContent>
-          </Popover>
-
-          <Popover>
-            <PopoverTrigger>Add Tool Tip</PopoverTrigger>
-            <PopoverContent className="w-fit"><AddToolTip graphId={graphObject.graphId} /></PopoverContent>
-          </Popover>
-
-        </ContextMenuWrapper>
-      }
     </CommonGraphWrapper>
   );
 }

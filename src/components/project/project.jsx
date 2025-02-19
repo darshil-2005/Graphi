@@ -14,7 +14,7 @@ import AddBarElement from '../createGraphElements/createCartesianGraphElements/a
 import AddScatterElement from '../createGraphElements/createCartesianGraphElements/addScatterElement.jsx';
 import AddXAxisElement from '../createGraphElements/createCartesianGraphElements/addXAxisElement.jsx';
 import AddYAxisElement from '../createGraphElements/createCartesianGraphElements/addYAxisElement.jsx';
-import AddCartesianElement from '../createGraphElements/createCartesianGraphElements/addCartesianGrid.jsx';
+import AddCartesianGrid from '../createGraphElements/createCartesianGraphElements/addCartesianGrid.jsx';
 import AddLegend from '../createGraphElements/createCartesianGraphElements/addLegend.jsx';
 import AddToolTip from '../createGraphElements/createCartesianGraphElements/addToolTip.jsx';
 import AddSingleColoredPieChart from '../createGraphElements/createPieElements/addSingleColoredPieELement.jsx';
@@ -74,6 +74,7 @@ function Project({ projectId }) {
   const [creatingPlane, setCreatingPlane] = useState(false);
 
   const [accordionIsOpen, setAccordionIsOpen] = useState("");
+  const [contextMenuMode, setContextMenuMode] = useState("Edit");
 
 
   async function handleSavingChanges() {
@@ -137,7 +138,7 @@ function Project({ projectId }) {
         <div className='flex gap-x-10'>
           <Button className={`h-10 px-4 text-sm ${orbitron.className}`} variant='secondary' onClick={handleCreatingPlanes}>{<SquarePlus strokeWidth={1.5} />}Add New Plane</Button>
           <Button className={`h-10 px-4 text-sm ${orbitron.className} ${showAddGraphList ? 'border border-blue-800' : 'bg-secondary/40 border'}`} disabled={!focusedPlaneId} variant='secondary' onClick={() => { setShowAddGraphList(!showAddGraphList); }}>{<ChartNoAxesColumnIncreasing absoluteStrokeWidth />}Add Graph</Button>
-          <Button className={`h-10 px-4 text-sm ${orbitron.className} ${showGraphElements ? 'border border-blue-800' : 'bg-secondary/40 border'}`} variant='secondary' onClick={() => { setShowGraphElements(!showGraphElements); }}>{<SquareMenu absoluteStrokeWidth />}Context Menu</Button>
+          <Button className={`h-10 px-4 text-sm ${orbitron.className} ${showGraphElements ? 'border border-blue-800' : 'bg-secondary/40 border'}`} disabled={!(typeof focusedElementIndex == 'number')} variant='secondary' onClick={() => { setShowGraphElements(!showGraphElements); }}>{<SquareMenu absoluteStrokeWidth />}Context Menu</Button>
           <Button className={`h-10 w-fit text-sm flex gap-x-3 ${orbitron.className} ${editMode ? 'border border-blue-800' : 'bg-secondary/40 border'}`} variant='secondary' onClick={() => { setEditMode(!editMode); }}>
             {<Pencil />}
             {<span>Edit Mode</span>}
@@ -149,7 +150,7 @@ function Project({ projectId }) {
         </div>
       </div>
 
-      <div className='mx-4 mt-8' onMouseDown={() => {setShowAddGraphList(false); setShowGraphElements(false); setAccordionIsOpen("")}}>
+      <div className='mx-4 mt-8' onMouseDown={() => { setShowAddGraphList(false); setShowGraphElements(false); setAccordionIsOpen("") }}>
         {planes?.map((data, index) => {
           return <Plane key={index} planeId={data.planeId} projectId={data.projectId} planeData={data.planeData} focusedPlaneId={focusedPlaneId} setFocusedElementIndex={setFocusedElementIndex} setFocusedPlaneId={setFocusedPlaneId} editMode={editMode} setEditMode={setEditMode} />
         })}
@@ -171,93 +172,248 @@ function Project({ projectId }) {
           <span className={`m-auto text-4xl font-bold text-primary block text-center tracking-widest ${orbitron.className}`}>Context Menu</span>
         </div>
 
-        <Separator className='h-0.5 mb-2' />
+        <Separator className='mt-1' />
+
+        <div className='w-[80%] text-xl flex px-4 gap-x-6'>
+          <Button className={`flex-1`} onClick={() => { setContextMenuMode("Create") }} variant={`${contextMenuMode == 'Create' ? 'secondary' : 'ghost'}`}>Create</Button>
+          <Separator orientation="vertical" className='h-8' />
+          <Button className='flex-1' onClick={() => { setContextMenuMode("Edit") }} variant={`${contextMenuMode == 'Edit' ? 'secondary' : 'ghost'}`}>Edit</Button>
+        </div>
 
 
-        <Accordion type="single" value={accordionIsOpen} collapsible className='mx-auto border px-6 py-2 grid justify-center rounded'>
-          <AccordionItem value="Graph Add Menu">
+        {
+          contextMenuMode == 'Create' &&
 
-            <AccordionTrigger onClick={() => {
-               if( accordionIsOpen == "" ){
-                setAccordionIsOpen("Graph Add Menu")
-               } else if ( accordionIsOpen == "Graph Add Menu" ) {
-                setAccordionIsOpen("")
-               }
-            }} className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>
-                {elements[focusedElementIndex]?.type}
-            </AccordionTrigger>
-          
-            <AccordionContent className='w-fit flex flex-col justify-center gap-y-4'>
-              {elements[focusedElementIndex]?.type == 'cartesianGraph' &&
-                <CreateCartesianGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
-              }
-              {elements[focusedElementIndex]?.type == 'pieGraph' &&
-                <CreatePieGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
-              }
-              {elements[focusedElementIndex]?.type == 'radarGraph' &&
-                <CreateRadarGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
-              }
-              {elements[focusedElementIndex]?.type == 'radialBarGraph' &&
-                <CreateRadialBarGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
-              }
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+          <>
+            {elements[focusedElementIndex]?.type == 'cartesianGraph' &&
+              <Accordion type="single" collapsible>
+                <AccordionItem value="x-axis">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add X Axis</AccordionTrigger>
+                  <AccordionContent><AddXAxisElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
 
+                <AccordionItem value="y-axis">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Y Axis</AccordionTrigger>
+                  <AccordionContent><AddYAxisElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
 
+                <AccordionItem value="line">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Line</AccordionTrigger>
+                  <AccordionContent><AddLineElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
 
-        {graphElements.filter((d) => {
+                <AccordionItem value="area">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Area</AccordionTrigger>
+                  <AccordionContent><AddAreaElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
 
-          return elements[focusedElementIndex]?.graphId == d.graphId
+                <AccordionItem value="bar">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Bar</AccordionTrigger>
+                  <AccordionContent><AddBarElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
 
-        }).filter((d) => d.isdeleted == false)
-          .map((currItem, index) => (
-            <div key={index}>
-              <Accordion type="single" collapsible className='mx-auto border px-6 py-2 w-80 grid justify-center rounded'>
-                <AccordionItem value="Graph Add Menu">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>
-                    {currItem?.type}
-                  </AccordionTrigger>
-                  <AccordionContent className='w-fit flex flex-col justify-center gap-y-4'>
-                    <Separator className='h-[1.5px] mb-2' />
-                    {currItem?.type === 'area' &&
-                      <AddAreaElement graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    {currItem?.type === 'bar' &&
-                      <AddBarElement graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    {currItem?.type === 'line' &&
-                      <AddLineElement graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    {currItem?.type === 'scatter' &&
-                      <AddScatterElement graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    {currItem?.type === 'xAxis' &&
-                      <AddXAxisElement graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    {currItem?.type === 'yAxis' &&
-                      <AddYAxisElement graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    {currItem?.type === 'cartesianGrid' &&
-                      <AddCartesianElement graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    {currItem?.type === 'legend' &&
-                      <AddLegend graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    {currItem?.type === 'toolTip' &&
-                      <AddToolTip graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    {currItem?.type === 'singleColoredPie' &&
-                      <AddSingleColoredPieChart graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    {currItem?.type === 'polarAngleAxis' &&
-                      <AddPolarAngleAxis graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    {currItem?.type === 'polarGrid' &&
-                      <AddPolarGrid graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    {currItem?.type === 'polarRadiusAxis' &&
-                      <AddPolarRadiusAxis graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    {currItem?.type === 'radar' &&
-                      <AddRadar graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    {currItem?.type === 'radialBarGraph' &&
-                      <AddRadialBarChart graphId={currItem?.graphId} editGraphObject={currItem} />}
-                    <Button variant={'destructive'} id={currItem?.graphId} onClick={() => deleteElementFromGraphElementsArray(currItem)}>Delete</Button>
-                  </AccordionContent>
+                <AccordionItem value="scatter">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Scatter</AccordionTrigger>
+                  <AccordionContent><AddScatterElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="cartesian-grid">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Cartesian Grid</AccordionTrigger>
+                  <AccordionContent><AddCartesianGrid graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="legend">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Legend</AccordionTrigger>
+                  <AccordionContent><AddLegend graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="tooltip">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Tool Tip</AccordionTrigger>
+                  <AccordionContent><AddToolTip graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
               </Accordion>
-            </div>
-          ))
+            }
+
+            {
+              elements[focusedElementIndex]?.type == 'pieGraph' &&
+              <Accordion type="single" collapsible>
+              <AccordionItem value="single-colored-pie">
+                <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Single Colored Pie</AccordionTrigger>
+                <AccordionContent><AddSingleColoredPieChart graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="legend">
+                <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Legend</AccordionTrigger>
+                <AccordionContent><AddLegend graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="tooltip">
+                <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Tool Tip</AccordionTrigger>
+                <AccordionContent><AddToolTip graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+              </AccordionItem>
+            </Accordion>
+            }
+
+            {
+              elements[focusedElementIndex]?.type == 'radialBarGraph' &&
+
+              <Accordion type="single" collapsible>
+                <AccordionItem value="radial-bar">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Radial BarGraph</AccordionTrigger>
+                  <AccordionContent><AddRadialBarChart graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="legend">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Legend</AccordionTrigger>
+                  <AccordionContent><AddLegend graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="tooltip">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Tool Tip</AccordionTrigger>
+                  <AccordionContent><AddToolTip graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            }
+
+            {
+              elements[focusedElementIndex]?.type == 'radarGraph' &&
+
+              <Accordion type="single" collapsible>
+
+                <AccordionItem value="polar-grid">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Polar Grid</AccordionTrigger>
+                  <AccordionContent><AddPolarGrid graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="polar-angle-axis">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Polar Angle Axis</AccordionTrigger>
+                  <AccordionContent><AddPolarAngleAxis graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="polar-radius-axis">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Polar Radius Axis</AccordionTrigger>
+                  <AccordionContent><AddPolarRadiusAxis graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="radar">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Radar</AccordionTrigger>
+                  <AccordionContent><AddRadar graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="legend">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Legend</AccordionTrigger>
+                  <AccordionContent><AddLegend graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="tooltip">
+                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Tool Tip</AccordionTrigger>
+                  <AccordionContent><AddToolTip graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                </AccordionItem>
+              </Accordion>
+
+            }
+
+          </>
         }
+
+        {
+          contextMenuMode == 'Edit' &&
+
+          <>
+            <Accordion type="single" value={accordionIsOpen} collapsible className='mx-auto border px-6 py-2 grid justify-center rounded'>
+              <AccordionItem value="Graph Add Menu">
+
+                <AccordionTrigger onClick={() => {
+                  if (accordionIsOpen == "") {
+                    setAccordionIsOpen("Graph Add Menu")
+                  } else if (accordionIsOpen == "Graph Add Menu") {
+                    setAccordionIsOpen("")
+                  }
+                }} className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>
+                  {elements[focusedElementIndex]?.type}
+                </AccordionTrigger>
+
+                <AccordionContent className='w-fit flex flex-col justify-center gap-y-4'>
+                  {elements[focusedElementIndex]?.type == 'cartesianGraph' &&
+                    <CreateCartesianGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
+                  }
+                  {elements[focusedElementIndex]?.type == 'pieGraph' &&
+                    <CreatePieGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
+                  }
+                  {elements[focusedElementIndex]?.type == 'radarGraph' &&
+                    <CreateRadarGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
+                  }
+                  {elements[focusedElementIndex]?.type == 'radialBarGraph' &&
+                    <CreateRadialBarGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
+                  }
+                  {elements[focusedElementIndex]?.type == 'textElement' &&
+                    <CreateTextComponent planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
+                  }
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+
+
+            {graphElements.filter((d) => {
+
+              return elements[focusedElementIndex]?.graphId == d.graphId
+
+            }).filter((d) => d.isdeleted == false)
+              .map((currItem, index) => (
+                <div key={index}>
+                  <Accordion type="single" collapsible className='mx-auto border px-6 py-2 w-80 grid justify-center rounded'>
+                    <AccordionItem value="Graph Add Menu">
+                      <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>
+                        {currItem?.type}
+                      </AccordionTrigger>
+                      <AccordionContent className='w-fit flex flex-col justify-center gap-y-4'>
+                        <Separator className='h-[1.5px] mb-2' />
+                        {currItem?.type === 'area' &&
+                          <AddAreaElement graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        {currItem?.type === 'bar' &&
+                          <AddBarElement graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        {currItem?.type === 'line' &&
+                          <AddLineElement graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        {currItem?.type === 'scatter' &&
+                          <AddScatterElement graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        {currItem?.type === 'xAxis' &&
+                          <AddXAxisElement graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        {currItem?.type === 'yAxis' &&
+                          <AddYAxisElement graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        {currItem?.type === 'cartesianGrid' &&
+                          <AddCartesianElement graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        {currItem?.type === 'legend' &&
+                          <AddLegend graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        {currItem?.type === 'toolTip' &&
+                          <AddToolTip graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        {currItem?.type === 'singleColoredPie' &&
+                          <AddSingleColoredPieChart graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        {currItem?.type === 'polarAngleAxis' &&
+                          <AddPolarAngleAxis graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        {currItem?.type === 'polarGrid' &&
+                          <AddPolarGrid graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        {currItem?.type === 'polarRadiusAxis' &&
+                          <AddPolarRadiusAxis graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        {currItem?.type === 'radar' &&
+                          <AddRadar graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        {currItem?.type === 'radialBarGraph' &&
+                          <AddRadialBarChart graphId={currItem?.graphId} editGraphObject={currItem} />}
+                        <Button variant={'destructive'} id={currItem?.graphId} onClick={() => deleteElementFromGraphElementsArray(currItem)}>Delete</Button>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
+              ))
+
+            }
+          </>
+        }
+
+
+
+
       </div>
+
 
 
       <div

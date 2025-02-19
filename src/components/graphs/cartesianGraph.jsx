@@ -61,65 +61,6 @@ function CartesianGraph({ graphObject, index, setDraggedElement, setFocusedEleme
             } 
           </ComposedChart>
         </ResponsiveContainer>
-
-        {editMode &&
-
-          <ContextMenuWrapper graphObject={graphObject}>            
-
-            <Popover>
-              <PopoverTrigger>Add X Axis</PopoverTrigger>
-              <PopoverContent className="w-fit">
-                <AddXAxisElement graphId={graphObject.graphId} />
-              </PopoverContent>
-            </Popover>
-
-            <Popover>
-              <PopoverTrigger>Add Y Axis</PopoverTrigger>
-              <PopoverContent className="w-fit">
-                <AddYAxisElement graphId={graphObject.graphId} />
-              </PopoverContent>
-            </Popover>
-
-            <Popover>
-              <PopoverTrigger>Add Line</PopoverTrigger>
-              <PopoverContent className="w-fit">
-                <AddLineElement graphId={graphObject.graphId} />
-              </PopoverContent>
-            </Popover>
-
-            <Popover>
-              <PopoverTrigger>Add Area</PopoverTrigger>
-              <PopoverContent className="w-fit"><AddAreaElement graphId={graphObject.graphId} /></PopoverContent>
-            </Popover>
-
-            <Popover>
-              <PopoverTrigger>Add Bar</PopoverTrigger>
-              <PopoverContent className="w-fit"><AddBarElement graphId={graphObject.graphId} /></PopoverContent>
-            </Popover>
-
-            <Popover>
-              <PopoverTrigger>Add Scatter</PopoverTrigger>
-              <PopoverContent className="w-fit"><AddScatterElement graphId={graphObject.graphId} /></PopoverContent>
-            </Popover>
-
-            <Popover>
-              <PopoverTrigger>Add Cartesian Grid</PopoverTrigger>
-              <PopoverContent className="w-fit"><AddCartesianGrid graphId={graphObject.graphId} /></PopoverContent>
-            </Popover>
-
-            <Popover>
-              <PopoverTrigger>Add Legend</PopoverTrigger>
-              <PopoverContent className="w-fit"><AddLegend graphId={graphObject.graphId} /></PopoverContent>
-            </Popover>
-
-            <Popover>
-              <PopoverTrigger>Add Tool Tip</PopoverTrigger>
-              <PopoverContent className="w-fit"><AddToolTip graphId={graphObject.graphId} /></PopoverContent>
-            </Popover>
-
-          </ContextMenuWrapper>
-        }
-
       </CommonGraphWrapper>
     </>
   );

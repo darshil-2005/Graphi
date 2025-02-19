@@ -32,16 +32,6 @@ const TextElement = ({ graphObject, index, setDraggedElement, setFocusedElementI
                 height: '100%'
             }} >{graphObject.text}</div>
 
-            {editMode &&
-                <ContextMenuWrapper graphObject={graphObject}>
-                    <Popover>
-                        <PopoverTrigger>Edit Text Element</PopoverTrigger>
-                        <PopoverContent>
-                            <CreateTextComponent planeId={graphObject.planeId} editGraphObject={graphObject} />
-                        </PopoverContent>
-                    </Popover>
-                </ContextMenuWrapper>
-            }
         </CommonGraphWrapper>
 
     )
