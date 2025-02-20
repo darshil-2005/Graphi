@@ -51,7 +51,7 @@ export async function usernameSetter(username) {
 }
 
 export async function handleLogin(method) {
-  await signIn(method, { redirectTo: "/" })
+  await signIn(method, { redirectTo: "/dashboard" })
 }
 
 export async function handleLogout() {

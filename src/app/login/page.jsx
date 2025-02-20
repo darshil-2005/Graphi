@@ -9,10 +9,18 @@ import { FaFacebook } from "react-icons/fa";
 import { Separator } from '@/components/ui/shadcnComponent/separator';
 import LoginButton from '../../components/authButtons/loginButton'
 import Navbar from '@/components/ui/navbar'
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] })
 
 async function Login() {
+
+  const session = await auth();
+
+  if (session) {
+    redirect('/dashboard');
+  }
 
   return (
     <div className='flex flex-col min-h-screen'>

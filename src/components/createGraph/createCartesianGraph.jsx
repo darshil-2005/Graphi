@@ -5,6 +5,7 @@ import NumberInput from '../formElements/numberInput';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import FormWrapper from '@/components/ui/formWrapper'
 import DropdownFileInput from '@/components/formElements/dropdownFileInput'
+import { Separator } from '@/components/ui/shadcnComponent/separator';
 
 function CreateCartesianGraph({ planeId, editGraphObject }) {
 
@@ -66,7 +67,8 @@ function CreateCartesianGraph({ planeId, editGraphObject }) {
         <>
             <form onSubmit={handleSubmit(addCartesianGraphInThePlaneElementsArray)}>
                 <FormWrapper>
-                    <div className='font-bold '>Create Cartesian Graph!!</div>
+                    {/* <div className='font-bold '>Create Cartesian Graph!!</div> */}
+                    <Separator/>
                     
                     <DropdownFileInput registerId={`fileUpload${planeId}`} register={register} defaultValue={editGraphObject?.data} />
 

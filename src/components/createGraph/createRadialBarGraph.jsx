@@ -6,6 +6,7 @@ import NumberInput from '../formElements/numberInput';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import FormWrapper from '@/components/ui/formWrapper';
 import DropdownFileInput from '@/components/formElements/dropdownFileInput'
+import { Separator } from '@/components/ui/shadcnComponent/separator';
 
 const CreateRadialBarGraph = ({ planeId, editGraphObject }) => {
 
@@ -67,10 +68,10 @@ const CreateRadialBarGraph = ({ planeId, editGraphObject }) => {
 
   return (
     <form onSubmit={handleSubmit(addRadialBarGraphInThePlaneElementsArray)} className='mb-4 flex gap-y-4 flex-col'>
-      <FormWrapper className='grid gap-y-4 w-[20rem] bg-primary-foreground p-4 mt-4 rounded-lg shadow-lg mx-auto'>
+      <FormWrapper>
 
-        <div className='font-bold grid'>Create Radial Bar Graph!!</div>
-        {/* <FileInput registerId="fileUploadRadialBar" label="Choose File" register={register} /> */}
+        <Separator/>
+
         <DropdownFileInput registerId={`fileUpload${planeId}`} register={register} defaultValue={editGraphObject?.data} />
 
         <div className='grid grid-cols-2'>

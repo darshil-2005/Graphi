@@ -7,6 +7,8 @@ import DropdownInput from '../../formElements/dropdownInput';
 import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
 import { retrieveFileIndex } from '@/utils/manualUtils'
+import { Separator } from '@/components/ui/shadcnComponent/separator';
+import FormWrapper from '@/components/ui/formWrapper';
 
 function AddLineElement({ graphId, editGraphObject }) {
 
@@ -57,7 +59,8 @@ function AddLineElement({ graphId, editGraphObject }) {
     return (
         <>
             <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-                <div className='w-64 grid gap-y-5'>
+            <FormWrapper>
+            <Separator/>
                     <DropdownInput
                         registerId='interpolationType'
                         optionsArray={['basis', 'basisClosed', 'basisOpen', 'bumpX', 'bumpY', 'bump', 'linear', 'linearClosed', 'natural', 'monotoneX', 'monotoneY', 'monotone', 'step', 'stepBefore', 'stepAfter']}
@@ -87,7 +90,7 @@ function AddLineElement({ graphId, editGraphObject }) {
 
                     <Button type='submit'>{editGraphObject ? 'Edit Element' : 'Add Line!!'}</Button>
 
-                </div>
+                </FormWrapper>
             </form>
 
         </>

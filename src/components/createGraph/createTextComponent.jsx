@@ -6,6 +6,7 @@ import DropdownInput from '../formElements/dropdownInput.jsx';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import { Textarea } from '@/components/ui/shadcnComponent/textarea.jsx';
 import FormWrapper from '@/components/ui/formWrapper';
+import { Separator } from '@/components/ui/shadcnComponent/separator.jsx';
 
 function CreateTextComponent({ planeId, editGraphObject }) {
 
@@ -86,8 +87,10 @@ function CreateTextComponent({ planeId, editGraphObject }) {
     <>
       <form onSubmit={handleSubmit(handleTextFormSubmit)}>
 
-        <FormWrapper className='grid gap-y-4 w-[20rem] bg-primary-foreground p-4 mt-4 rounded-lg shadow-lg mx-auto'>
-          <div className='font-bold'>Create Text Component!!</div>
+        <FormWrapper>
+
+          <Separator/>
+
           <div className='flex flex-col gap-y-2'>
             <Textarea
               id="text"

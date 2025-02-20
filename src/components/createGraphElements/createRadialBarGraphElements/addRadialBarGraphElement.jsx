@@ -10,6 +10,8 @@ import { CheckBox } from 'src/components/formElements/checkBox.jsx';
 import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import { retrieveFileIndex } from '@/utils/manualUtils';
 import { retrieveDataFromIndexedDBWithFileId } from '@/utils/manualUtils'
+import FormWrapper from '@/components/ui/formWrapper';
+import { Separator } from '@/components/ui/shadcnComponent/separator';
 
 
 function AddRadialBarChart({ graphId, editGraphObject }) {
@@ -66,8 +68,9 @@ function AddRadialBarChart({ graphId, editGraphObject }) {
   return (
     <>
       <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-        <div className='flex flex-col gap-y-5'>
-          <div className='font-bold'>Create Radial Bar Graph!!</div>
+        <FormWrapper>
+          <Separator/>
+
           {keys &&
             <DropdownInput registerId='dataKey' label='Data Key:' defaultValue={editGraphObject?.dataKey} optionsArray={keys} register={register} />
           }
@@ -78,7 +81,7 @@ function AddRadialBarChart({ graphId, editGraphObject }) {
           <ColorInput registerId='labelFill' register={register} label={'Label Fill'} className='w-[8rem]' defaultValue={editGraphObject?.labelFill} />
           <DropdownInput registerId='labelPosition' label='Label Position' defaultValue={editGraphObject?.labelPosition} optionsArray={['top', 'insideTopLeft', 'insideTop', 'insideTopRight', 'left', 'insideLeft', 'center', 'insideRight', 'right', 'insideBottomLeft', 'insideBottom', 'insideBottomRight', 'bottom']} register={register} formatLabel={true} />
           <Button type='submit'>Add Radial Bar Graph!!</Button>
-        </div>
+          </FormWrapper>
 
       </form>
     </>

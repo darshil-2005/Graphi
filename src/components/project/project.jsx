@@ -320,8 +320,8 @@ function Project({ projectId }) {
           contextMenuMode == 'Edit' &&
 
           <>
-            <Accordion type="single" value={accordionIsOpen} collapsible className='mx-auto border px-6 py-2 grid justify-center rounded'>
-              <AccordionItem value="Graph Add Menu">
+            <Accordion type="single" value={accordionIsOpen} collapsible className="w-full grid gap-y-4 px-10">
+              <AccordionItem value="Graph Add Menu" className='border rounded-lg'>
 
                 <AccordionTrigger onClick={() => {
                   if (accordionIsOpen == "") {
@@ -329,11 +329,11 @@ function Project({ projectId }) {
                   } else if (accordionIsOpen == "Graph Add Menu") {
                     setAccordionIsOpen("")
                   }
-                }} className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>
-                  {elements[focusedElementIndex]?.type}
+                }} className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}>
+                  <span className="text-lg font-semibold capitalize">{elements[focusedElementIndex]?.type}</span>
                 </AccordionTrigger>
 
-                <AccordionContent className='w-fit flex flex-col justify-center gap-y-4'>
+                <AccordionContent className="px-4">
                   {elements[focusedElementIndex]?.type == 'cartesianGraph' &&
                     <CreateCartesianGraph planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
                   }
@@ -361,13 +361,12 @@ function Project({ projectId }) {
             }).filter((d) => d.isdeleted == false)
               .map((currItem, index) => (
                 <div key={index}>
-                  <Accordion type="single" collapsible className='mx-auto border px-6 py-2 w-80 grid justify-center rounded'>
-                    <AccordionItem value="Graph Add Menu">
-                      <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>
-                        {currItem?.type}
+                  <Accordion type="single" collapsible className="w-full grid gap-y-4 px-10 min-w-[25rem]">
+                    <AccordionItem value="Graph Add Menu" className='border rounded-lg'>
+                      <AccordionTrigger className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}>
+                        <span className="text-lg font-semibold capitalize">{currItem?.type}</span>
                       </AccordionTrigger>
-                      <AccordionContent className='w-fit flex flex-col justify-center gap-y-4'>
-                        <Separator className='h-[1.5px] mb-2' />
+                      <AccordionContent className="px-4">
                         {currItem?.type === 'area' &&
                           <AddAreaElement graphId={currItem?.graphId} editGraphObject={currItem} />}
                         {currItem?.type === 'bar' &&
@@ -398,7 +397,7 @@ function Project({ projectId }) {
                           <AddRadar graphId={currItem?.graphId} editGraphObject={currItem} />}
                         {currItem?.type === 'radialBarGraph' &&
                           <AddRadialBarChart graphId={currItem?.graphId} editGraphObject={currItem} />}
-                        <Button variant={'destructive'} id={currItem?.graphId} onClick={() => deleteElementFromGraphElementsArray(currItem)}>Delete</Button>
+                        <Button variant={'destructive'} id={currItem?.graphId} className='w-full mt-3' onClick={() => deleteElementFromGraphElementsArray(currItem)}>Delete</Button>
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
@@ -421,14 +420,14 @@ function Project({ projectId }) {
           } transition-all duration-300 ease-in-out bg-[#f2f2f2] dark:bg-popover shadow-2xl shadow-chart-3`}
       >
         {/* Header */}
-        <div className="flex items-center mt-6 mb-0.5 justify-between w-full">
+        <div className="flex items-center mt-8 mb-0.5 justify-between w-full">
           <button
             className="w-fit p-0 bg-transparent ml-2"
             onClick={() => setShowAddGraphList(!showAddGraphList)}
           >
             <X size={36} className="absolute -translate-y-1/2 bg-red-900 text-white rounded-lg shadow-[0_0_10px_#ff0000]" />
           </button>
-          <span className={`m-auto text-4xl font-bold text-primary block text-center tracking-widest ${orbitron.className}`}>
+          <span className={`m-auto  text-4xl font-bold text-primary block text-center tracking-widest ${orbitron.className}`}>
             Create Graphs
           </span>
         </div>
@@ -440,8 +439,8 @@ function Project({ projectId }) {
         {/* Accordion for Forms */}
         <Accordion type="multiple" className="w-full grid gap-y-4 px-10">
           {/* Cartesian Graph */}
-          <AccordionItem value="cartesian">
-            <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+          <AccordionItem value="cartesian" className='border rounded-lg'>
+            <AccordionTrigger className="rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4  transition-colors">
               <div className={`flex items-center gap-2 ${orbitron.className}`}>
                 <span className="text-lg font-semibold">Cartesian Graph</span>
               </div>
@@ -452,8 +451,8 @@ function Project({ projectId }) {
           </AccordionItem>
 
           {/* Pie Graph */}
-          <AccordionItem value="pie">
-            <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+          <AccordionItem value="pie" className='border rounded-lg'>
+            <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ">
               <div className={`flex items-center gap-2 ${orbitron.className}`}>
                 <span className="text-lg font-semibold">Pie Graph</span>
               </div>
@@ -464,8 +463,8 @@ function Project({ projectId }) {
           </AccordionItem>
 
           {/* Radial Bar Graph */}
-          <AccordionItem value="radialBar">
-            <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+          <AccordionItem value="radialBar" className='border rounded-lg'>
+            <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors">
               <div className={`flex items-center gap-2 ${orbitron.className}`}>
                 <span className="text-lg font-semibold">Radial Bar Graph</span>
               </div>
@@ -476,8 +475,8 @@ function Project({ projectId }) {
           </AccordionItem>
 
           {/* Radar Graph */}
-          <AccordionItem value="radar">
-            <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+          <AccordionItem value="radar" className='border rounded-lg'>
+            <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ">
               <div className={`flex items-center gap-2 ${orbitron.className}`}>
                 <span className="text-lg font-semibold">Radar Graph</span>
               </div>
@@ -488,8 +487,8 @@ function Project({ projectId }) {
           </AccordionItem>
 
           {/* Text Component */}
-          <AccordionItem value="text">
-            <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-3 rounded-lg transition-colors border">
+          <AccordionItem value="text" className='border rounded-lg'>
+            <AccordionTrigger className="hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors">
               <div className={`flex items-center gap-2 ${orbitron.className}`}>
                 <span className="text-lg font-semibold">Text Component</span>
               </div>

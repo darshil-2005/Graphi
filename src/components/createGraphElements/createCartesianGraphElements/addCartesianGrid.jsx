@@ -4,6 +4,8 @@ import usePlaneElementsStore from '../../../features/store/planeElementsStore';
 import { Button } from '@/components/ui/shadcnComponent/button';
 import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import ColorInput from '../../formElements/colorInput';
+import { Separator } from '@/components/ui/shadcnComponent/separator';
+import FormWrapper from '@/components/ui/formWrapper';
 
 function AddCartesianElement({ graphId, editGraphObject }) {
 
@@ -37,7 +39,8 @@ function AddCartesianElement({ graphId, editGraphObject }) {
 
     return (
         <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-            <div className='w-64 grid gap-y-5'>
+            <FormWrapper>
+            <Separator/>
                 <ColorInput
                     registerId='cartesianGridColor'
                     label='Color'
@@ -48,7 +51,7 @@ function AddCartesianElement({ graphId, editGraphObject }) {
 
                 />
                 <Button type='submit'>Add Cartesian Grid!!</Button>
-            </div>
+            </FormWrapper>
         </form>
     )
 }

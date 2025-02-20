@@ -5,6 +5,8 @@ import usePlaneElementsStore from '../../../features/store/planeElementsStore';
 import { Button } from '@/components/ui/shadcnComponent/button';
 import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import { CustomTooltip } from '@/utils/manualUtils';
+import { Separator } from '@/components/ui/shadcnComponent/separator';
+import FormWrapper from '@/components/ui/formWrapper';
 
 function AddToolTip({ graphId, editGraphObject }) {
 
@@ -45,10 +47,11 @@ function AddToolTip({ graphId, editGraphObject }) {
     return (
         <>
                 <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-                    <div className='w-64 grid gap-y-5'>
+                <FormWrapper>
+                <Separator/>
                         {/* <ColorInput/> */}
                         <Button type='submit'>Add ToolTip!!</Button>
-                    </div>
+                    </FormWrapper>
                 </form>
         </>
     )

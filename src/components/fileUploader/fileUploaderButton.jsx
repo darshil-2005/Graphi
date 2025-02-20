@@ -87,12 +87,12 @@ function FileUploaderInput({ className }) {
               <Plus className='h-5 w-5 ' />
             </div>
             <div className='ml-4 text-2xl group-hover:text-muted-foreground text-muted-foreground/70 tracking-widest transition-all duration-100'>
-              Upload New File
+              Upload CSV File
             </div>
           </>
         )}
       </Label>
-      <Input type='file' id='dashboardFileUploadHandler' required onChange={handleUploadingFile} disabled={isUploading} />
+      <Input type='file' id='dashboardFileUploadHandler' accept={'text/csv'} required onChange={handleUploadingFile} disabled={isUploading} />
     </>
   )
 }

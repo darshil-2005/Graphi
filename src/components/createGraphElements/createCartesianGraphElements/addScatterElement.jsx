@@ -8,6 +8,8 @@ import DropdownInput from '../../formElements/dropdownInput';
 import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
 import {retrieveFileIndex} from '@/utils/manualUtils'
+import { Separator } from '@/components/ui/shadcnComponent/separator';
+import FormWrapper from '@/components/ui/formWrapper';
 
 function AddScatterElement({ graphId, editGraphObject }) {
     const { register, handleSubmit } = useForm();
@@ -46,7 +48,8 @@ function AddScatterElement({ graphId, editGraphObject }) {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="w-64 grid gap-y-3 tracking-wider">
+            <FormWrapper>
+            <Separator/>
                 <Label htmlFor="scatterName" >Scatter Name</Label>
                 <Input
                     id="scatterName"
@@ -105,7 +108,7 @@ function AddScatterElement({ graphId, editGraphObject }) {
                 )}
 
                 <Button type="submit">Add Scatter Points!</Button>
-            </div>
+            </FormWrapper>
         </form>
     );
 }

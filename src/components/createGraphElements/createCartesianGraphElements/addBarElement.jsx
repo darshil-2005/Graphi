@@ -7,6 +7,8 @@ import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
 import { retrieveFileIndex } from '@/utils/manualUtils'
 import NumberInput from '@/components/formElements/numberInput';
+import FormWrapper from '@/components/ui/formWrapper';
+import { Separator } from '@/components/ui/shadcnComponent/separator';
 
 function AddBarElement({ graphId, editGraphObject }) {
 
@@ -55,7 +57,8 @@ function AddBarElement({ graphId, editGraphObject }) {
     return (
         <>
             <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-                <div className='w-64 grid gap-y-5'>
+                <FormWrapper>
+                    <Separator/>
                     <ColorInput
                         label='Color'
                         registerId='fill'
@@ -70,7 +73,7 @@ function AddBarElement({ graphId, editGraphObject }) {
 
                     <NumberInput registerId={'radius'} label={'Radius'} defaultValue={parseInt(editGraphObject?.radius) || 0} register={register} />
                     <Button type='submit'>{editGraphObject ? 'Edit Bar' : 'Add Bars!!'}</Button>
-                </div>
+                    </FormWrapper>
             </form>
         </>
     )

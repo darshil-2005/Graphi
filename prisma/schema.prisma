@@ -17,10 +17,11 @@ model user {
   createdAt     DateTime         @default(now())
   updatedAt     DateTime         @updatedAt
   deletedAt     DateTime?
-  accounts      account[]
-  project       project[]
-  projectmember projectMember[]
+  credits       Int              @default(20)
+  accounts      account?
   dataAccess    fileDataAccess[]
+  projectmember projectMember[]
+  project       project[]
 
   @@index([email])
   @@map("users")
@@ -32,12 +33,12 @@ model account {
   type              String
   provider          String
   providerAccountId String   @map("provider_account_id")
-  refresh_token     String?  @db.Text
-  access_token      String?  @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String?  @db.Text
+  id_token          String?
   session_state     String?
   updatedAt         DateTime @updatedAt
   user              user     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -53,17 +54,11 @@ model project {
   updatedAt      DateTime        @updatedAt
   updatedBy      String
   deletedAt      DateTime?
-  projectMembers projectMember[]
   planes         plane[]
+  projectMembers projectMember[]
   user           user            @relation(fields: [updatedBy], references: [username], onDelete: Cascade)
 
   @@map("projects")
-}
-
-enum AccessLevel {
-  ADMIN
-  EDITOR
-  VIEWER
 }
 
 model projectMember {
@@ -74,8 +69,8 @@ model projectMember {
   addedAt             DateTime    @default(now())
   updatedUserConfigAt DateTime    @updatedAt
   userConfigUpdater   String?
-  project             project     @relation(fields: [projectId], references: [projectId], onDelete: Cascade)
   member              user        @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  project             project     @relation(fields: [projectId], references: [projectId], onDelete: Cascade)
 
   @@map("projectMembers")
 }
@@ -112,12 +107,17 @@ model plane {
 }
 
 model fileDataAccess {
-  fileId   String   @id
-  userId   String
-  fileName String
-  fileSize Int
-  fileKeys Json
-  addedAt  DateTime @default(now())
+  fileId    String   @id
+  userId    String
+  fileName  String
+  fileSize  Int
+  fileKeys  Json
+  addedAt   DateTime @default(now())
+  dataOwner user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
 
-  dataOwner user @relation(fields: [userId], references: [id], onDelete: Cascade)
+enum AccessLevel {
+  ADMIN
+  EDITOR
+  VIEWER
 }

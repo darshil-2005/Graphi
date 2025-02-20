@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/shadcnComponent/button';
 import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import DropdownInput from '../../formElements/dropdownInput';
 import { retrieveFileIndex } from '@/utils/manualUtils'
+import { Separator } from '@/components/ui/shadcnComponent/separator';
+import FormWrapper from '@/components/ui/formWrapper';
 
 const AddPolarAngleAxis = ({ graphId, editGraphObject }) => {
     const { register, handleSubmit } = useForm();
@@ -40,7 +42,8 @@ const AddPolarAngleAxis = ({ graphId, editGraphObject }) => {
 
     return (
         <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-            <div className='grid w-64 gap-y-5'>
+            <FormWrapper>
+            <Separator/>
                 {keys &&
                     <DropdownInput
                         register={register}
@@ -51,7 +54,7 @@ const AddPolarAngleAxis = ({ graphId, editGraphObject }) => {
                 }
 
                 <Button type='submit'>Add Polar Angle Axis!!</Button>
-            </div>
+            </FormWrapper>
         </form>
     )
 }

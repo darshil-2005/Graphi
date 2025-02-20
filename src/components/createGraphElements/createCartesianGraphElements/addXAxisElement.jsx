@@ -12,6 +12,8 @@ import NumberInput from '../../formElements/numberInput.jsx';
 import TextInput from 'src/components/formElements/textInput.jsx';
 import { CheckBox } from '../../formElements/checkBox.jsx';
 import { retrieveFileIndex } from '@/utils/manualUtils'
+import { Separator } from '@/components/ui/shadcnComponent/separator';
+import FormWrapper from '@/components/ui/formWrapper';
 
 
 function AddXAxisElement({ graphId, editGraphObject }) {
@@ -89,7 +91,8 @@ function AddXAxisElement({ graphId, editGraphObject }) {
         <>
             <form onSubmit={handleSubmit(handleLineFormSubmit)}>
 
-                <div className='w-64 grid gap-y-5'>
+            <FormWrapper>
+            <Separator/>
 
                     <div className='grid grid-cols-2'>
                         <NumberInput registerId='domainStart'
@@ -194,7 +197,7 @@ function AddXAxisElement({ graphId, editGraphObject }) {
                     <CheckBox label={'Allow Duplicate Categories'} defaultChecked={editGraphObject ? editGraphObject.allowDuplicateCategories : true} registerId={'allowDuplicateCategories'} register={register} />
                     <Button type='submit'>{editGraphObject ? 'Edit X Axis' : 'Add X Axis'}</Button>
 
-                </div>
+                </FormWrapper>
             </form>
         </>
     )

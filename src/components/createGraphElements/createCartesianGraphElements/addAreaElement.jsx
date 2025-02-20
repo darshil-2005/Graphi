@@ -7,6 +7,8 @@ import DropdownInput from '../../formElements/dropdownInput';
 import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
 import { retrieveFileIndex } from '@/utils/manualUtils'
+import { Separator } from '@/components/ui/shadcnComponent/separator';
+import FormWrapper from '@/components/ui/formWrapper';
 
 
 function AddAreaElement({ graphId, editGraphObject }) {
@@ -58,7 +60,8 @@ function AddAreaElement({ graphId, editGraphObject }) {
     return (
         <>
             <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-                <div className='w-64 grid gap-y-5'>
+            <FormWrapper>
+            <Separator/>
 
                     <DropdownInput
                         registerId="areaType"
@@ -91,7 +94,7 @@ function AddAreaElement({ graphId, editGraphObject }) {
 
                     <Button type='submit'>{editGraphObject ? 'Edit Graph' : 'Add Area!!'}</Button>
 
-                </div>
+                    </FormWrapper>
             </form>
 
         </>

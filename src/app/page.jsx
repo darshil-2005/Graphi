@@ -10,6 +10,7 @@ import Link from 'next/link'
 import Navbar from '@/components/ui/navbar'
 
 import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] })
 

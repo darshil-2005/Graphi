@@ -9,6 +9,8 @@ import { CheckBox } from 'src/components/formElements/checkBox';
 import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import { retrieveFileIndex } from '@/utils/manualUtils';
 import { retrieveDataFromIndexedDBWithFileId } from '@/utils/manualUtils'
+import { Separator } from '@/components/ui/shadcnComponent/separator';
+import FormWrapper from '@/components/ui/formWrapper';
 
 function AddSingleColoredPieChart({ graphId, editGraphObject }) {
 
@@ -87,8 +89,8 @@ function AddSingleColoredPieChart({ graphId, editGraphObject }) {
         <>
             <form onSubmit={handleSubmit(handleLineFormSubmit)}>
 
-                <div className='grid w-64 gap-y-5'>
-                    <div className='font-bold grid'>Create Pie Graph!!</div>
+                <FormWrapper>
+                <Separator/>
 
                     {keys &&
                         <DropdownInput
@@ -188,7 +190,7 @@ function AddSingleColoredPieChart({ graphId, editGraphObject }) {
                     />
                     <Button type='submit'>{editGraphObject ? 'Edit Graph' : 'Add PieChart!!'}</Button>
 
-                </div>
+                </FormWrapper>
             </form>
 
         </>

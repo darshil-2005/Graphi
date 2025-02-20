@@ -8,6 +8,7 @@ import NumberInput from '../formElements/numberInput';
 import usePlaneElementsStore from '../../features/store/planeElementsStore.jsx';
 import FormWrapper from '@/components/ui/formWrapper';
 import DropdownFileInput from '@/components/formElements/dropdownFileInput'
+import { Separator } from '@/components/ui/shadcnComponent/separator';
 
 const CreateRadarGraph = ({ planeId, editGraphObject }) => {
 
@@ -65,9 +66,9 @@ const CreateRadarGraph = ({ planeId, editGraphObject }) => {
     return (
 
         <form onSubmit={handleSubmit(addRadarGraphInThePlaneElementsArray)} className='mb-4 flex gap-y-4 flex-col'>
-            <FormWrapper className='grid gap-y-4 w-[20rem] bg-primary-foreground p-4 mt-4 rounded-lg shadow-lg mx-auto'>
-                <div className='font-bold grid'>Create Radar Graph!!</div>
-                {/* <FileInput registerId="fileUploadRadarGraph" label="Choose File" register={register} /> */}
+            <FormWrapper>
+
+            <Separator/>
                 <DropdownFileInput registerId={`fileUpload${planeId}`} register={register} defaultValue={editGraphObject?.data} />
                 <div className='grid grid-cols-2'>
                     <NumberInput registerId="height" label="Height" defaultValue={parseInt(editGraphObject?.height) || 200} suffix="px" register={register} />

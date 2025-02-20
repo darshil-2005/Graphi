@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/shadcnComponent/button';
 import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
 import { isTheElementInGraphElementsArray } from '@/utils/manualUtils';
 import { toast } from "sonner";
+import { Separator } from '@/components/ui/shadcnComponent/separator';
+import FormWrapper from '@/components/ui/formWrapper';
 
 const AddPolarGrid = ({ graphId, editGraphObject }) => {
 
@@ -36,7 +38,9 @@ const AddPolarGrid = ({ graphId, editGraphObject }) => {
 
         } else {
 
-            if (!(isTheElementInGraphElementsArray(graphElements, graphId, 'radar'))) {
+            const res = isTheElementInGraphElementsArray(graphElements, graphId, 'radar');
+
+            if (!(res)) {
                 toast.warning('Please add a radar first!');
                 return;
             }
@@ -55,9 +59,10 @@ const AddPolarGrid = ({ graphId, editGraphObject }) => {
 
     return (
         <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-            <div className='w-64 grid gap-y-4'>
+            <FormWrapper>
+            <Separator/>
                 <Button type='submit'>Add Polar Grid!!</Button>
-            </div>
+            </FormWrapper>
         </form>
     )
 }

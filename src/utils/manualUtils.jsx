@@ -10,7 +10,7 @@ export function isTheElementInGraphElementsArray(graphElementsArray, graphId, el
   });
 
   const temp2 = temp.filter((d) => {
-    d.type == element;
+    return (d.type == element);
   })
 
   if (temp2.length > 0){
@@ -19,6 +19,7 @@ export function isTheElementInGraphElementsArray(graphElementsArray, graphId, el
   
   return false;
 }
+
 
 export function retrieveGraphObjectIndex(graphId, graphObjectsArray) {
   for (let j = 0; j < graphObjectsArray.length; j++) {

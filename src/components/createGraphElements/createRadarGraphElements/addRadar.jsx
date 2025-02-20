@@ -8,6 +8,8 @@ import ColorInput from '../../../components/formElements/colorInput';
 import NumberInput from '../../../components/formElements/numberInput';
 import TextInput from '../../formElements/textInput';
 import { retrieveFileIndex } from '@/utils/manualUtils'
+import { Separator } from '@/components/ui/shadcnComponent/separator';
+import FormWrapper from '@/components/ui/formWrapper';
 
 const AddRadar = ({ graphId, editGraphObject }) => {
     const { register, handleSubmit } = useForm();
@@ -49,7 +51,8 @@ const AddRadar = ({ graphId, editGraphObject }) => {
     }
     return (
         <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-            <div className='w-64 grid gap-y-5'>
+            <FormWrapper>
+            <Separator/>
 
                 <TextInput registerId='name' label='Name' register={register} defaultValue={editGraphObject?.name} />
 
@@ -78,7 +81,7 @@ const AddRadar = ({ graphId, editGraphObject }) => {
                 <NumberInput registerId='fillOpacity' label='Fill Opacity' register={register} suffix='%' step='0.1' min='0' max='1' defaultValue={editGraphObject?.fillOpacity || 0.4} />
 
                 <Button type='submit'>Add Polar Angle Axis!!</Button>
-            </div>
+            </FormWrapper>
         </form>
     )
 }

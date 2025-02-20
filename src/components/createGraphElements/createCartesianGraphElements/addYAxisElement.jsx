@@ -7,6 +7,8 @@ import DropdownInput from '../../formElements/dropdownInput.jsx';
 import NumberInput from '../../formElements/numberInput.jsx';
 import TextInput from 'src/components/formElements/textInput.jsx';
 import { CheckBox } from '../../formElements/checkBox.jsx';
+import { Separator } from '@/components/ui/shadcnComponent/separator';
+import FormWrapper from '@/components/ui/formWrapper';
 
 function AddYAxisElement({ graphId, editGraphObject }) {
 
@@ -71,7 +73,8 @@ function AddYAxisElement({ graphId, editGraphObject }) {
     return (
         <>
             <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-                <div className='w-64 grid gap-y-5'>
+            <FormWrapper>
+            <Separator/>
 
                     <div className='grid grid-cols-2'>
                         <NumberInput registerId='domainStart'
@@ -172,7 +175,7 @@ function AddYAxisElement({ graphId, editGraphObject }) {
                     <CheckBox label={'Allow Duplicate Categories'} defaultChecked={editGraphObject ? editGraphObject.allowDuplicateCategories : true} registerId={'allowDuplicateCategories'} register={register} />
 
                     <Button type='submit'>{editGraphObject ? 'Edit Y Axis' : 'Add Y Axis'}</Button>
-                </div>
+                </FormWrapper>
             </form>
         </>
     );

@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import usePlaneElementsStore from '../../../features/store/planeElementsStore';
 import { Button } from '@/components/ui/shadcnComponent/button';
 import { retrieveGraphObjectIndex } from '@/utils/manualUtils';
+import { Separator } from '@/components/ui/shadcnComponent/separator';
+import FormWrapper from '@/components/ui/formWrapper';
 
 function AddLegend({ graphId, editGraphObject }) {
 
@@ -41,9 +43,10 @@ function AddLegend({ graphId, editGraphObject }) {
     return (
         <>
             <form onSubmit={handleSubmit(handleLineFormSubmit)}>
-                <div className='w-64 grid gap-y-5'>
+                <FormWrapper>
+                    <Separator/>
                     <Button type='submit'>Add Legend!!</Button>
-                </div>
+                </FormWrapper>
             </form>
         </>
     )
