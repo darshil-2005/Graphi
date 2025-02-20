@@ -186,70 +186,70 @@ function Project({ projectId }) {
 
           <>
             {elements[focusedElementIndex]?.type == 'cartesianGraph' &&
-              <Accordion type="single" collapsible>
-                <AccordionItem value="x-axis">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add X Axis</AccordionTrigger>
-                  <AccordionContent><AddXAxisElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+              <Accordion type="single" collapsible className="w-full grid gap-y-4 px-10">
+                <AccordionItem value="x-axis" className='border rounded-lg'>
+                  <AccordionTrigger className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add X Axis</span>  </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddXAxisElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="y-axis">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Y Axis</AccordionTrigger>
-                  <AccordionContent><AddYAxisElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="y-axis" className='border rounded-lg'>
+                  <AccordionTrigger className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Y Axis</span>  </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddYAxisElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="line">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Line</AccordionTrigger>
-                  <AccordionContent><AddLineElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="line" className='border rounded-lg'>
+                  <AccordionTrigger className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Line</span>  </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddLineElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="area">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Area</AccordionTrigger>
-                  <AccordionContent><AddAreaElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="area" className='border rounded-lg'>
+                  <AccordionTrigger className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Area</span>  </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddAreaElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="bar">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Bar</AccordionTrigger>
-                  <AccordionContent><AddBarElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="bar" className='border rounded-lg'>
+                  <AccordionTrigger className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Bar</span> </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddBarElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="scatter">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Scatter</AccordionTrigger>
-                  <AccordionContent><AddScatterElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="scatter" className='border rounded-lg'>
+                  <AccordionTrigger className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Scatter</span> </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddScatterElement graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="cartesian-grid">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Cartesian Grid</AccordionTrigger>
-                  <AccordionContent><AddCartesianGrid graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="cartesian-grid" className='border rounded-lg'>
+                  <AccordionTrigger className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Cartesian Grid</span>  </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddCartesianGrid graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="legend">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Legend</AccordionTrigger>
-                  <AccordionContent><AddLegend graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="legend" className='border rounded-lg'>
+                  <AccordionTrigger className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Legend</span>  </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddLegend graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="tooltip">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Tool Tip</AccordionTrigger>
-                  <AccordionContent><AddToolTip graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="tooltip" className='border rounded-lg'>
+                  <AccordionTrigger className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Tool Tip</span>  </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddToolTip graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
               </Accordion>
             }
 
             {
               elements[focusedElementIndex]?.type == 'pieGraph' &&
-              <Accordion type="single" collapsible>
-              <AccordionItem value="single-colored-pie">
-                <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Single Colored Pie</AccordionTrigger>
-                <AccordionContent><AddSingleColoredPieChart graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+              <Accordion type="single" collapsible className="w-full grid gap-y-4 px-10">
+              <AccordionItem value="single-colored-pie" className='border rounded-lg'>
+                <AccordionTrigger className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Single Colored Pie</span>  </AccordionTrigger>
+                <AccordionContent className="px-4"><AddSingleColoredPieChart graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
               </AccordionItem>
               
-              <AccordionItem value="legend">
-                <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Legend</AccordionTrigger>
-                <AccordionContent><AddLegend graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+              <AccordionItem value="legend" className='border rounded-lg'>
+                <AccordionTrigger className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Legend</span>  </AccordionTrigger>
+                <AccordionContent className="px-4"><AddLegend graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
               </AccordionItem>
               
-              <AccordionItem value="tooltip">
-                <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Tool Tip</AccordionTrigger>
-                <AccordionContent><AddToolTip graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+              <AccordionItem value="tooltip" className='border rounded-lg'>
+                <AccordionTrigger className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Tool Tip</span>  </AccordionTrigger>
+                <AccordionContent className="px-4"><AddToolTip graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
               </AccordionItem>
             </Accordion>
             }
@@ -257,20 +257,20 @@ function Project({ projectId }) {
             {
               elements[focusedElementIndex]?.type == 'radialBarGraph' &&
 
-              <Accordion type="single" collapsible>
-                <AccordionItem value="radial-bar">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Radial BarGraph</AccordionTrigger>
-                  <AccordionContent><AddRadialBarChart graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+              <Accordion type="single" collapsible className="w-full grid gap-y-4 px-10">
+                <AccordionItem value="radial-bar" className='border rounded-lg'>
+                  <AccordionTrigger  className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Radial BarGraph</span>  </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddRadialBarChart graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="legend">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Legend</AccordionTrigger>
-                  <AccordionContent><AddLegend graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="legend" className='border rounded-lg'>
+                  <AccordionTrigger  className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Legend</span> </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddLegend graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="tooltip">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Tool Tip</AccordionTrigger>
-                  <AccordionContent><AddToolTip graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="tooltip" className='border rounded-lg'>
+                  <AccordionTrigger  className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Tool Tip</span> </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddToolTip graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
               </Accordion>
             }
@@ -278,36 +278,36 @@ function Project({ projectId }) {
             {
               elements[focusedElementIndex]?.type == 'radarGraph' &&
 
-              <Accordion type="single" collapsible>
+              <Accordion type="single" collapsible className="w-full grid gap-y-4 px-10">
 
-                <AccordionItem value="polar-grid">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Polar Grid</AccordionTrigger>
-                  <AccordionContent><AddPolarGrid graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="polar-grid" className='border rounded-lg'>
+                  <AccordionTrigger  className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Polar Grid</span> </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddPolarGrid graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="polar-angle-axis">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Polar Angle Axis</AccordionTrigger>
-                  <AccordionContent><AddPolarAngleAxis graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="polar-angle-axis" className='border rounded-lg'>
+                  <AccordionTrigger  className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Polar Angle Axis</span> </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddPolarAngleAxis graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="polar-radius-axis">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Polar Radius Axis</AccordionTrigger>
-                  <AccordionContent><AddPolarRadiusAxis graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="polar-radius-axis" className='border rounded-lg'>
+                  <AccordionTrigger  className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Polar Radius Axis</span>  </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddPolarRadiusAxis graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="radar">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Radar</AccordionTrigger>
-                  <AccordionContent><AddRadar graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="radar" className='border rounded-lg'>
+                  <AccordionTrigger  className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Radar</span>  </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddRadar graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="legend">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Legend</AccordionTrigger>
-                  <AccordionContent><AddLegend graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="legend" className='border rounded-lg'>
+                  <AccordionTrigger  className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Legend</span> </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddLegend graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="tooltip">
-                  <AccordionTrigger className={`capitalize py-2 gap-x-4 rounded-xl text-3xl ${orbitron.className}`}>Add Tool Tip</AccordionTrigger>
-                  <AccordionContent><AddToolTip graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
+                <AccordionItem value="tooltip" className='border rounded-lg'>
+                  <AccordionTrigger  className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}><span className="text-lg font-semibold capitalize">Add Tool Tip</span> </AccordionTrigger>
+                  <AccordionContent className="px-4"><AddToolTip graphId={elements[focusedElementIndex]?.graphId} /></AccordionContent>
                 </AccordionItem>
               </Accordion>
 
@@ -360,10 +360,10 @@ function Project({ projectId }) {
 
             }).filter((d) => d.isdeleted == false)
               .map((currItem, index) => (
-                <div key={index}>
-                  <Accordion type="single" collapsible className="w-full grid gap-y-4 px-10 min-w-[25rem]">
+                
+                  <Accordion key={index} type="single" collapsible  className="w-full grid gap-y-4 px-10">
                     <AccordionItem value="Graph Add Menu" className='border rounded-lg'>
-                      <AccordionTrigger className={`hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}>
+                      <AccordionTrigger className={` hover:bg-gray-100 dark:hover:bg-gray-800 px-4 py-4 rounded-lg transition-colors ${orbitron.className}`}>
                         <span className="text-lg font-semibold capitalize">{currItem?.type}</span>
                       </AccordionTrigger>
                       <AccordionContent className="px-4">
@@ -380,7 +380,7 @@ function Project({ projectId }) {
                         {currItem?.type === 'yAxis' &&
                           <AddYAxisElement graphId={currItem?.graphId} editGraphObject={currItem} />}
                         {currItem?.type === 'cartesianGrid' &&
-                          <AddCartesianElement graphId={currItem?.graphId} editGraphObject={currItem} />}
+                          <AddCartesianGrid graphId={currItem?.graphId} editGraphObject={currItem} />}
                         {currItem?.type === 'legend' &&
                           <AddLegend graphId={currItem?.graphId} editGraphObject={currItem} />}
                         {currItem?.type === 'toolTip' &&
@@ -401,7 +401,7 @@ function Project({ projectId }) {
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion>
-                </div>
+              
               ))
 
             }

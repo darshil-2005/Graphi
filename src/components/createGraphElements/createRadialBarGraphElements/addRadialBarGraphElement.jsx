@@ -67,7 +67,7 @@ function AddRadialBarChart({ graphId, editGraphObject }) {
 
   return (
     <>
-      <form onSubmit={handleSubmit(handleLineFormSubmit)}>
+      <form onSubmit={handleSubmit(handleLineFormSubmit)} >
         <FormWrapper>
           <Separator/>
 
