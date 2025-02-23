@@ -67,7 +67,7 @@ const CreateRadialBarGraph = ({ planeId, editGraphObject }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit(addRadialBarGraphInThePlaneElementsArray)} className='mb-4 flex gap-y-4 flex-col'>
+    <form onSubmit={handleSubmit(addRadialBarGraphInThePlaneElementsArray)}>
       <FormWrapper>
 
         <Separator/>

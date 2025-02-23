@@ -5,7 +5,7 @@ const DropdownInput = ({ registerId, register, optionsArray, label, defaultValue
 
 
     return (
-        <div className='flex flex-col gap-y-3 justify-around'>
+        <div className='flex flex-col gap-y-3 justify-around bg-secondary'>
             <Label htmlFor={registerId}>{label}</Label>
             <select required id={registerId} name={registerId} defaultValue={defaultValue} className='bg-secondary border-2 border-foreground/20 h-8 py-1 px-1 rounded-md' {...register(registerId, { onChange: (e) => { onChangeHandler(e.target.value) } })}>
                 {

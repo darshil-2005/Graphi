@@ -58,6 +58,20 @@ export async function handleLogout() {
   await signOut({ redirectTo: "/" })
 }
 
+export async function retrieveUserCredits() {
+
+  const session = await auth();
+
+  const response = await prisma.user.findUnique({
+    where: {
+      id: session.user.id,
+    }
+  })
+
+  return response.credits;
+}
+
+
 export async function handleCreatingProject() {
 
   const session = await auth();
@@ -179,6 +193,14 @@ export async function DBSync(planeElements, graphElements) {
     for (let planeElement of planeElements) {
 
       if (planeElement.isdeleted == true) {
+
+        await prisma.graphElement.deleteMany({
+
+          where: {
+            planeElementId: planeElement.graphId,
+
+          }
+        })
         await prisma.planeElement.delete({
           where: {
             planeElementId: planeElement.graphId,

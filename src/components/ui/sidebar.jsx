@@ -1,14 +1,16 @@
 'use client';
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Orbitron } from 'next/font/google'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import { auth } from '@/auth'
 import LogOutButton from '@/components/authButtons/logoutButton'
+import { retrieveUserCredits } from '@/app/server/actions';
 
 import { PanelLeftClose, PanelRightClose, House, LucideLayoutDashboard, Gem, BookOpenCheck } from 'lucide-react'
 import ModeToggle from '@/components/modeToogle';
+import CreditsDisplay from '@/components/credits/creditsDisplay';
 
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] })
@@ -18,6 +20,19 @@ function Sidebar({ session }) {
     const [extended, setExtended] = useState(false);
 
     const path = usePathname();
+    const [credits, setCredits] = useState(undefined);
+
+    useEffect(() => {
+
+        async function temp() {
+            const res = await retrieveUserCredits();
+            setCredits(res);
+        }
+        temp();
+    }, [credits])
+
+    
+
 
     const sidebarMenuOptions = [{ label: 'Home', icon: <House size={32} absoluteStrokeWidth />, link: '/' },
     { label: 'Dashboard', icon: <LucideLayoutDashboard size={32} absoluteStrokeWidth />, link: '/dashboard' },
@@ -63,6 +78,7 @@ function Sidebar({ session }) {
             </ul>
 
             <div className='flex flex-col gap-y-6'>
+                
                 <ModeToggle className={`${extended ? 'w-full' : 'aspect-square'} `} />
                 <div className='flex items-center gap-x-3'>
                     <img src={session.user.image} alt="" className='h-10 w-10 rounded-full aspect-square' />

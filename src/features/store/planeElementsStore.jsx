@@ -7,17 +7,7 @@ const initialState = {
   planeElements: [],
   graphElements: [],
   userDataFiles: [],
-  // deltas: [],
 }
-
-// function addToDeltasArray(receivedObject, deltas) {
-
-//   for (let i = 0; i < deltas.length; i++) {
-//     if (deltas[i].id == receivedObject.id) { return false }
-//   }
-
-//   return true
-// }
 
 const usePlaneElementsStore = create(
   immer((set, get) => ({
@@ -25,9 +15,8 @@ const usePlaneElementsStore = create(
     planeElements: initialState.planeElements,
     graphElements: initialState.graphElements,
     userDataFiles: initialState.userDataFiles,
-    deltas: initialState.deltas,
 
-    elementsFetcherFromDatabaseOnOpeningProject: async (planeIdArray) => {      
+    elementsFetcherFromDatabaseOnOpeningProject: async (planeIdArray) => {
       const response = await planeElementsAndGraphElementFetcher(planeIdArray);
       set((state) => {
         const planeElementsResponse = response.planeElements.map((d) => {
@@ -49,49 +38,76 @@ const usePlaneElementsStore = create(
       })
     },
 
-    syncDeltasInDB: async (planeIdArray) => {
+    saveElements: async (planeIdArray) => {
 
-      const planeElementsToBeSynced = [];
-      const graphElementsToBeSynced = [];
+      console.log(planeIdArray)
 
-      for (let i = 0; i < get().planeElements.length; i++) {
-          planeElementsToBeSynced.push(get().planeElements[i])
-      }
+      const fileredPlaneElements = get().planeElements.filter((d) => {
 
-      for (let i = 0; i < get().graphElements.length; i++) {
-          graphElementsToBeSynced.push(get().graphElements[i])
-      }
+        if (planeIdArray.includes(d.planeId)) {
 
-      const response = await DBSync(planeElementsToBeSynced, graphElementsToBeSynced)
+          return true
+        }
+        
+        return false
+      })
+
+      const filteredGraphElements = get().graphElements.filter((d) => {
+
+        if ( planeIdArray.includes(d.planeId) ) {
+
+          return true
+        }
+
+        return false
+      })
+
+      await DBSync( fileredPlaneElements, filteredGraphElements );
+
+
 
     },
 
 
     //* ADD ELEMENTS IN STATE ELEMENTS
-    
-    
+
+
     addPlaneElements: (payload) => {
       set((state) => {
-        // const res = addToDeltasArray({ type: 'planeElement', id: payload.graph.graphId }, state.deltas);
-        // if (res) {
-        //   state.deltas.push({ type: 'planeElement', id: payload.graph.graphId })
-        // }
+
+        const planeId = payload.graph.planeId;
+        const releventPlaneElements = get().planeElements.filter((d) => d.planeId == planeId);
+
+        
+        let zIndexArray = [];
+        
+        for ( let _ of releventPlaneElements) {
+          
+          console.log("Rele: ", _.zIndex)
+          zIndexArray.push(Number(_.zIndex));
+
+        }
+
+        
+        const maxZIndex = Math.max(...zIndexArray);
+        console.log("ZIndex Ayyat: ", maxZIndex)
+
+
+
 
         const tempPushObj = payload.graph;
+        tempPushObj.zIndex = Number(maxZIndex) + 1;
         tempPushObj.isdeleted = false;
         state.planeElements.push(tempPushObj);
       });
     },
-    
+
     addGraphObjGraphElementsArray: (payload) => {
       set((state) => {
-        // const res = addToDeltasArray({ type: 'graphElement', id: payload.newGraphElement.elementId }, state.deltas);
-        // if (res) {
-        //   state.deltas.push({ type: 'graphElement', id: payload.newGraphElement.elementId })
-        // }
+
 
         const tempPushObj = payload.newGraphElement;
-        tempPushObj.isdeleted = false;        
+        tempPushObj.isdeleted = false;
         state.graphElements.push(tempPushObj);
       });
     },
@@ -99,14 +115,10 @@ const usePlaneElementsStore = create(
 
     //* EDIT ELEMENTS IN STATE ELEMENTS
 
-    
+
     handleResize: (payload) => {
 
       set((state) => {
-        // const res = addToDeltasArray({ type: 'planeElement', id: payload.graphId }, state.deltas);
-        // if (res) {
-        //   state.deltas.push({ type: 'planeElement', id: payload.graphId })
-        // }
 
         for (let i = 0; i < state.planeElements.length; i++) {
           if (String(state.planeElements[i].graphId) === String(payload.graphId)) {
@@ -118,13 +130,9 @@ const usePlaneElementsStore = create(
     },
 
     updatePosition: (payload) => {
-      
+
       set((state) => {
-        // const res = addToDeltasArray({ type: 'planeElement', id: payload.graphId }, state.deltas);
-        // if (res) {
-        //   state.deltas.push({ type: 'planeElement', id: payload.graphId })
-        // }
-        
+
         for (let i = 0; i < state.planeElements.length; i++) {
           if (String(state.planeElements[i].graphId) === String(payload.graphId)) {
             state.planeElements[i].top = payload.top;
@@ -136,42 +144,32 @@ const usePlaneElementsStore = create(
 
     handleEditing: (payload) => {
       set((state) => {
-        
-        // const res = addToDeltasArray({ type: 'planeElement', id: payload.graphId }, state.deltas);
-        // if (res) {
-        //   state.deltas.push({ type: 'planeElement', id: payload.graphId })
-        // }
-        
+
+
+
         for (let i = 0; i < state.planeElements.length; i++) {
           if (String(state.planeElements[i].graphId) === String(payload.graphId)) {
             for (let key in payload) {
               state.planeElements[i][key] = payload[key]
             }
+      
           }
         }
       });
     },
-    
+
     updateGraphObjInPlaneElements: (payload) => {
       if (payload.index >= 0 && payload.index < get().planeElements.length) {
         set((state) => {
-          // const res = addToDeltasArray({ type: 'planeElement', id: state.planeElements[payload.index].graphId }, state.deltas);
-          // if (res) {
-          //   state.deltas.push({ type: 'planeElement', id: state.planeElements[payload.index].graphId })
-          // }
 
           state.planeElements[payload.index][payload.property] = payload.propertyValue;
         });
       }
     },
-    
+
     handleGraphElementsArrayEditing: (payload) => {
       set((state) => {
 
-        // const res = addToDeltasArray({ type: 'graphElement', id: payload.elementId }, state.deltas);
-        // if (res) {
-        //   state.deltas.push({ type: 'graphElement', id: payload.elementId })
-        // }
         for (let j = 0; j < state.graphElements.length; j++) {
           if (String(state.graphElements[j].elementId) === payload.elementId) {
             for (let key in payload) {
@@ -183,42 +181,37 @@ const usePlaneElementsStore = create(
     },
 
 
-
-    
     deleteElementFromElementsArray: (graphId) => {
       set((state) => {
-        // const res = addToDeltasArray({ type: 'planeElement', id: graphId }, state.deltas);
-        // if (res) {
-        //   state.deltas.push({ type: 'planeElement', id: graphId, isdeleted: true })
-        // }
+
         state.graphElements = state.graphElements.filter((d) => {
           return graphId != d.graphId
         })
         for (let i = 0; i < state.planeElements.length; i++) {
           if (String(state.planeElements[i].graphId) === String(graphId)) {
-              state.planeElements[i].isdeleted = true
+            state.planeElements[i].isdeleted = true;
           }
         }
+
       });
     },
+
 
     deleteElementFromGraphElementsArray: (payload) => {
       set((state) => {
 
-        // const res = addToDeltasArray({ type: 'graphElement', id: payload.elementId }, state.deltas);
-        // if (res) {
-        //   state.deltas.push({ type: 'graphElement', id: payload.elementId, isdeleted: true })
-        // }
+
         for (let j = 0; j < state.graphElements.length; j++) {
           if (String(state.graphElements[j].elementId) === payload.elementId) {
 
-            state.graphElements[j].isdeleted = true
+            state.graphElements[j].isdeleted = true;
           }
         }
 
-        
+
+
       }
-    );
+      );
     },
 
   }))

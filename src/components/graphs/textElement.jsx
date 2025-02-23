@@ -1,12 +1,5 @@
 import { hexToRgbA } from '@/utils/manualUtils'
 import CommonGraphWrapper from '../ui/commonGraphWrapper'
-import ContextMenuWrapper from '../ui/contextMenuWrapper'
-import CreateTextComponent from '../createGraph/createTextComponent'
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/shadcnComponent/popover"
 
 const TextElement = ({ graphObject, index, setDraggedElement, setFocusedElementIndex, editMode }) => {
     return (

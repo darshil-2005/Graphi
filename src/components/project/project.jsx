@@ -43,11 +43,25 @@ import {
 import { Pencil, Save, SquareMenu, ChartNoAxesColumnIncreasing, X, SquarePlus } from 'lucide-react';
 import { Separator } from '@/components/ui/shadcnComponent/separator';
 
+import CreditsDisplay from '@/components/credits/creditsDisplay';
+import { retrieveUserCredits } from '@/app/server/actions';
+
 
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] })
 
 function Project({ projectId }) {
+
+    const [credits, setCredits] = useState(undefined);
+  
+      useEffect(() => {
+  
+          async function temp() {
+              const res = await retrieveUserCredits();
+              setCredits(res);
+          }
+          temp();
+      }, [credits])
 
   const router = useRouter();
 
@@ -55,8 +69,9 @@ function Project({ projectId }) {
   const deleteElementFromGraphElementsArray = usePlaneElementsStore((state) => state.deleteElementFromGraphElementsArray);
   const setUserFiles = usePlaneElementsStore((state) => state.setUserFiles);
   const graphElements = usePlaneElementsStore((state) => state.graphElements);
-  const syncDeltasInDB = usePlaneElementsStore((state) => state.syncDeltasInDB);
   const elementsFetcherFromDatabaseOnOpeningProject = usePlaneElementsStore((state) => state.elementsFetcherFromDatabaseOnOpeningProject);
+  const deleteElementFromElementsArray = usePlaneElementsStore((state) => state.deleteElementFromElementsArray);
+  const saveElements = usePlaneElementsStore((state) => state.saveElements);
 
   const [showGraphElements, setShowGraphElements] = useState(false);
   const [showAddGraphList, setShowAddGraphList] = useState(false);
@@ -67,7 +82,6 @@ function Project({ projectId }) {
   const [planeIdArray, setPlaneIdArray] = useState(undefined);
   const [fetched, setFetched] = useState(false);
 
-
   //? UI Use States
 
   const [syncingChanges, setSyncingChanges] = useState(false);
@@ -77,13 +91,6 @@ function Project({ projectId }) {
   const [contextMenuMode, setContextMenuMode] = useState("Edit");
 
 
-  async function handleSavingChanges() {
-    setSyncingChanges(true);
-    await syncDeltasInDB(planeIdArray);
-    setSyncingChanges(false);
-
-    toast.success('Changes saved successfully!!');
-  }
 
   useEffect(() => {
     async function temp() {
@@ -92,15 +99,16 @@ function Project({ projectId }) {
       setPlanes(fetchedPlanes);
     }
     temp();
-  }, [projectId, creatingPlane])
+  }, [projectId, creatingPlane]);
+
 
   useEffect(() => {
     if (planes) {
       setPlaneIdArray(planes.map((d) => { return d.planeId }));
     }
   }, [planes]);
-  useEffect(() => {
 
+  useEffect(() => {
     async function temp() {
       await elementsFetcherFromDatabaseOnOpeningProject(planeIdArray);
     }
@@ -128,13 +136,26 @@ function Project({ projectId }) {
     }
     setCreatingPlane(false);
   }
-  ``
+
+
+  const handleSavingChanges = async () => {
+
+    setSyncingChanges(true);
+    
+    await saveElements(planeIdArray);
+    
+    setSyncingChanges(false);
+
+    toast.success("Saved Changes");
+
+  }
+
   return (
     <div className=' mx-auto w-full overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-foreground'>
 
       <div className='sticky top-0 z-[10] flex mb-10 justify-between py-4 items-center px-4 shadow-md bg-background dark:shadow-slate-200/10'>
 
-        <div className={`${orbitron.className} flex items-center ml-4 text-3xl tracking-[0.6rem] text-primary`}><Link href='/'>GRAPHI</Link></div>
+        <CreditsDisplay credits={credits} width={28}/>
         <div className='flex gap-x-10'>
           <Button className={`h-10 px-4 text-sm ${orbitron.className}`} variant='secondary' onClick={handleCreatingPlanes}>{<SquarePlus strokeWidth={1.5} />}Add New Plane</Button>
           <Button className={`h-10 px-4 text-sm ${orbitron.className} ${showAddGraphList ? 'border border-blue-800' : 'bg-secondary/40 border'}`} disabled={!focusedPlaneId} variant='secondary' onClick={() => { setShowAddGraphList(!showAddGraphList); }}>{<ChartNoAxesColumnIncreasing absoluteStrokeWidth />}Add Graph</Button>
@@ -349,6 +370,7 @@ function Project({ projectId }) {
                   {elements[focusedElementIndex]?.type == 'textElement' &&
                     <CreateTextComponent planeId={focusedPlaneId} editGraphObject={elements[focusedElementIndex]} />
                   }
+                  <Button className='w-full mt-3' variant={"destructive"} id={elements[focusedElementIndex]?.graphId} onClick={(e) => {deleteElementFromElementsArray(e.target.id); setFocusedElementIndex(null); setShowGraphElements(false)}}>Delete</Button>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

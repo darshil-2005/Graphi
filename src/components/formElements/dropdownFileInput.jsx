@@ -12,7 +12,7 @@ const DropdownFileInput = ({ registerId, register, defaultValue, onChangeHandler
     return (
         <div className='flex flex-col gap-y-3 justify-around'>
             <Label htmlFor={registerId}>Select File: </Label>
-            <select id={registerId} name={registerId} defaultValue={defaultValue} className='bg-secondary h-8 p-1 rounded-md' {...register(registerId, { onChange: (e) => { onChangeHandler(e.target.value) } })}>
+            <select id={registerId} name={registerId} defaultValue={defaultValue} className='bg-secondary border-2 border-foreground/20 h-8 p-1 rounded-md' {...register(registerId, { onChange: (e) => { onChangeHandler(e.target.value) } })}>
                 {
                     optionsArray &&
                     optionsArray.map((option, index) => (<option key={index} value={option.fileId}>{!formatLabel ? option.fileName : option.fileName.charAt(0).toUpperCase() + option.fileName.slice(1)}</option>))
