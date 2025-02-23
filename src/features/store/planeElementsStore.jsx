@@ -89,7 +89,8 @@ const usePlaneElementsStore = create(
         }
 
         
-        const maxZIndex = Math.max(...zIndexArray);
+        console.log("ZIndex Ayyat2: ", zIndexArray)
+        const maxZIndex = Math.max(...zIndexArray, 0);
         console.log("ZIndex Ayyat: ", maxZIndex)
 
 
