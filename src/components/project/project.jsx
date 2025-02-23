@@ -196,9 +196,9 @@ function Project({ projectId }) {
         <Separator className='mt-1' />
 
         <div className='w-[80%] text-xl flex px-4 gap-x-6'>
-          <Button className={`flex-1`} onClick={() => { setContextMenuMode("Create") }} variant={`${contextMenuMode == 'Create' ? 'secondary' : 'ghost'}`}>Create</Button>
+          <Button onClick={() => { setContextMenuMode("Create") }} variant='secondary' className={`flex-1 ${contextMenuMode == 'Create' ? 'border border-blue-400' : ''}`}>Create</Button>
           <Separator orientation="vertical" className='h-8' />
-          <Button className='flex-1' onClick={() => { setContextMenuMode("Edit") }} variant={`${contextMenuMode == 'Edit' ? 'secondary' : 'ghost'}`}>Edit</Button>
+          <Button onClick={() => { setContextMenuMode("Edit") }} variant='secondary' className={`flex-1 ${contextMenuMode == 'Edit' ? 'border border-blue-400' : ''}`}>Edit</Button>
         </div>
 
 
