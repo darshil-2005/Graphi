@@ -81,7 +81,7 @@ function Sidebar({ session }) {
                 
                 <ModeToggle className={`${extended ? 'w-full' : 'aspect-square'} `} />
                 <div className='flex items-center gap-x-3'>
-                    <img src={session.user.image} alt="" className='h-10 w-10 rounded-full aspect-square' />
+                    <img src={session?.user.image} alt="" className='h-10 w-10 rounded-full aspect-square' />
                     {extended &&
                         <div className='flex flex-col'>
                             <span className='text-2xl font-bold tracking-widest'>{session.user.name}</span>

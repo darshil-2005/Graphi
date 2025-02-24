@@ -11,11 +11,11 @@ const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] });
 
 const Pricing = async () => {
 
-  const session = await auth();
+  // const session = await auth();
 
   return (
     <div className="flex h-screen">
-      <Sidebar session={session} />
+      {/* <Sidebar session={session} /> */}
       <div className="flex flex-col flex-1 px-4 bg-[radial-gradient(circle_at_top_left,_rgba(0,0,0,0.1)_0%,_transparent_60%),_radial-gradient(circle_at_bottom_right,_rgba(0,0,0,0.1)_0%,_transparent_60%)] dark:bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.06)_0%,_transparent_60%),_radial-gradient(circle_at_bottom_right,_rgba(255,255,255,0.06)_0%,_transparent_60%)]">
         <span className={`text-6xl h-[18vh] tracking-widest flex items-center justify-center ${orbitron.className}`}>
           Pricing
