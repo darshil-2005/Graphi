@@ -14,6 +14,9 @@ const data = [
 ];
 
 
+
+
+
 export default function LineChartExample() {
   return (
     <ResponsiveContainer width="100%" height="100%">
