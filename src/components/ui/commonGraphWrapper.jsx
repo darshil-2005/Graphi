@@ -6,6 +6,8 @@ const CommonGraphWrapper = ({ children, graphObject, index, setDraggedElement, s
 
     const elements = usePlaneElementsStore((state) => state.planeElements);
     const handleResize = usePlaneElementsStore((state) => state.handleResize);
+
+
     
       function handleDragStart(e) {
         setDraggedElement(e.currentTarget.id);
@@ -35,8 +37,17 @@ const CommonGraphWrapper = ({ children, graphObject, index, setDraggedElement, s
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
             style={{
-                height: graphObject.height, width: graphObject.width, position: 'absolute', left: graphObject.left, top: graphObject.top, zIndex: graphObject.zIndex, borderRadius: graphObject.borderRadius,
-                backgroundColor: hexToRgbA(graphObject.backgroundColor, graphObject.backgroundColorOpacity), resize: `${editMode ? 'both' : 'none'}`, overflow: 'hidden'
+                    height: graphObject.height,
+                    width: graphObject.width,
+                    position: 'absolute',
+                    left: graphObject.left,
+                    top: graphObject.top,
+                    zIndex: graphObject.zIndex,
+                    borderRadius: graphObject.borderRadius,
+                    backgroundColor: hexToRgbA(graphObject.backgroundColor, graphObject.backgroundColorOpacity), 
+                    resize: `${editMode ? 'both' : 'none'}`, 
+                    overflow: 'hidden',
+                    
             }}>
             {children}
         </div>
