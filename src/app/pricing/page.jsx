@@ -1,5 +1,6 @@
 import Sidebar from "@/components/ui/sidebar"
 import { auth } from "@/auth";
+import Navbar from "@/components/ui/navbar";
 import {
   Card
 } from "@/components/ui/shadcnComponent/card"
@@ -14,14 +15,15 @@ const Pricing = async () => {
   // const session = await auth();
 
   return (
-    <div className="flex h-screen">
+    <div className="flex flex-col h-screen">
       {/* <Sidebar session={session} /> */}
-      <div className="flex flex-col flex-1 px-4 bg-[radial-gradient(circle_at_top_left,_rgba(0,0,0,0.1)_0%,_transparent_60%),_radial-gradient(circle_at_bottom_right,_rgba(0,0,0,0.1)_0%,_transparent_60%)] dark:bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.06)_0%,_transparent_60%),_radial-gradient(circle_at_bottom_right,_rgba(255,255,255,0.06)_0%,_transparent_60%)]">
+      <Navbar/>
+      <div className="flex flex-col flex-1 px-4">
         <span className={`text-6xl h-[18vh] tracking-widest flex items-center justify-center ${orbitron.className}`}>
           Pricing
         </span>
         {/* <Separator/> */}
-        <div className="flex flex-1 pt-8 gap-12 justify-center">
+        <div className="flex flex-1 pt-2 gap-12 justify-center">
 
           <Card className="h-[28rem] w-[24rem] shadow-xl flex flex-col items-center bg-back rounded-2xl p-6 border hover:scale-105 transition-transform duration-500">
 
@@ -29,7 +31,7 @@ const Pricing = async () => {
 
 
 
-            <img src="/coin2.png" alt="Pro Credits" className="mt-6 h-40 w-40 object-contain" />
+            <img src='/images/coin2.png' alt="Pro Credits" className="mt-6 h-40 w-40 object-contain" />
 
             <div className="flex flex-col items-center mt-6">
               <span className="font-semibold text-4xl text-gray-700 dark:text-gray-300">
@@ -50,7 +52,7 @@ const Pricing = async () => {
 
           <span className="text-gray-800 dark:text-gray-100 mt-4 text-4xl">Pro Pack</span>
 
-            <img src="/coin2.png" alt="Pro Credits" className="mt-6 h-40 w-40 object-contain" />
+            <img src="/images/coin2.png" alt="Pro Credits" className="mt-6 h-40 w-40 object-contain" />
 
             <div className="flex flex-col items-center mt-6">
               <span className="font-semibold text-4xl text-gray-700 dark:text-gray-300">
@@ -74,7 +76,7 @@ const Pricing = async () => {
 
 
 
-            <img src="/coin2.png" alt="Pro Credits" className="mt-6 h-40 w-40 object-contain" />
+            <img src="/images/coin2.png" alt="Pro Credits" className="mt-6 h-40 w-40 object-contain" />
 
             <div className="flex flex-col items-center mt-6">
               <span className="font-semibold text-4xl text-gray-700 dark:text-gray-300">
