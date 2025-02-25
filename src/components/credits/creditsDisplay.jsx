@@ -10,7 +10,7 @@ export default function CreditsDisplay({ credits, onAddCredits, width }) {
             
             <span className="flex items-center gap-x-0.5 text-foreground">
                 <span className="text-lg">{`${credits ? credits : '...'}`}</span>
-                <img src="/coin2.png" alt="" className="size-6"/>
+                <img src="images/coin2.png" alt="" className="size-6"/>
                 {/* <Coins className="text-yellow-500 w-5 h-5" /> */}
             </span>
 
