@@ -1,18 +1,15 @@
-import Sidebar from "@/components/ui/sidebar"
-import { auth } from "@/auth";
 import Navbar from "@/components/ui/navbar";
 import {
   Card
 } from "@/components/ui/shadcnComponent/card"
 import { Button } from "@/components/ui/shadcnComponent/button";
 import { Orbitron } from "next/font/google";
-import { Separator } from "@/components/ui/shadcnComponent/separator";
 
 const orbitron = Orbitron({ subsets: ['latin'], weight: ['400', '700'] });
 
 const Pricing = async () => {
 
-  // const session = await auth();
+  
 
   return (
     <div className="flex flex-col h-screen">
@@ -42,7 +39,7 @@ const Pricing = async () => {
 
 
             <Button className="mt-8 w-full max-w-[20rem] py-3 text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400">
-              BUY FOR $12
+              BUY FOR ₹1050
             </Button>
 
           </Card>
@@ -63,7 +60,7 @@ const Pricing = async () => {
 
 
             <Button className="mt-8 w-full max-w-[20rem] py-3 text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400">
-              BUY FOR $20
+              BUY FOR ₹1750
             </Button>
 
           </Card>
@@ -87,7 +84,7 @@ const Pricing = async () => {
 
 
             <Button className="mt-8 w-full max-w-[20rem] py-3 text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-400">
-              BUY FOR $45
+              BUY FOR ₹4000
             </Button>
 
           </Card>
